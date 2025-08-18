@@ -31,7 +31,7 @@ export default async function SelectCircleEarningsPage() {
   const sinceSixMonths = new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString();
   const { data: hired } = await supabase
     .from('referrals')
-    .select('id, status, created_at, job:jobs(id, title, salary_min, salary_max)')
+    .select('id, status, ai_match_score, created_at, job:jobs(id, title, salary_min, salary_max)')
     .match({ referrer_id: user.id as string })
     .eq('status','hired')
     .gte('created_at', sinceSixMonths)
@@ -49,7 +49,7 @@ export default async function SelectCircleEarningsPage() {
   try {
     const { data } = await supabase
       .from('revenue_distributions' as any)
-      .select('id, referral_id, placement_fee, select_share, status, paid_at')
+      .select('id, referral_id, placement_fee, select_share, status, paid_at, referral:referrals(id, job:jobs(id, title, salary_min, salary_max))')
       .match({ select_member_id: user.id as string })
       .order('paid_at', { ascending: false });
     distributions = (data as any[]) || [];
@@ -72,7 +72,7 @@ export default async function SelectCircleEarningsPage() {
     .map(([month, earnings]) => ({ month, earnings }));
 
   // Referral success breakdown
-  const pendingCount = (allRecent as any[] || []).filter(r => ['submitted','reviewed','shortlisted','interviewing'].includes(r?.status)).length;
+  const pendingCount = (allRecent as any[] || []).filter(r => ['submitted','reviewed','shortlisted'].includes(r?.status)).length;
   const successfulCount = (allRecent as any[] || []).filter(r => r?.status === 'hired').length;
   const paidCount = (distributions || []).filter(d => d?.status === 'paid').length;
   const breakdown = [
@@ -87,18 +87,24 @@ export default async function SelectCircleEarningsPage() {
       const job = Array.isArray(r?.job) ? r.job[0] : r?.job;
       const fee = estimatePlacementFee(job?.salary_min, job?.salary_max);
       const earn = fee * 0.40;
-      return { id: r.id, title: job?.title || '—', estimatedEarnings: earn, date: r?.created_at };
+      return { id: r.id, title: job?.title || '—', estimatedEarnings: earn, date: r?.created_at, matchScore: r?.ai_match_score };
     })
     .sort((a, b) => b.estimatedEarnings - a.estimatedEarnings)
     .slice(0, 5);
 
   // Payment history rows
-  const payments = (distributions || []).map(d => ({
-    id: d?.id,
-    date: d?.paid_at ? new Date(d.paid_at).toLocaleDateString() : '—',
-    amount: typeof d?.select_share === 'number' ? d.select_share : Math.round((d?.placement_fee || 0) * 0.40),
-    status: d?.status || 'calculated',
-  })).slice(0, 8);
+  const payments = (distributions || []).map(d => {
+    const referral = Array.isArray(d?.referral) ? d.referral[0] : d?.referral;
+    const job = referral && (Array.isArray(referral?.job) ? referral.job[0] : referral?.job);
+    const computedAmount = typeof d?.select_share === 'number' ? d.select_share : Math.round((d?.placement_fee || 0) * 0.40);
+    return {
+      id: d?.id,
+      date: d?.paid_at ? new Date(d.paid_at).toLocaleDateString() : '—',
+      amount: computedAmount,
+      status: d?.status || 'calculated',
+      jobTitle: job?.title || '—',
+    };
+  }).slice(0, 8);
 
   // YTD Summary
   const currentYear = new Date().getFullYear();
@@ -160,6 +166,7 @@ export default async function SelectCircleEarningsPage() {
                   <tr className="text-left border-b">
                     <th className="py-2 pr-4">Referral</th>
                     <th className="py-2 pr-4">Estimated Earnings</th>
+                    <th className="py-2 pr-4">Match Score</th>
                     <th className="py-2 pr-4">Date</th>
                   </tr>
                 </thead>
@@ -168,6 +175,7 @@ export default async function SelectCircleEarningsPage() {
                     <tr key={r.id} className="border-b last:border-none">
                       <td className="py-2 pr-4">{r.title}</td>
                       <td className="py-2 pr-4 text-green-700">{fmtCurrency(r.estimatedEarnings)}</td>
+                      <td className="py-2 pr-4">{typeof r.matchScore === 'number' ? `${Math.round(r.matchScore)}%` : '—'}</td>
                       <td className="py-2 pr-4">{r.date ? new Date(r.date).toLocaleDateString() : '—'}</td>
                     </tr>
                   ))}
@@ -190,6 +198,7 @@ export default async function SelectCircleEarningsPage() {
                 <thead>
                   <tr className="text-left border-b">
                     <th className="py-2 pr-4">Date</th>
+                    <th className="py-2 pr-4">Job</th>
                     <th className="py-2 pr-4">Amount</th>
                     <th className="py-2 pr-4">Status</th>
                   </tr>
@@ -198,6 +207,7 @@ export default async function SelectCircleEarningsPage() {
                   {payments.map((p, idx) => (
                     <tr key={p.id || idx} className="border-b last:border-none">
                       <td className="py-2 pr-4">{p.date}</td>
+                      <td className="py-2 pr-4">{(p as any).jobTitle || '—'}</td>
                       <td className="py-2 pr-4">{fmtCurrency(p.amount || 0)}</td>
                       <td className="py-2 pr-4 capitalize">{p.status}</td>
                     </tr>

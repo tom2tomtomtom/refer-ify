@@ -20,7 +20,7 @@ type Candidate = {
   created_at: string;
 };
 
-export function CandidatesClient({ initialCandidates }: { initialCandidates: Candidate[] }) {
+export function CandidatesClient({ initialCandidates, mode: _mode }: { initialCandidates: Candidate[]; mode?: 'referrer' | 'client' }) {
   const supabase = useMemo(() => getSupabaseBrowserClient(), []);
   const [candidates, setCandidates] = useState<Candidate[]>(initialCandidates);
   const [loading, setLoading] = useState(false);

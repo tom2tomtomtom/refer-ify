@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<"processing" | "success" | "error">("processing");
@@ -123,5 +123,13 @@ export default function PaymentSuccessPage() {
         )}
       </Card>
     </div>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-6">Loading…</div>}>
+      <PaymentSuccessInner />
+    </Suspense>
   );
 }
