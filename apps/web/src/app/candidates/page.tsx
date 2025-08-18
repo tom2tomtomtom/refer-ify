@@ -44,25 +44,12 @@ export default async function CandidatesPage() {
     }
   }
 
-  // Initial rows
-  let initialRows: any[] = [];
-  if (mode === 'referrer' && user) {
-    const { data } = await supabase
-      .from('referrals')
-      .select('id, status, created_at, candidate_email, candidate_name, ai_match_score, job:jobs(title)')
-      .eq('referrer_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(50);
-    initialRows = data ?? [];
-  } else if (mode === 'client' && user) {
-    const { data } = await supabase
-      .from('referrals')
-      .select('id, status, created_at, candidate_email, candidate_name, ai_match_score, job:jobs!inner(title, client_id)')
-      .eq('job.client_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(50);
-    initialRows = data ?? [];
-  }
+  // Initial list from candidates (generic). Role filters are applied via metrics; advanced joins can be added later.
+  const { data: initialRows } = await supabase
+    .from('candidates')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(50);
 
   return (
     <div className="px-4 py-6 md:px-6">
@@ -76,7 +63,7 @@ export default async function CandidatesPage() {
         <Card><CardHeader className="pb-1"><CardTitle className="text-sm">Average Match Score</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{avgMatch === null ? '—' : avgMatch}</div></CardContent></Card>
       </div>
 
-      <CandidatesClient initialCandidates={initialRows} />
+      <CandidatesClient initialCandidates={initialRows ?? []} />
     </div>
   );
 }

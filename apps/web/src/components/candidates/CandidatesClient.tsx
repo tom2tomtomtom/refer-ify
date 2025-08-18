@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { getSupabaseBrowserClient } from '@/lib/supabase/client';
+import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
@@ -97,8 +98,16 @@ export function CandidatesClient({ initialCandidates }: { initialCandidates: Can
               <tr><td className="py-4 px-4 text-muted-foreground" colSpan={7}>No candidates found.</td></tr>
             ) : (
               candidates.map(c => (
-                <tr key={c.id} className="border-b last:border-none">
-                  <td className="py-2 pr-4 font-medium">{[c.first_name, c.last_name].filter(Boolean).join(' ') || c.email}</td>
+                <tr key={c.id} className="border-b last:border-none hover:bg-muted/30 cursor-pointer" onClick={()=>window.location.href=`/candidates/${c.id}`}>
+                  <td className="py-2 pr-4 font-medium">
+                    <div className="flex items-center gap-2">
+                      <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center text-[10px]">
+                        {((c.first_name?.[0]||'') + (c.last_name?.[0]||'')).toUpperCase()}
+                      </div>
+                      <span>{[c.first_name, c.last_name].filter(Boolean).join(' ') || c.email}</span>
+                      <Link className="ml-2 underline text-xs text-blue-600" href={`/candidates/${c.id}`} onClick={(e)=>e.stopPropagation()}>View Details</Link>
+                    </div>
+                  </td>
                   <td className="py-2 pr-4">{c.current_company || '—'}</td>
                   <td className="py-2 pr-4">{c.current_title || '—'}</td>
                   <td className="py-2 pr-4">{c.years_experience ?? '—'}</td>
