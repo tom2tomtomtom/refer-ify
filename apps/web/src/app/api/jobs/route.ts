@@ -68,12 +68,60 @@ export async function POST(request: Request) {
       experience_level,
       job_type,
       subscription_tier,
-      status = "draft"
+      status = "draft",
+      payment_session_id
     } = body;
 
     // Validation
     if (!title?.trim() || !description?.trim()) {
       return NextResponse.json({ error: "Title and description are required" }, { status: 400 });
+    }
+
+    // For active jobs, require payment validation (except for drafts)
+    if (status === "active" && payment_session_id) {
+      // Validate payment with Stripe
+      const { getStripeServer } = await import("@/lib/stripe");
+      const stripe = getStripeServer();
+      
+      try {
+        const session = await stripe.checkout.sessions.retrieve(payment_session_id);
+        
+        if (session.payment_status !== "paid") {
+          return NextResponse.json({ 
+            error: "Payment not confirmed" 
+          }, { status: 400 });
+        }
+
+        // Verify the payment matches the subscription tier
+        if (session.metadata?.subscription_tier !== subscription_tier) {
+          return NextResponse.json({ 
+            error: "Payment tier mismatch" 
+          }, { status: 400 });
+        }
+      } catch (stripeError) {
+        console.error("Stripe validation error:", stripeError);
+        return NextResponse.json({ 
+          error: "Payment validation failed" 
+        }, { status: 400 });
+      }
+    } else if (status === "active" && !payment_session_id) {
+      // Active jobs require payment (unless it's a draft being activated with existing payment)
+      const existingPayment = await supabase
+        .from("payment_transactions")
+        .select("*")
+        .eq("client_id", user.id)
+        .eq("type", "job_posting")
+        .eq("status", "completed")
+        .eq("subscription_tier", subscription_tier)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (existingPayment.error) {
+        return NextResponse.json({ 
+          error: "Payment required for active job posting" 
+        }, { status: 402 });
+      }
     }
 
     const jobData = {

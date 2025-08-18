@@ -122,27 +122,79 @@ export function JobPostingForm() {
   const handleSubmit = async (isDraft: boolean = false) => {
     setLoading(true);
     try {
-      const payload = {
-        ...formData,
-        status: isDraft ? "draft" : "active",
-        requirements: formData.requirements.filter(req => req.text.trim())
-      };
+      // For drafts, save without payment
+      if (isDraft) {
+        const payload = {
+          ...formData,
+          status: "draft",
+          requirements: formData.requirements.filter(req => req.text.trim())
+        };
 
-      const response = await fetch("/api/jobs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+        const response = await fetch("/api/jobs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-      if (!response.ok) throw new Error("Failed to create job");
+        if (!response.ok) throw new Error("Failed to save draft");
 
-      await response.json();
-      toast.success(isDraft ? "Job saved as draft!" : "Job posted successfully!");
-      router.push("/client/jobs");
+        toast.success("Job saved as draft!");
+        router.push("/client/jobs");
+        return;
+      }
+
+      // For publishing, initiate payment flow
+      await handlePaymentFlow();
     } catch {
       toast.error("Failed to create job. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePaymentFlow = async () => {
+    try {
+      // Get user email for payment
+      const userResponse = await fetch("/api/auth/user");
+      const userData = await userResponse.json();
+      
+      if (!userData.user?.email) {
+        throw new Error("User email not found");
+      }
+
+      // Create payment session
+      const paymentResponse = await fetch("/api/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "job_posting",
+          subscription_tier: formData.subscription_tier,
+          customerEmail: userData.user.email,
+          job_data: {
+            title: formData.title,
+            subscription_tier: formData.subscription_tier
+          }
+        })
+      });
+
+      if (!paymentResponse.ok) {
+        throw new Error("Failed to create payment session");
+      }
+
+      const paymentData = await paymentResponse.json();
+      
+      // Store job data in session storage for post-payment processing
+      sessionStorage.setItem('pendingJobData', JSON.stringify({
+        ...formData,
+        status: "active",
+        requirements: formData.requirements.filter(req => req.text.trim())
+      }));
+
+      // Redirect to Stripe Checkout
+      window.location.href = paymentData.url;
+    } catch (error) {
+      console.error("Payment flow error:", error);
+      throw error;
     }
   };
 

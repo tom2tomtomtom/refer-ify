@@ -44,12 +44,60 @@ export default async function CandidatesPage() {
     }
   }
 
-  // Initial list from candidates (generic). Role filters are applied via metrics; advanced joins can be added later.
-  const { data: initialRows } = await supabase
-    .from('candidates')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(50);
+  // Role-aware initial list
+  let initialRows: any[] = [];
+  if (mode === 'referrer' && user) {
+    // Your referrals with candidate + status + job
+    const { data } = await supabase
+      .from('referrals')
+      .select('id, status, created_at, job:jobs(id, title), cand_ref:candidate_referrals(id, candidate:candidates(id, email, first_name, last_name, current_title, current_company, created_at))')
+      .match({ referrer_id: user.id as string })
+      .order('created_at', { ascending: false })
+      .limit(50);
+    initialRows = ((data as any[]) || []).map(r => {
+      const c = r?.cand_ref?.candidate || {};
+      return {
+        id: c.id,
+        email: c.email,
+        first_name: c.first_name,
+        last_name: c.last_name,
+        current_title: c.current_title,
+        current_company: c.current_company,
+        created_at: c.created_at || r.created_at,
+        status: r.status,
+        job_title: r?.job?.title || '',
+      };
+    });
+  } else if (mode === 'client' && user) {
+    // Candidates referred to your jobs
+    const { data } = await supabase
+      .from('referrals')
+      .select('id, status, created_at, job:jobs!inner(id, title, client_id), cand_ref:candidate_referrals(id, candidate:candidates(id, email, first_name, last_name, current_title, current_company, created_at))')
+      .eq('jobs.client_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(50);
+    initialRows = ((data as any[]) || []).map(r => {
+      const c = r?.cand_ref?.candidate || {};
+      return {
+        id: c.id,
+        email: c.email,
+        first_name: c.first_name,
+        last_name: c.last_name,
+        current_title: c.current_title,
+        current_company: c.current_company,
+        created_at: c.created_at || r.created_at,
+        status: r.status,
+        job_title: r?.job?.title || '',
+      };
+    });
+  } else {
+    const { data } = await supabase
+      .from('candidates')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(50);
+    initialRows = (data as any[]) || [];
+  }
 
   return (
     <div className="px-4 py-6 md:px-6">
@@ -63,7 +111,7 @@ export default async function CandidatesPage() {
         <Card><CardHeader className="pb-1"><CardTitle className="text-sm">Average Match Score</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{avgMatch === null ? '—' : avgMatch}</div></CardContent></Card>
       </div>
 
-      <CandidatesClient initialCandidates={initialRows ?? []} />
+      <CandidatesClient mode={mode} initialCandidates={initialRows ?? []} />
     </div>
   );
 }

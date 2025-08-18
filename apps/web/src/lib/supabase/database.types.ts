@@ -253,6 +253,23 @@ export interface Database {
         Insert: Partial<Database["public"]["Tables"]["candidate_skills"]["Row"]> & { candidate_id: string; skill_name: string };
         Update: Partial<Database["public"]["Tables"]["candidate_skills"]["Row"]>;
       };
+      payment_transactions: {
+        Row: {
+          id: string;
+          client_id: string | null;
+          stripe_session_id: string | null;
+          stripe_invoice_id: string | null;
+          amount: number | null;
+          currency: string | null;
+          type: "job_posting" | "subscription" | null;
+          subscription_tier: SubscriptionTier | null;
+          status: "pending" | "completed" | "failed" | "refunded" | null;
+          metadata: Record<string, unknown> | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["payment_transactions"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["payment_transactions"]["Row"]>;
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
