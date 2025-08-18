@@ -1,6 +1,17 @@
 import { NextRequest } from 'next/server'
 import { GET, POST } from '@/app/api/referrals/route'
 
+// Mock NextResponse for Next.js 15 compatibility
+jest.mock('next/server', () => ({
+  NextRequest: jest.requireActual('next/server').NextRequest,
+  NextResponse: {
+    json: jest.fn((data, options) => ({
+      json: async () => data,
+      status: options?.status || 200,
+    })),
+  },
+}))
+
 const mockSupabaseClient = {
   auth: {
     getUser: jest.fn(),

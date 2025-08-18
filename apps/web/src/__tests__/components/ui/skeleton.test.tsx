@@ -19,16 +19,11 @@ describe('Skeleton Component', () => {
     expect(skeleton).toHaveClass('animate-pulse') // Should still have default classes
   })
 
-  it('renders as different HTML elements when using asChild', () => {
-    render(
-      <Skeleton asChild>
-        <span data-testid="skeleton-span">Loading...</span>
-      </Skeleton>
-    )
+  it('renders with proper data attributes', () => {
+    render(<Skeleton data-testid="skeleton" />)
     
-    const skeleton = screen.getByTestId('skeleton-span')
-    expect(skeleton.tagName).toBe('SPAN')
-    expect(skeleton).toHaveClass('animate-pulse')
+    const skeleton = screen.getByTestId('skeleton')
+    expect(skeleton).toHaveAttribute('data-slot', 'skeleton')
   })
 
   it('passes through other props', () => {

@@ -6,8 +6,14 @@ jest.mock('next/navigation', () => ({
   redirect: jest.fn(),
 }))
 
+// Mock Supabase server functions to avoid Next.js 15 cookies context issue
+jest.mock('@/lib/supabase/server', () => ({
+  getSupabaseServerComponentClient: jest.fn(),
+}))
+
 describe('Authentication Integration Tests', () => {
   let testClient: ReturnType<typeof createTestSupabaseClient>
+  const mockGetSupabaseServerComponentClient = require('@/lib/supabase/server').getSupabaseServerComponentClient
 
   beforeAll(() => {
     testClient = createTestSupabaseClient()
@@ -20,9 +26,6 @@ describe('Authentication Integration Tests', () => {
 
   describe('User Authentication Flow', () => {
     it('successfully authenticates a valid user', async () => {
-      // This is a simplified test since we can't easily mock the full Supabase client
-      // In a real integration test, you'd want to use a test database
-      
       const mockUser = {
         id: 'test-user-id',
         email: 'test@example.com',
@@ -36,7 +39,6 @@ describe('Authentication Integration Tests', () => {
         role: 'authenticated',
       }
 
-      // Mock the Supabase client to return a valid user
       const mockSupabaseClient = {
         auth: {
           getUser: jest.fn().mockResolvedValue({
@@ -53,10 +55,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      // Temporarily mock the Supabase client
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       const user = await getCurrentUser()
       expect(user).toEqual(mockUser)
@@ -72,9 +71,7 @@ describe('Authentication Integration Tests', () => {
         },
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       const user = await getCurrentUser()
       expect(user).toBeNull()
@@ -104,9 +101,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       const result = await requireRole('client')
       expect(result.user).toEqual(mockUser)
@@ -136,9 +131,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       await requireRole('client')
       expect(redirect).toHaveBeenCalledWith('/')
@@ -166,9 +159,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       const result = await requireRole(['client', 'founding_circle'])
       expect(result.user).toEqual(mockUser)
@@ -200,9 +191,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       await requireRole('client')
       expect(redirect).toHaveBeenCalledWith('/')
@@ -230,9 +219,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       await requireRole('client')
       expect(redirect).toHaveBeenCalledWith('/')
@@ -260,9 +247,7 @@ describe('Authentication Integration Tests', () => {
         }),
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       await requireRole('client', '/unauthorized')
       expect(redirect).toHaveBeenCalledWith('/unauthorized')
@@ -280,9 +265,7 @@ describe('Authentication Integration Tests', () => {
         },
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       await requireAuth()
       expect(redirect).toHaveBeenCalledWith('/login')
@@ -298,9 +281,7 @@ describe('Authentication Integration Tests', () => {
         },
       }
 
-      jest.doMock('@/lib/supabase/server', () => ({
-        getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
-      }))
+      mockGetSupabaseServerComponentClient.mockResolvedValue(mockSupabaseClient)
 
       const user = await getCurrentUser()
       expect(user).toBeNull()

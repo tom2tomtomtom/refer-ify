@@ -14,20 +14,22 @@ describe('Button Component', () => {
   it('renders with different variants', () => {
     const variants = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'] as const
     
-    variants.forEach((variant) => {
-      render(<Button variant={variant}>Button</Button>)
-      const button = screen.getByRole('button', { name: 'Button' })
+    variants.forEach((variant, index) => {
+      const { unmount } = render(<Button variant={variant}>Button {index}</Button>)
+      const button = screen.getByRole('button', { name: `Button ${index}` })
       expect(button).toBeInTheDocument()
+      unmount()
     })
   })
 
   it('renders with different sizes', () => {
     const sizes = ['default', 'sm', 'lg', 'icon'] as const
     
-    sizes.forEach((size) => {
-      render(<Button size={size}>Button</Button>)
-      const button = screen.getByRole('button', { name: 'Button' })
+    sizes.forEach((size, index) => {
+      const { unmount } = render(<Button size={size}>Button {index}</Button>)
+      const button = screen.getByRole('button', { name: `Button ${index}` })
       expect(button).toBeInTheDocument()
+      unmount()
     })
   })
 

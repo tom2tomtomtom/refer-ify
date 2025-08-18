@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Suspense } from "react";
 
-export default async function CandidateDetailPage({ params }: { params: { id: string } }) {
+export default async function CandidateDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await getSupabaseServerComponentClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
@@ -12,7 +12,8 @@ export default async function CandidateDetailPage({ params }: { params: { id: st
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
   const role = profile?.role ?? null;
 
-  const { data: candidate } = await supabase.from('candidates').select('*').eq('id', params.id).single();
+  const { id } = await params;
+  const { data: candidate } = await supabase.from('candidates').select('*').eq('id', id).single();
   if (!candidate) return <div className="p-6">Candidate not found.</div>;
 
   // Latest referral
@@ -98,7 +99,7 @@ export default async function CandidateDetailPage({ params }: { params: { id: st
         <CardHeader><CardTitle>Client Notes</CardTitle></CardHeader>
         <CardContent>
           {role === 'client' ? (
-            <NotesClient candidateId={params.id} defaultValue={referral?.client_notes || ''} />
+            <NotesClient candidateId={id} defaultValue={referral?.client_notes || ''} />
           ) : (
             <div className="text-sm text-muted-foreground">Only clients can edit notes.</div>
           )}
@@ -109,7 +110,7 @@ export default async function CandidateDetailPage({ params }: { params: { id: st
         <CardHeader><CardTitle>Actions</CardTitle></CardHeader>
         <CardContent>
           {role === 'client' ? (
-            <StatusActionsClient candidateId={params.id} />
+            <StatusActionsClient candidateId={id} />
           ) : (
             <div className="text-sm text-muted-foreground">Only clients can update status.</div>
           )}

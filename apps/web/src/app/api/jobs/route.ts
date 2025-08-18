@@ -20,7 +20,7 @@ export async function GET(request: Request) {
       *,
       referrals(count)
     `, { count: "exact" })
-    .eq("client_id", user.id)
+    .match({ client_id: user.id as string })
     .range(offset, offset + limit - 1)
     .order("created_at", { ascending: false });
 
@@ -29,11 +29,11 @@ export async function GET(request: Request) {
   }
   
   if (status && status !== "all") {
-    query = query.eq("status", status);
+    query = query.eq("status", status as any);
   }
   
   if (tier && tier !== "all") {
-    query = query.eq("subscription_tier", tier);
+    query = query.eq("subscription_tier", tier as any);
   }
 
   const { data, error, count } = await query;
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
 
     const { data, error } = await supabase
       .from("jobs")
-      .insert([jobData])
+      .insert([jobData as any])
       .select()
       .single();
 

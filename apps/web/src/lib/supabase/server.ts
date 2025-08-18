@@ -16,14 +16,14 @@ export async function getSupabaseServerClient() {
       get(name: string) {
         return cookieStore.get(name)?.value;
       },
-      set(name: string, value: string, options: { path?: string; domain?: string; httpOnly?: boolean; secure?: boolean; sameSite?: "strict" | "lax" | "none"; maxAge?: number; expires?: Date }) {
+      set(name: string, value: string, options: any) {
         cookieStore.set({ name, value, ...options });
       },
-      remove(name: string, options: { path?: string; domain?: string }) {
+      remove(name: string, options: any) {
         cookieStore.set({ name, value: "", ...options });
       },
-    },
-  });
+    } as any,
+  } as any);
 }
 
 // Use this in Server Components (e.g., layout.tsx, page.tsx) to AVOID modifying cookies

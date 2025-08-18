@@ -1,18 +1,30 @@
 import { NextRequest } from 'next/server'
 import { GET, POST } from '@/app/api/jobs/route'
 
+// Mock NextResponse for Next.js 15 compatibility
+jest.mock('next/server', () => ({
+  NextRequest: jest.requireActual('next/server').NextRequest,
+  NextResponse: {
+    json: jest.fn((data, options) => ({
+      json: async () => data,
+      status: options?.status || 200,
+    })),
+  },
+}))
+
 const mockSupabaseClient = {
   auth: {
     getUser: jest.fn(),
   },
-  from: jest.fn().mockReturnThis(),
-  select: jest.fn().mockReturnThis(),
-  eq: jest.fn().mockReturnThis(),
-  range: jest.fn().mockReturnThis(),
-  order: jest.fn().mockReturnThis(),
-  or: jest.fn().mockReturnThis(),
-  insert: jest.fn().mockReturnThis(),
-  single: jest.fn().mockReturnThis(),
+  from: jest.fn(),
+  select: jest.fn(),
+  eq: jest.fn(),
+  match: jest.fn(),
+  range: jest.fn(),
+  order: jest.fn(),
+  or: jest.fn(),
+  insert: jest.fn(),
+  single: jest.fn(),
 }
 
 jest.mock('@/lib/supabase/server', () => ({
@@ -61,7 +73,7 @@ describe('/api/jobs', () => {
       // Mock the query chain
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         select: jest.fn().mockReturnValue({
-          eq: jest.fn().mockReturnValue({
+          match: jest.fn().mockReturnValue({
             range: jest.fn().mockReturnValue({
               order: jest.fn().mockResolvedValue(mockQuery)
             })
@@ -89,7 +101,7 @@ describe('/api/jobs', () => {
       
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         select: jest.fn().mockReturnValue({
-          eq: jest.fn().mockReturnValue({
+          match: jest.fn().mockReturnValue({
             range: jest.fn().mockReturnValue({
               order: jest.fn().mockReturnValue({
                 or: mockOr
@@ -114,7 +126,7 @@ describe('/api/jobs', () => {
       
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         select: jest.fn().mockReturnValue({
-          eq: jest.fn().mockReturnValue({
+          match: jest.fn().mockReturnValue({
             range: jest.fn().mockReturnValue({
               order: jest.fn().mockReturnValue({
                 eq: mockEqStatus
@@ -141,7 +153,7 @@ describe('/api/jobs', () => {
       
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         select: jest.fn().mockReturnValue({
-          eq: jest.fn().mockReturnValue({
+          match: jest.fn().mockReturnValue({
             range: mockRange
           })
         })
@@ -164,7 +176,7 @@ describe('/api/jobs', () => {
 
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         select: jest.fn().mockReturnValue({
-          eq: jest.fn().mockReturnValue({
+          match: jest.fn().mockReturnValue({
             range: jest.fn().mockReturnValue({
               order: jest.fn().mockResolvedValue({
                 data: null,
@@ -295,16 +307,14 @@ describe('/api/jobs', () => {
       const mockUser = { id: 'user123', email: 'test@example.com' }
       mockSupabaseClient.auth.getUser.mockResolvedValue({ data: { user: mockUser } })
 
-      const mockSelect = jest.fn().mockReturnValue({
-        single: jest.fn().mockResolvedValue({
-          data: null,
-          error: { message: 'Database error' },
-        })
-      })
-
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         insert: jest.fn().mockReturnValue({
-          select: mockSelect
+          select: jest.fn().mockReturnValue({
+            single: jest.fn().mockResolvedValue({
+              data: null,
+              error: { message: 'Database error' },
+            })
+          })
         })
       })
 

@@ -68,20 +68,6 @@ export interface Database {
         Insert: Partial<Database["public"]["Tables"]["subscriptions"]["Row"]> & { client_id: string };
         Update: Partial<Database["public"]["Tables"]["subscriptions"]["Row"]>;
       };
-    };
-    Views: Record<string, never>;
-    Functions: Record<string, never>;
-    Enums: {
-      user_role: UserRole;
-      job_status: JobStatus;
-      subscription_tier: SubscriptionTier;
-      referral_status: ReferralStatus;
-    };
-  };
-}
-
-
-
       // NEW: Founding Circle Tables
       founding_metrics: {
         Row: {
@@ -267,3 +253,14 @@ export interface Database {
         Insert: Partial<Database["public"]["Tables"]["candidate_skills"]["Row"]> & { candidate_id: string; skill_name: string };
         Update: Partial<Database["public"]["Tables"]["candidate_skills"]["Row"]>;
       };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: {
+      user_role: UserRole;
+      job_status: JobStatus;
+      subscription_tier: SubscriptionTier;
+      referral_status: ReferralStatus;
+    };
+  };
+}

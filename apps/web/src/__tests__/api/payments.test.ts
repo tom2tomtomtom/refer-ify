@@ -1,6 +1,17 @@
 import { POST } from '@/app/api/payments/route'
 import { NextRequest } from 'next/server'
 
+// Mock NextResponse for Next.js 15 compatibility
+jest.mock('next/server', () => ({
+  NextRequest: jest.requireActual('next/server').NextRequest,
+  NextResponse: {
+    json: jest.fn((data, options) => ({
+      json: async () => data,
+      status: options?.status || 200,
+    })),
+  },
+}))
+
 // Mock Stripe
 const mockStripeInstance = {
   checkout: {

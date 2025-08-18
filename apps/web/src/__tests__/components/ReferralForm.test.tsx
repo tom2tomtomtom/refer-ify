@@ -31,11 +31,13 @@ describe('ReferralForm', () => {
   it('renders form fields correctly', () => {
     render(<ReferralForm job={mockJob} />)
 
-    expect(screen.getByLabelText('Professional Name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('First Name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Last Name *')).toBeInTheDocument()
     expect(screen.getByLabelText('Professional Email *')).toBeInTheDocument()
     expect(screen.getByLabelText('Phone')).toBeInTheDocument()
     expect(screen.getByLabelText('LinkedIn Profile')).toBeInTheDocument()
-    expect(screen.getByLabelText('Expected Salary')).toBeInTheDocument()
+    expect(screen.getByLabelText('Salary Min')).toBeInTheDocument()
+    expect(screen.getByLabelText('Salary Max')).toBeInTheDocument()
     expect(screen.getByLabelText('Availability')).toBeInTheDocument()
     expect(screen.getByLabelText('Why is this professional a strong fit?')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Submit Referral' })).toBeInTheDocument()
@@ -52,10 +54,13 @@ describe('ReferralForm', () => {
     const user = userEvent.setup()
     render(<ReferralForm job={mockJob} />)
 
-    const nameInput = screen.getByLabelText('Professional Name *')
-    await user.type(nameInput, 'John Doe')
+    const firstNameInput = screen.getByLabelText('First Name *')
+    const lastNameInput = screen.getByLabelText('Last Name *')
+    await user.type(firstNameInput, 'John')
+    await user.type(lastNameInput, 'Doe')
 
-    expect(nameInput).toHaveValue('John Doe')
+    expect(firstNameInput).toHaveValue('John')
+    expect(lastNameInput).toHaveValue('Doe')
   })
 
   it('shows error when submitting without consent', async () => {
@@ -85,11 +90,11 @@ describe('ReferralForm', () => {
     render(<ReferralForm job={mockJob} />)
 
     const fileInput = screen.getByRole('textbox', { hidden: true })
-    const largeFile = new File(['x'.repeat(11 * 1024 * 1024)], 'resume.pdf', { type: 'application/pdf' })
+    const largeFile = new File(['x'.repeat(6 * 1024 * 1024)], 'resume.pdf', { type: 'application/pdf' })
 
     await user.upload(fileInput, largeFile)
 
-    expect(toast.error).toHaveBeenCalledWith('File too large. Max 10MB')
+    expect(toast.error).toHaveBeenCalledWith('File too large. Max 5MB')
   })
 
   it('successfully uploads a valid file', async () => {
@@ -154,10 +159,11 @@ describe('ReferralForm', () => {
     render(<ReferralForm job={mockJob} onSubmitted={mockOnSubmitted} />)
 
     // Fill form
-    await user.type(screen.getByLabelText('Professional Name *'), 'John Doe')
+    await user.type(screen.getByLabelText('First Name *'), 'John')
+    await user.type(screen.getByLabelText('Last Name *'), 'Doe')
     await user.type(screen.getByLabelText('Professional Email *'), 'john@example.com')
     await user.type(screen.getByLabelText('Phone'), '+1234567890')
-    await user.type(screen.getByLabelText('Expected Salary'), '90000')
+    await user.type(screen.getByLabelText('Salary Max'), '90000')
     await user.type(screen.getByLabelText('Why is this professional a strong fit?'), 'Great experience')
 
     // Check consent

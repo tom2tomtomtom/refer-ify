@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { data, error } = await supabase
       .from("jobs")
       .select(`
@@ -25,8 +25,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
           )
         )
       `)
-      .eq("id", id)
-      .eq("client_id", user.id)
+      .match({ id: id as string, client_id: user.id as string })
       .single();
 
     if (error) throw error;
@@ -40,13 +39,13 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   }
 }
 
-export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const body = await request.json();
     const {
       title,
@@ -89,9 +88,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
     const { data, error } = await supabase
       .from("jobs")
-      .update(updateData)
-      .eq("id", id)
-      .eq("client_id", user.id)
+      .update(updateData as any)
+      .match({ id: id as string, client_id: user.id as string })
       .select()
       .single();
 
@@ -106,18 +104,17 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(_request: Request, context: { params: Promise<{ id: string }> }) {
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { error } = await supabase
       .from("jobs")
-      .update({ status: "archived" })
-      .eq("id", id)
-      .eq("client_id", user.id);
+      .update({ status: "archived" } as any)
+      .match({ id: id as string, client_id: user.id as string });
 
     if (error) throw error;
 

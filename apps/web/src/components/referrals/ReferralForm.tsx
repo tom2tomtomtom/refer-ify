@@ -190,12 +190,12 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>First Name *</Label>
-              <Input value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} />
+              <Label htmlFor="first_name">First Name *</Label>
+              <Input id="first_name" value={form.first_name} onChange={(e) => setForm({ ...form, first_name: e.target.value })} />
             </div>
             <div>
-              <Label>Last Name *</Label>
-              <Input value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} />
+              <Label htmlFor="last_name">Last Name *</Label>
+              <Input id="last_name" value={form.last_name} onChange={(e) => setForm({ ...form, last_name: e.target.value })} />
             </div>
             <div>
               <Label htmlFor="candidate_email">Professional Email *</Label>

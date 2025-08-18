@@ -16,8 +16,8 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from("profiles")
-    .update({ role })
-    .eq("id", user.id)
+    .update({ role } as any)
+    .match({ id: user.id as string })
     .select("id, role")
     .single();
 

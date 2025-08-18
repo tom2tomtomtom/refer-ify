@@ -53,11 +53,10 @@ describe('ReferralForm', () => {
     expect(screen.getByText('Join our team as a senior software engineer working with React and TypeScript')).toBeInTheDocument()
     
     // Check form fields
-    expect(screen.getByLabelText('Professional Name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('First Name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Last Name *')).toBeInTheDocument()
     expect(screen.getByLabelText('Professional Email *')).toBeInTheDocument()
     expect(screen.getByLabelText('Phone')).toBeInTheDocument()
-    expect(screen.getByLabelText('LinkedIn Profile')).toBeInTheDocument()
-    expect(screen.getByLabelText('Expected Salary')).toBeInTheDocument()
     expect(screen.getByLabelText('Why is this professional a strong fit?')).toBeInTheDocument()
     
     // Check consent checkbox
@@ -75,32 +74,30 @@ describe('ReferralForm', () => {
     expect(screen.queryByText('Senior Software Engineer')).not.toBeInTheDocument()
     
     // Form fields should still be present
-    expect(screen.getByLabelText('Professional Name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('First Name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Last Name *')).toBeInTheDocument()
     expect(screen.getByLabelText('Professional Email *')).toBeInTheDocument()
   })
 
   it('allows filling form fields', () => {
     render(<ReferralForm job={mockJob} onSubmitted={mockOnSubmitted} />)
 
-    const nameInput = screen.getByLabelText('Professional Name *')
+    const firstNameInput = screen.getByLabelText('First Name *')
+    const lastNameInput = screen.getByLabelText('Last Name *')
     const emailInput = screen.getByLabelText('Professional Email *')
     const phoneInput = screen.getByLabelText('Phone')
-    const linkedinInput = screen.getByLabelText('LinkedIn Profile')
-    const salaryInput = screen.getByLabelText('Expected Salary')
     const notesTextarea = screen.getByLabelText('Why is this professional a strong fit?')
 
-    fireEvent.change(nameInput, { target: { value: 'John Doe' } })
+    fireEvent.change(firstNameInput, { target: { value: 'John' } })
+    fireEvent.change(lastNameInput, { target: { value: 'Doe' } })
     fireEvent.change(emailInput, { target: { value: 'john@example.com' } })
     fireEvent.change(phoneInput, { target: { value: '+1234567890' } })
-    fireEvent.change(linkedinInput, { target: { value: 'https://linkedin.com/in/johndoe' } })
-    fireEvent.change(salaryInput, { target: { value: '120000' } })
     fireEvent.change(notesTextarea, { target: { value: 'Great developer with 5 years experience' } })
 
-    expect(nameInput).toHaveValue('John Doe')
+    expect(firstNameInput).toHaveValue('John')
+    expect(lastNameInput).toHaveValue('Doe')
     expect(emailInput).toHaveValue('john@example.com')
     expect(phoneInput).toHaveValue('+1234567890')
-    expect(linkedinInput).toHaveValue('https://linkedin.com/in/johndoe')
-    expect(salaryInput).toHaveValue(120000)
     expect(notesTextarea).toHaveValue('Great developer with 5 years experience')
   })
 
@@ -108,7 +105,8 @@ describe('ReferralForm', () => {
     render(<ReferralForm job={mockJob} onSubmitted={mockOnSubmitted} />)
 
     // Fill required fields
-    fireEvent.change(screen.getByLabelText('Professional Name *'), { target: { value: 'John Doe' } })
+    fireEvent.change(screen.getByLabelText('First Name *'), { target: { value: 'John' } })
+    fireEvent.change(screen.getByLabelText('Last Name *'), { target: { value: 'Doe' } })
     fireEvent.change(screen.getByLabelText('Professional Email *'), { target: { value: 'john@example.com' } })
 
     // Try to submit without consent
@@ -122,7 +120,8 @@ describe('ReferralForm', () => {
     render(<ReferralForm job={mockJob} onSubmitted={mockOnSubmitted} />)
 
     // Fill form fields
-    fireEvent.change(screen.getByLabelText('Professional Name *'), { target: { value: 'John Doe' } })
+    fireEvent.change(screen.getByLabelText('First Name *'), { target: { value: 'John' } })
+    fireEvent.change(screen.getByLabelText('Last Name *'), { target: { value: 'Doe' } })
     fireEvent.change(screen.getByLabelText('Professional Email *'), { target: { value: 'john@example.com' } })
     fireEvent.change(screen.getByLabelText('Phone'), { target: { value: '+1234567890' } })
     fireEvent.change(screen.getByLabelText('Expected Salary'), { target: { value: '120000' } })
@@ -170,7 +169,8 @@ describe('ReferralForm', () => {
     render(<ReferralForm job={mockJob} onSubmitted={mockOnSubmitted} />)
 
     // Fill form and submit
-    fireEvent.change(screen.getByLabelText('Professional Name *'), { target: { value: 'John Doe' } })
+    fireEvent.change(screen.getByLabelText('First Name *'), { target: { value: 'John' } })
+    fireEvent.change(screen.getByLabelText('Last Name *'), { target: { value: 'Doe' } })
     fireEvent.change(screen.getByLabelText('Professional Email *'), { target: { value: 'john@example.com' } })
     fireEvent.click(screen.getByRole('checkbox'))
     fireEvent.click(screen.getByRole('button', { name: 'Submit Referral' }))

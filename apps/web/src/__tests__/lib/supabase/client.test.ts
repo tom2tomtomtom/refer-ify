@@ -1,5 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr'
-import { getSupabaseClient } from '@/lib/supabase/client'
+import { getSupabaseBrowserClient } from '@/lib/supabase/client'
 
 // Mock Supabase SSR
 jest.mock('@supabase/ssr')
@@ -21,7 +21,7 @@ describe('Supabase Client', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
 
-    const client = getSupabaseClient()
+    const client = getSupabaseBrowserClient()
 
     expect(mockCreateBrowserClient).toHaveBeenCalledWith(
       'https://test.supabase.co',
@@ -41,7 +41,7 @@ describe('Supabase Client', () => {
     delete process.env.NEXT_PUBLIC_SUPABASE_URL
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
 
-    expect(() => getSupabaseClient()).toThrow('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
+    expect(() => getSupabaseBrowserClient()).toThrow('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
 
     // Restore environment variables
     process.env.NEXT_PUBLIC_SUPABASE_URL = originalUrl
@@ -55,7 +55,7 @@ describe('Supabase Client', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
     delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-    expect(() => getSupabaseClient()).toThrow('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
+    expect(() => getSupabaseBrowserClient()).toThrow('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
 
     // Restore environment variables
     process.env.NEXT_PUBLIC_SUPABASE_URL = originalUrl
@@ -73,8 +73,8 @@ describe('Supabase Client', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
 
-    const client1 = getSupabaseClient()
-    const client2 = getSupabaseClient()
+    const client1 = getSupabaseBrowserClient()
+    const client2 = getSupabaseBrowserClient()
 
     // Should only call createBrowserClient once
     expect(mockCreateBrowserClient).toHaveBeenCalledTimes(1)
@@ -93,7 +93,7 @@ describe('Supabase Client', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321'
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'dev-anon-key'
 
-    const client = getSupabaseClient()
+    const client = getSupabaseBrowserClient()
 
     expect(mockCreateBrowserClient).toHaveBeenCalledWith(
       'http://localhost:54321',
@@ -109,7 +109,7 @@ describe('Supabase Client', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = ''
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
 
-    expect(() => getSupabaseClient()).toThrow('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
+    expect(() => getSupabaseBrowserClient()).toThrow('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
 
     // Restore environment variables
     process.env.NEXT_PUBLIC_SUPABASE_URL = originalUrl
@@ -132,7 +132,7 @@ describe('Supabase Client', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
 
-    const client = getSupabaseClient()
+    const client = getSupabaseBrowserClient()
 
     // Client should have expected methods
     expect(client.from).toBeDefined()

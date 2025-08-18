@@ -67,6 +67,7 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
       items: [
         { label: "How It Works", href: "/how-it-works" },
         { label: "Candidates", href: "/candidates" },
+        { label: "My Referrals", href: "/referrals" },
         { label: "Network Growth", href: "/founding/network" },
         { label: "Revenue Dashboard", href: "/founding/revenue" },
         { label: "Invite Members", href: "/founding/invite" },
@@ -142,7 +143,7 @@ export default async function RootLayout({
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       userId = user.id;
-      const { data } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+      const { data } = await supabase.from("profiles").select("role").eq("id", user.id as unknown as string).single();
       headerRole = data?.role ?? null;
     }
   } catch {}
