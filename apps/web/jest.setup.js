@@ -60,6 +60,8 @@ process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-key'
 process.env.STRIPE_SECRET_KEY = 'sk_test_test'
 process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'pk_test_test'
+process.env.NEXT_PUBLIC_BASE_URL = 'http://localhost:3000'
+process.env.STRIPE_WEBHOOK_SECRET = 'whsec_test_secret'
 process.env.NODE_ENV = 'test'
 
 // Mock console warnings that are expected in tests

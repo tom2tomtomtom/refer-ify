@@ -28,6 +28,14 @@ jest.mock('@/lib/stripe', () => ({
 describe('/api/payments', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    
+    // Reset getStripeServer mock to default implementation
+    const mockGetStripeServer = require('@/lib/stripe').getStripeServer
+    mockGetStripeServer.mockImplementation(() => mockStripeInstance)
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
   })
 
   describe('POST /api/payments', () => {

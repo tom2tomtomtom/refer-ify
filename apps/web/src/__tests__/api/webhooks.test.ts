@@ -36,10 +36,15 @@ describe('/api/webhooks', () => {
     
     // Mock environment variable
     process.env.STRIPE_WEBHOOK_SECRET = 'whsec_test_secret'
+    
+    // Reset getStripeServer mock to default implementation
+    const mockGetStripeServer = require('@/lib/stripe').getStripeServer
+    mockGetStripeServer.mockImplementation(() => mockStripeInstance)
   })
 
   afterEach(() => {
     delete process.env.STRIPE_WEBHOOK_SECRET
+    jest.restoreAllMocks()
   })
 
   describe('POST /api/webhooks', () => {

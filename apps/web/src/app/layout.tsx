@@ -51,10 +51,11 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
   if (role === "client") {
     return {
       items: [
-        { label: "How It Works", href: "/how-it-works" },
-        { label: "Candidates", href: "/candidates" },
-        { label: "Success Stories", href: "/success-stories" },
-        { label: "Get Started", href: "/apply" },
+        { label: "Dashboard", href: "/client" },
+        { label: "Candidates", href: "/client/candidates" },
+        { label: "Jobs", href: "/client/jobs" },
+        { label: "Job Opportunities", href: "/client/job-opportunities" },
+        { label: "Settings", href: "/client" },
       ],
       cta: hasClientJobs
         ? { label: "View Jobs", href: "/client/jobs" }

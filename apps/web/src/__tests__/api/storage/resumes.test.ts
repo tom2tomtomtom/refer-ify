@@ -44,6 +44,11 @@ describe('/api/storage/resumes', () => {
   })
 
   afterEach(() => {
+    // Don't restore the mock, just reset it to default value for consistency
+    mockDateNow.mockReturnValue(1640995200000)
+  })
+
+  afterAll(() => {
     mockDateNow.mockRestore()
   })
 

@@ -1,4 +1,5 @@
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -20,8 +21,18 @@ export default async function MyReferralsDashboardPage() {
     );
   }
 
-  // Use direct server call to Supabase route to preserve auth cookies
-  const dashboardRes = await fetch("/api/referrals/my-dashboard", { cache: 'no-store' });
+  // Role-based access: clients should not use referrals dashboard
+  try {
+    const { data: profile } = await supabase.from("profiles").select("role").match({ id: user.id as string }).single();
+    const role = (profile as any)?.role ?? null;
+    if (role === 'client') {
+      redirect('/candidates');
+    }
+  } catch {}
+
+  // Build absolute URL for server-side fetch
+  const origin = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const dashboardRes = await fetch(`${origin}/api/referrals/my-dashboard`, { cache: 'no-store' });
   const dashboard: any = await dashboardRes.json();
 
   return (

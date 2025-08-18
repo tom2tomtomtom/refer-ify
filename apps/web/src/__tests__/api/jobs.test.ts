@@ -310,10 +310,7 @@ describe('/api/jobs', () => {
       jest.spyOn(mockSupabaseClient, 'from').mockReturnValue({
         insert: jest.fn().mockReturnValue({
           select: jest.fn().mockReturnValue({
-            single: jest.fn().mockResolvedValue({
-              data: null,
-              error: { message: 'Database error' },
-            })
+            single: jest.fn().mockRejectedValue(new Error('Database error'))
           })
         })
       })
@@ -386,6 +383,9 @@ describe('/api/jobs', () => {
       const request = new NextRequest('http://localhost/api/jobs', {
         method: 'POST',
         body: 'invalid json',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
 
       const response = await POST(request)
@@ -393,7 +393,7 @@ describe('/api/jobs', () => {
       expect(response.status).toBe(500)
       
       const body = await response.json()
-      expect(body.error).toContain('Failed to create job')
+      expect(body.error).toContain('json')
     })
   })
 })

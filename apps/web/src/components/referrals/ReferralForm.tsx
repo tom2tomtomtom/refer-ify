@@ -211,12 +211,12 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
               <Input id="candidate_linkedin" value={form.candidate_linkedin} onChange={(e) => setForm({ ...form, candidate_linkedin: e.target.value })} />
             </div>
             <div>
-              <Label>Current Company</Label>
-              <Input value={form.current_company} onChange={(e)=>setForm({ ...form, current_company: e.target.value })} />
+              <Label htmlFor="current_company">Current Company</Label>
+              <Input id="current_company" value={form.current_company} onChange={(e)=>setForm({ ...form, current_company: e.target.value })} />
             </div>
             <div>
-              <Label>Current Title</Label>
-              <Input value={form.current_title} onChange={(e)=>setForm({ ...form, current_title: e.target.value })} />
+              <Label htmlFor="current_title">Current Title</Label>
+              <Input id="current_title" value={form.current_title} onChange={(e)=>setForm({ ...form, current_title: e.target.value })} />
             </div>
           </div>
 
@@ -233,16 +233,16 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label>Experience (years)</Label>
-              <Input type="number" min={0} max={40} value={form.experience_years} onChange={(e)=>setForm({ ...form, experience_years: Number(e.target.value) })} />
+              <Label htmlFor="experience_years">Experience (years)</Label>
+              <Input id="experience_years" type="number" min={0} max={40} value={form.experience_years} onChange={(e)=>setForm({ ...form, experience_years: Number(e.target.value) })} />
             </div>
             <div>
-              <Label>Salary Min</Label>
-              <Input type="number" value={form.salary_min} onChange={(e) => setForm({ ...form, salary_min: e.target.value })} />
+              <Label htmlFor="salary_min">Salary Min</Label>
+              <Input id="salary_min" type="number" value={form.salary_min} onChange={(e) => setForm({ ...form, salary_min: e.target.value })} />
             </div>
             <div>
-              <Label>Salary Max</Label>
-              <Input type="number" value={form.salary_max} onChange={(e) => setForm({ ...form, salary_max: e.target.value })} />
+              <Label htmlFor="salary_max">Salary Max</Label>
+              <Input id="salary_max" type="number" value={form.salary_max} onChange={(e) => setForm({ ...form, salary_max: e.target.value })} />
             </div>
             <div>
               <Label htmlFor="availability">Availability</Label>
@@ -263,9 +263,9 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label>Work Authorization</Label>
+              <Label htmlFor="work_auth">Work Authorization</Label>
               <Select value={form.work_auth} onValueChange={(v) => setForm({ ...form, work_auth: v })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger id="work_auth"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="US Citizen">US Citizen</SelectItem>
                   <SelectItem value="Green Card">Green Card</SelectItem>
@@ -276,13 +276,13 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
               </Select>
             </div>
             <div>
-              <Label>Location (city, state)</Label>
-              <Input value={form.location} onChange={(e)=>setForm({ ...form, location: e.target.value })} />
+              <Label htmlFor="location">Location (city, state)</Label>
+              <Input id="location" value={form.location} onChange={(e)=>setForm({ ...form, location: e.target.value })} />
             </div>
             <div>
-              <Label>Relationship</Label>
+              <Label htmlFor="relationship">Relationship</Label>
               <Select value={form.relationship} onValueChange={(v)=>setForm({ ...form, relationship: v })}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger id="relationship"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Former Colleague">Former Colleague</SelectItem>
                   <SelectItem value="Conference Connection">Conference Connection</SelectItem>
@@ -297,8 +297,8 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label>Confidence (1-5)</Label>
-              <Input type="number" min={1} max={5} value={form.confidence} onChange={(e)=>setForm({ ...form, confidence: Number(e.target.value) })} />
+              <Label htmlFor="confidence">Confidence (1-5)</Label>
+              <Input id="confidence" type="number" min={1} max={5} value={form.confidence} onChange={(e)=>setForm({ ...form, confidence: Number(e.target.value) })} />
             </div>
           </div>
 

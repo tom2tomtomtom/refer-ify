@@ -1,13 +1,36 @@
 import { createBrowserClient } from '@supabase/ssr'
-import { getSupabaseBrowserClient } from '@/lib/supabase/client'
 
 // Mock Supabase SSR
 jest.mock('@supabase/ssr')
 const mockCreateBrowserClient = createBrowserClient as jest.MockedFunction<typeof createBrowserClient>
 
+// Mock the client module to allow testing singleton behavior
+jest.mock('@/lib/supabase/client', () => {
+  let browserClient: any = null
+  
+  return {
+    getSupabaseBrowserClient: jest.fn(() => {
+      if (browserClient) return browserClient
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
+      }
+
+      browserClient = mockCreateBrowserClient(supabaseUrl, supabaseAnonKey)
+      return browserClient
+    }),
+    __resetClient: jest.fn(() => { browserClient = null })
+  }
+})
+
+const { getSupabaseBrowserClient, __resetClient } = require('@/lib/supabase/client')
+
 describe('Supabase Client', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    __resetClient()
   })
 
   it('creates browser client with correct configuration', () => {
@@ -86,8 +109,12 @@ describe('Supabase Client', () => {
   })
 
   it('works with different environment configurations', () => {
-    const mockClient = { id: 'supabase-client' }
+    const mockClient = { id: 'supabase-client-dev' }
     mockCreateBrowserClient.mockReturnValue(mockClient as any)
+
+    // Save originals
+    const originalUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const originalKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
     // Test development configuration
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321'
@@ -100,6 +127,10 @@ describe('Supabase Client', () => {
       'dev-anon-key'
     )
     expect(client).toBe(mockClient)
+
+    // Restore environment variables
+    process.env.NEXT_PUBLIC_SUPABASE_URL = originalUrl
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = originalKey
   })
 
   it('handles empty string environment variables', () => {

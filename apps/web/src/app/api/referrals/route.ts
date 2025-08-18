@@ -18,7 +18,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const supabase = await getSupabaseServerClient();
-  const body = await request.json();
+  
+  let body;
+  try {
+    body = await request.json();
+  } catch (error) {
+    return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 });
+  }
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const payload = {

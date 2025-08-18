@@ -91,7 +91,8 @@ describe('RealTimeJobFeed', () => {
       const query = {
         ...mockSupabaseClient,
         then: (callback: (result: { data: any; error: null }) => void) => {
-          callback({ data: mockJobs, error: null })
+          // Use setTimeout to make callback async and avoid act() warnings
+          setTimeout(() => callback({ data: mockJobs, error: null }), 0)
         },
       }
       return query
@@ -221,7 +222,7 @@ describe('RealTimeJobFeed', () => {
       const query = {
         ...mockSupabaseClient,
         then: (callback: (result: { data: null; error: Error }) => void) => {
-          callback({ data: null, error: new Error('API Error') })
+          setTimeout(() => callback({ data: null, error: new Error('API Error') }), 0)
         },
       }
       return query
@@ -240,7 +241,7 @@ describe('RealTimeJobFeed', () => {
       const query = {
         ...mockSupabaseClient,
         then: (callback: (result: { data: any[]; error: null }) => void) => {
-          callback({ data: [], error: null })
+          setTimeout(() => callback({ data: [], error: null }), 0)
         },
       }
       return query
@@ -262,7 +263,7 @@ describe('RealTimeJobFeed', () => {
       const query = {
         ...mockSupabaseClient,
         then: (callback: (result: { data: any[]; error: null }) => void) => {
-          callback({ data: [], error: null })
+          setTimeout(() => callback({ data: [], error: null }), 0)
         },
       }
       return query
