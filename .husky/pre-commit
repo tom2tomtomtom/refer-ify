@@ -1,0 +1,121 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Refer-ify Business Rule Compliance Checks
+echo "🔍 Running Refer-ify business rule compliance checks..."
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Function to print colored output
+print_error() {
+    echo "${RED}❌ $1${NC}"
+}
+
+print_success() {
+    echo "${GREEN}✅ $1${NC}"
+}
+
+print_warning() {
+    echo "${YELLOW}⚠️  $1${NC}"
+}
+
+# Check for job board violations (critical business rule)
+echo "Checking for job board feature violations..."
+JOB_BOARD_VIOLATIONS=$(grep -r -l "browse.*job\|apply.*job\|job.*board\|search.*job" src/ --include="*.ts" --include="*.tsx" --exclude-dir=__tests__ --exclude-dir=constants 2>/dev/null || true)
+
+if [ -n "$JOB_BOARD_VIOLATIONS" ]; then
+    print_error "Potential job board feature detected - violates referral-only rule"
+    echo "Files with violations:"
+    echo "$JOB_BOARD_VIOLATIONS"
+    echo "Reference: .claude-suite/CLAUDE.md - Business Logic Rules"
+    echo "Fix: Remove job browsing features - platform is referral-only"
+    exit 1
+fi
+
+# Check for direct application violations
+echo "Checking for direct application violations..."
+DIRECT_APP_VIOLATIONS=$(grep -r -l "apply.*now\|direct.*applic\|self.*apply" src/ --include="*.ts" --include="*.tsx" --exclude-dir=__tests__ 2>/dev/null || true)
+
+if [ -n "$DIRECT_APP_VIOLATIONS" ]; then
+    print_error "Direct application feature detected - violates referral-only rule"
+    echo "Files with violations:"
+    echo "$DIRECT_APP_VIOLATIONS"
+    echo "Reference: CONTEXT_ANCHORS.md - Never allow direct applications"
+    exit 1
+fi
+
+# Check for candidate browsing violations
+echo "Checking for candidate browsing violations..."
+CANDIDATE_BROWSE_VIOLATIONS=$(grep -r -l "candidate.*browse\|browse.*candidate" src/app/ --include="*.ts" --include="*.tsx" 2>/dev/null || true)
+
+if [ -n "$CANDIDATE_BROWSE_VIOLATIONS" ]; then
+    print_error "Candidate browsing feature detected - violates business rules"
+    echo "Files with violations:"
+    echo "$CANDIDATE_BROWSE_VIOLATIONS"
+    echo "Reference: src/lib/constants/businessRules.ts - CANDIDATE_ACCESS: 'NO_BROWSING'"
+    exit 1
+fi
+
+# Check TypeScript compilation
+echo "Checking TypeScript compilation..."
+if ! npm run type-check > /dev/null 2>&1; then
+    print_error "TypeScript compilation failed"
+    echo "Run 'npm run type-check' to see errors"
+    exit 1
+fi
+
+# Check ESLint
+echo "Checking ESLint compliance..."
+if ! npm run lint > /dev/null 2>&1; then
+    print_error "ESLint check failed"
+    echo "Run 'npm run lint' to see errors"
+    exit 1
+fi
+
+# Check test coverage (if tests exist)
+echo "Checking test coverage..."
+if npm test -- --coverage --passWithNoTests --silent 2>/dev/null | grep -q "Statements.*: [0-3][0-9]\."; then
+    CURRENT_COVERAGE=$(npm test -- --coverage --passWithNoTests --silent 2>/dev/null | grep "Statements" | grep -o "[0-9]\+\.[0-9]\+%" | head -1)
+    print_warning "Test coverage at $CURRENT_COVERAGE - target is 80%"
+    echo "Reference: .claude-suite/specs/test-coverage-80-percent.md"
+    echo "Continue with coverage improvement plan"
+fi
+
+# Check for unauthorized role access patterns
+echo "Checking role-based access patterns..."
+ROLE_VIOLATIONS=$(grep -r -l "role.*===.*'admin'\|bypass.*auth\|skip.*permission" src/ --include="*.ts" --include="*.tsx" --exclude-dir=__tests__ --exclude="businessRules.ts" 2>/dev/null || true)
+
+if [ -n "$ROLE_VIOLATIONS" ]; then
+    print_warning "Potential role access issue detected"
+    echo "Files to review:"
+    echo "$ROLE_VIOLATIONS"
+    echo "Ensure proper role-based access control is implemented"
+fi
+
+# Check for hardcoded values that should be in business rules
+echo "Checking for hardcoded business values..."
+HARDCODED_VALUES=$(grep -r -l "40%\|45%\|15%\|\$500\|\$1500\|\$3000" src/ --include="*.ts" --include="*.tsx" --exclude="businessRules.ts" --exclude-dir=__tests__ 2>/dev/null || true)
+
+if [ -n "$HARDCODED_VALUES" ]; then
+    print_warning "Hardcoded business values detected"
+    echo "Files with potential hardcoded values:"
+    echo "$HARDCODED_VALUES"
+    echo "Consider using constants from src/lib/constants/businessRules.ts"
+fi
+
+# Success message
+print_success "Business rule compliance checks passed"
+print_success "Code quality checks passed"
+echo ""
+echo "🎯 Current Development Context:"
+echo "   Platform: Referral-only executive recruitment"
+echo "   Quality: Executive-grade standards maintained"
+echo "   Testing: Coverage improvement in progress (target: 80%)"
+echo "   Reference: CONTEXT_ANCHORS.md for quick rules"
+echo ""
+
+exit 0

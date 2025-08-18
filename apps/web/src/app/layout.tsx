@@ -52,6 +52,7 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
     return {
       items: [
         { label: "How It Works", href: "/how-it-works" },
+        { label: "Candidates", href: "/candidates" },
         { label: "Success Stories", href: "/success-stories" },
         { label: "Get Started", href: "/apply" },
       ],
@@ -64,18 +65,22 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
   if (role === "founding") {
     return {
       items: [
-        { label: "Network Growth", href: "/founding-circle" },
-        { label: "Revenue Dashboard", href: "/founding-circle" },
-        { label: "Invite Members", href: "/founding-circle" },
-        { label: "Advisory", href: "/founding-circle" },
+        { label: "How It Works", href: "/how-it-works" },
+        { label: "Candidates", href: "/candidates" },
+        { label: "Network Growth", href: "/founding/network" },
+        { label: "Revenue Dashboard", href: "/founding/revenue" },
+        { label: "Invite Members", href: "/founding/invite" },
+        { label: "Advisory", href: "/founding/advisory" },
       ],
-      cta: { label: "Dashboard", href: "/founding-circle" },
+      cta: { label: "Dashboard", href: "/founding" },
       roleLabel: "Founding Circle Member",
     };
   }
   if (role === "select") {
     return {
       items: [
+        { label: "How It Works", href: "/how-it-works" },
+        { label: "Candidates", href: "/candidates" },
         { label: "Job Opportunities", href: "/select-circle" },
         { label: "My Referrals", href: "/select-circle/referrals" },
         { label: "Earnings", href: "/select-circle" },
@@ -181,8 +186,8 @@ export default async function RootLayout({
               )}
             </div>
             <nav className="flex items-center gap-6 text-sm text-muted-foreground">
-              {navigation.items.map((item) => (
-                <Link key={item.href} href={item.href} className="hover:text-foreground">
+              {navigation.items.map((item, idx) => (
+                <Link key={`${item.href}-${item.label}-${idx}`} href={item.href} className="hover:text-foreground">
                   {item.label}
                 </Link>
               ))}

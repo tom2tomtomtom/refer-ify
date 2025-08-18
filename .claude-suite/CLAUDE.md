@@ -78,27 +78,32 @@
 - Comprehensive testing infrastructure (Jest + Playwright + MSW)
 - CI/CD pipeline
 
-### 🚧 CURRENT FOCUS (Phase 1)
-**Week 3 - Referral System Implementation**
-- [ ] Referral submission form with file upload
-- [ ] Referral management dashboard for clients
-- [ ] My Referrals dashboard for network members
-- [ ] Notification system for status updates
+### 🚧 CURRENT FOCUS
+**Week 3 - Founding + Candidate Systems**
+- [x] Founding Circle dashboards (network, revenue with charts, invite, advisory)
+- [x] Candidate referral form (resume upload + storage, duplicate checks)
+- [x] Candidate tables (candidates, candidate_referrals) and role-aware `/candidates` dashboard
+- [ ] My Referrals dashboards for Founding/Select
+- [ ] Client-side candidate review tools (status updates, feedback)
 
-### 📋 UPCOMING (Phases 2-5)
+### 📋 UPCOMING
 - AI matching engine (GPT-4 + vector embeddings)
 - Payment processing (Stripe subscriptions + fee distribution)  
 - Analytics & optimization dashboards
 - Production launch preparation
 
-## 🧪 Testing Infrastructure
+## 🧪 Testing & Coverage
 
-### Commands
+### Test Commands
 ```bash
-# Development
-npm run dev          # Next.js with Turbopack
-npm run test:watch   # Jest in watch mode
-npm run test:e2e:ui  # Playwright with UI
+# Development Testing
+npm test                    # Run all tests
+npm test -- --watch        # Jest in watch mode
+npm test -- --coverage     # Run with coverage report
+
+# Coverage Analysis
+npm test -- --coverage --passWithNoTests  # Full coverage check
+npm test -- --coverage --silent          # Coverage summary only
 
 # Quality Gates
 npm run test:ci      # All unit/integration tests
@@ -109,10 +114,36 @@ npm run type-check   # TypeScript validation
 npm run lint         # ESLint check
 ```
 
-### Coverage Requirements
-- **Unit Tests**: 80-90% coverage for new code
-- **Integration Tests**: All API routes tested
-- **E2E Tests**: Critical user flows covered
+### Coverage Progress & Targets
+- **Current Coverage**: 43.26% statements, 45.1% lines (as of January 2025)
+- **Target**: 80% statement coverage
+- **Progress**: +18% improvement from 25% baseline
+- **Strategy**: API routes → utilities → components → integration tests
+
+### Test Categories & Status
+- ✅ **Authentication & Authorization**: Complete (auth.ts, role-based access)
+- ✅ **API Routes**: Comprehensive (users, payments, storage, webhooks, dev tools)
+- ✅ **Database Utilities**: Full coverage (Supabase client/server/service)
+- ✅ **Core Components**: JobCard, ReferralForm, dialogs, UI components
+- ✅ **Utility Functions**: utils.ts, stripe.ts integration
+- 🚧 **Business Logic Components**: In progress (ReferralModal, ClientReferralsBoard)
+- 🚧 **Integration Tests**: Targeted workflow coverage
+- 📋 **E2E Tests**: Critical user flow coverage
+
+### Test Architecture
+```bash
+src/__tests__/
+├── api/                    # API route tests (auth, jobs, referrals, etc.)
+├── components/             # Component unit tests
+│   ├── ui/                # UI component tests (button, dialog, etc.)
+│   ├── jobs/              # Job-related component tests
+│   └── referrals/         # Referral component tests
+├── lib/                   # Utility and service tests
+│   ├── supabase/          # Database client tests
+│   └── stripe.test.ts     # Payment integration tests
+├── integration/           # Cross-system integration tests
+└── setup/                 # Test configuration and utilities
+```
 
 ## 🔧 Development Guidelines
 
@@ -120,7 +151,13 @@ npm run lint         # ESLint check
 - **TypeScript**: Strict typing, no `any` without justification
 - **React**: Functional components, custom hooks, error boundaries
 - **Next.js**: Server components default, client components marked
-- **Testing**: Write tests first, comprehensive coverage
+- **Testing**: Test new features as you build, maintain 80% coverage target
+
+### Testing Workflow Integration
+- **New Features**: Write comprehensive tests immediately after implementation
+- **Coverage Sprints**: Regular dedicated sessions to increase legacy coverage
+- **Parallel Development**: Build features while maintaining testing discipline
+- **Quality Gates**: All tests must pass before deployment
 
 ### Business Logic Rules
 - **Referral-Only**: Never allow direct candidate browsing/application
@@ -181,6 +218,19 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_or_live_key
 # OpenAI Integration
 OPENAI_API_KEY=your_openai_key
 ```
+
+## 🤖 AI Tool Integration
+
+### Context Loading for All AI Tools
+- **Quick Start**: Use `CONTEXT_ANCHORS.md` for immediate context
+- **Session Templates**: Use `.claude-suite/session-templates.md` for proper initialization
+- **Validation**: Use `.claude-suite/validation-prompt.md` to ensure rule compliance
+- **Business Rules**: Always reference `src/lib/constants/businessRules.ts` for platform rules
+
+### Automated Compliance
+- **Pre-commit Hooks**: `.husky/pre-commit` prevents business rule violations
+- **Cursor Guidelines**: `.cursor/instructions.md` provides Cursor-specific context
+- **Rule Enforcement**: TypeScript constants prevent accidental rule violations
 
 ## 📞 Support Commands
 

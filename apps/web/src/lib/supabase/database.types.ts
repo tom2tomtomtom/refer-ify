@@ -81,3 +81,189 @@ export interface Database {
 }
 
 
+
+      // NEW: Founding Circle Tables
+      founding_metrics: {
+        Row: {
+          id: string;
+          user_id: string;
+          month: string;
+          network_revenue: number | null;
+          direct_referrals: number | null;
+          advisory_revenue: number | null;
+          active_network_members: number | null;
+          successful_placements: number | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["founding_metrics"]["Row"]> & { user_id: string; month: string };
+        Update: Partial<Database["public"]["Tables"]["founding_metrics"]["Row"]>;
+      };
+      advisory_sessions: {
+        Row: {
+          id: string;
+          founder_id: string;
+          client_id: string | null;
+          duration_hours: number;
+          status: "scheduled" | "completed" | "cancelled" | "no_show";
+          session_date: string | null;
+          session_type: "strategy" | "hiring" | "network" | "market_intel";
+          hourly_rate: number | null;
+          notes: string | null;
+          outcome: string | null;
+          follow_up_required: boolean | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["advisory_sessions"]["Row"]> & { founder_id: string };
+        Update: Partial<Database["public"]["Tables"]["advisory_sessions"]["Row"]>;
+      };
+      select_circle_invitations: {
+        Row: {
+          id: string;
+          founder_id: string;
+          invited_email: string;
+          invited_name: string | null;
+          invited_company: string | null;
+          invited_title: string | null;
+          status: "sent" | "opened" | "accepted" | "declined" | "expired";
+          invitation_message: string | null;
+          relationship_context: string | null;
+          expected_expertise: string[] | null;
+          sent_at: string | null;
+          opened_at: string | null;
+          responded_at: string | null;
+          accepted_at: string | null;
+          expires_at: string | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["select_circle_invitations"]["Row"]> & { founder_id: string; invited_email: string };
+        Update: Partial<Database["public"]["Tables"]["select_circle_invitations"]["Row"]>;
+      };
+      network_activity: {
+        Row: {
+          id: string;
+          member_id: string;
+          activity_type: "referral_made" | "referral_success" | "job_viewed" | "login" | "profile_updated";
+          activity_data: Record<string, unknown> | null;
+          points_earned: number | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["network_activity"]["Row"]> & { member_id: string; activity_type: string };
+        Update: Partial<Database["public"]["Tables"]["network_activity"]["Row"]>;
+      };
+      revenue_distributions: {
+        Row: {
+          id: string;
+          referral_id: string;
+          founding_member_id: string | null;
+          select_member_id: string | null;
+          placement_fee: number;
+          platform_share: number;
+          select_share: number;
+          founding_share: number;
+          status: "calculated" | "paid" | "disputed";
+          paid_at: string | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["revenue_distributions"]["Row"]> & { referral_id: string; placement_fee: number };
+        Update: Partial<Database["public"]["Tables"]["revenue_distributions"]["Row"]>;
+      };
+
+      // CANDIDATE REFERRAL SYSTEM TABLES
+      candidates: {
+        Row: {
+          id: string;
+          email: string;
+          first_name: string | null;
+          last_name: string | null;
+          phone: string | null;
+          linkedin_url: string | null;
+          current_company: string | null;
+          current_title: string | null;
+          years_experience: number | null;
+          location: string | null;
+          salary_expectation_min: number | null;
+          salary_expectation_max: number | null;
+          currency: string | null;
+          availability: "immediate" | "2_weeks" | "1_month" | "3_months" | "not_looking" | null;
+          work_authorization: "us_citizen" | "green_card" | "h1b" | "opt" | "requires_sponsorship" | null;
+          resume_url: string | null;
+          resume_filename: string | null;
+          ai_summary: string | null;
+          skills: Record<string, unknown> | null;
+          preferences: Record<string, unknown> | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["candidates"]["Row"]> & { email: string };
+        Update: Partial<Database["public"]["Tables"]["candidates"]["Row"]>;
+      };
+      candidate_referrals: {
+        Row: {
+          id: string;
+          referral_id: string;
+          candidate_id: string;
+          referrer_notes: string | null;
+          relationship_to_candidate: string | null;
+          referral_reason: string | null;
+          candidate_consent_given: boolean | null;
+          candidate_consent_date: string | null;
+          referrer_confidence: number | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["candidate_referrals"]["Row"]> & { referral_id: string; candidate_id: string };
+        Update: Partial<Database["public"]["Tables"]["candidate_referrals"]["Row"]>;
+      };
+      ai_match_analysis: {
+        Row: {
+          id: string;
+          candidate_id: string;
+          job_id: string;
+          ai_match_score: number | null;
+          skill_match_score: number | null;
+          experience_match_score: number | null;
+          culture_fit_score: number | null;
+          ai_analysis: Record<string, unknown> | null;
+          missing_skills: Record<string, unknown> | null;
+          strengths: Record<string, unknown> | null;
+          concerns: Record<string, unknown> | null;
+          recommendation: "strong_match" | "good_match" | "possible_match" | "poor_match" | null;
+          analyzed_at: string | null;
+          ai_model_version: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["ai_match_analysis"]["Row"]> & { candidate_id: string; job_id: string };
+        Update: Partial<Database["public"]["Tables"]["ai_match_analysis"]["Row"]>;
+      };
+      candidate_interactions: {
+        Row: {
+          id: string;
+          candidate_id: string;
+          job_id: string | null;
+          interaction_type: "referral_submitted" | "resume_uploaded" | "screening_call" | "client_interview" | "offer_extended" | "offer_accepted" | "offer_declined" | "withdrawn";
+          notes: string | null;
+          scheduled_for: string | null;
+          completed_at: string | null;
+          outcome: string | null;
+          next_steps: string | null;
+          created_by: string | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["candidate_interactions"]["Row"]> & { candidate_id: string; interaction_type: string };
+        Update: Partial<Database["public"]["Tables"]["candidate_interactions"]["Row"]>;
+      };
+      candidate_skills: {
+        Row: {
+          id: string;
+          candidate_id: string;
+          skill_name: string;
+          skill_category: string | null;
+          proficiency_level: number | null;
+          years_experience: number | null;
+          verified: boolean | null;
+          source: string | null;
+          created_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["candidate_skills"]["Row"]> & { candidate_id: string; skill_name: string };
+        Update: Partial<Database["public"]["Tables"]["candidate_skills"]["Row"]>;
+      };

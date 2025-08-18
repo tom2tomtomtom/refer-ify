@@ -17,7 +17,7 @@
 - Hosting: Vercel (full-stack)
 - **Testing**: Jest + React Testing Library + Playwright + MSW
 
-## Current Phase: Job Management System + Testing Infrastructure Complete ✅
+## Current Phase: Job Management + Testing Infrastructure Complete ✅ | Coverage Enhancement In Progress 🚧
 - [x] Project directory created
 - [x] Next.js 14 + Supabase project initialization
 - [x] Supabase database schema setup (RLS policies included)
@@ -56,6 +56,9 @@
 - Session 3: **Complete job management system with real-time features**
 - Session 4: Premium homepage + site-wide design updates; dev server restarted and healthy on :3000
 - Session 5: **Comprehensive testing infrastructure implementation with Jest, Playwright, MSW, and CI/CD**
+- Session 6: **Test coverage enhancement** - API routes, utilities, and component testing (25% → 43% coverage)
+- Session 7: **Founding Circle dashboard system** completed (network, revenue, invite, advisory) + cross-page nav
+- Session 8: **Candidate referral system** (resume upload, candidates + candidate_referrals, role-aware candidates dashboard)
 - Last Updated: August 18, 2025
 
 ## Known Errors & Solutions
@@ -105,6 +108,30 @@ supabase/
 └── seed.sql            # Initial data
 ```
 
+## 🧪 Current Testing Status
+
+### Coverage Metrics (January 2025)
+- **Current**: 43.26% statements, 45.1% lines
+- **Target**: 80% statement coverage 
+- **Progress**: +18% improvement from 25% baseline
+- **Strategy**: Systematic API → utilities → components → integration
+
+### Test Coverage by Area
+- ✅ **Authentication & Security**: auth.ts, role-based access (88% coverage)
+- ✅ **API Routes**: users, payments, storage, webhooks, dev tools (100% new routes)
+- ✅ **Database Layer**: Supabase client/server/service utilities (97% coverage)
+- ✅ **Core UI Components**: Button, Badge, Dialog, Skeleton, Switch, Avatar
+- 🚧 **Business Components**: JobCard, ReferralForm (fixing modal rendering issues)
+- 📋 **Integration Flows**: Cross-system workflow testing
+- 📋 **High-Impact Pages**: Dashboard, job management, referral workflows
+
+### Testing Commands
+```bash
+npm test                    # Run all tests
+npm test -- --coverage     # Full coverage report
+npm test -- --watch        # Development mode
+```
+
 ## Progress Tracking
 - [x] Project setup and Supabase configuration ✅
 - [x] Authentication system (Supabase Auth + LinkedIn + Email) ✅
@@ -122,6 +149,16 @@ supabase/
 - [x] **Integration tests for complete user flows** ✅
 - [x] **End-to-end tests for critical business processes** ✅
 - [x] **CI/CD pipeline with automated testing and coverage reporting** ✅
+- 🚧 **Test Coverage Enhancement**: 43.26% → 80% target (API routes ✅, utilities ✅, components 🚧)
+- [x] **Founding Circle Dashboard System** ✅
+  - [x] Main founding dashboard (`/founding`)
+  - [x] Network Growth (`/founding/network`)
+  - [x] Revenue Dashboard with charts + CSV export (`/founding/revenue`)
+  - [x] Invitation Management (`/founding/invite`)
+  - [x] Advisory Services dashboard (`/founding/advisory`)
+- [x] **Candidate Referral System** ✅ (multi-table integration, resume storage)
+- [x] **Candidate Management Dashboard** ✅ (`/candidates`, role-aware for referrers/clients)
+- [x] **Global navigation polish** ✅ (role-aware items + Candidates link for all roles)
 - [ ] Candidate referral system with file storage
 - [ ] Job detail view with inline editing, status, analytics
 - [ ] My Referrals dashboards (Select/Founding Circle)
