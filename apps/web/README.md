@@ -32,7 +32,7 @@ STRIPE_SECRET_KEY=
 STRIPE_PUBLISHABLE_KEY=
 STRIPE_WEBHOOK_SECRET=
 OPENAI_API_KEY=
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_BASE_URL=image.pnghttp://localhost:3000
 ```
 
 Supabase SQL is located at `../../supabase/migrations` and `../../supabase/seed.sql`.

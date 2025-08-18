@@ -238,7 +238,7 @@ export function RealTimeJobFeed({ userRole }: RealTimeJobFeedProps) {
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2">
             <TrendingUp className="h-8 w-8 text-primary" />
-            Live Job Feed
+            Opportunity Board
             {userRole === "founding_circle" && (
               <Badge variant="secondary" className="ml-2">
                 <Sparkles className="h-3 w-3 mr-1" />
@@ -247,7 +247,7 @@ export function RealTimeJobFeed({ userRole }: RealTimeJobFeedProps) {
             )}
           </h1>
           <p className="text-muted-foreground">
-            Real-time opportunities for top referrers
+            Executive opportunities in real time
           </p>
         </div>
 

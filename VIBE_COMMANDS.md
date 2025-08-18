@@ -3,60 +3,54 @@
 ## Level 1: Ultra Simple (For Fast Development)
 Just describe what you want in plain English:
 
-"Build the Founding Circle member dashboard"
+"Build the Founding Circle network earnings dashboard"
 → System activates: frontend-developer + backend-architect
 
-"Add AI candidate matching to job posts"  
-→ System activates: ai-integration-expert + backend-architect
+"Add referral submission for people I know personally"  
+→ System activates: referral-specialist + backend-architect
 
-"Make the payment system work with Stripe"
-→ System activates: payment-specialist + backend-architect
+"Create client requirement posting (private, not public jobs)"
+→ System activates: business-logic-specialist + backend-architect
 
-"Fix the authentication flow"
-→ System activates: security-auditor + debugger
+"Fix the referral submission flow"
+→ System activates: debugger + referral-specialist
 
 ## Level 2: Productivity Commands
-/build-authentication "Auth0 with LinkedIn OAuth"
-/add-ai-matching "GPT-4 candidate scoring"
-/setup-payments "Stripe Connect marketplace"
-/create-dashboards "Multi-role user interfaces"
+/build-referral-system "Network-based professional introductions"
+/add-network-earnings "Track Founding Circle performance"
+/setup-client-requirements "Private job requirement posting"
+/create-referral-dashboards "Multi-role network interfaces"
 /fix-whatever-is-broken
 /make-it-look-better
 /deploy-when-ready
 
 ## Level 3: Specialist Commands
-"Ask the security-auditor to review our Auth0 setup"
-"Get the ai-integration-expert to optimize matching"
-"Have the payment-specialist handle fee distribution"
-"Get the frontend-developer to make responsive dashboards"
+"Ask the referral-specialist to optimize the submission flow"
+"Get the network-performance expert to track earnings"
+"Have the relationship-manager handle client requirements"
+"Get the frontend-developer to make executive-friendly dashboards"
 
 ## Level 4: Direct Tool Commands
-"Use Cursor to build the job posting interface"
-"Use Claude Code to create the AI matching engine"
-"Use Cursor to design the candidate profiles"
+"Use Cursor to build the network earnings interface"
+"Use Claude Code to create the referral submission system"
+"Use Cursor to design the client requirement posting"
 
 ## Refer-ify Specific Commands
 
-### Authentication & Users
-- "Build multi-role authentication system"
-- "Create Founding Circle member onboarding"
-- "Add Select Circle invitation workflow"
-- "Set up client company registration"
+### Network & Referrals
+- "Build Founding Circle network earnings dashboard"
+- "Create Select Circle referral submission for known contacts"
+- "Add network performance tracking and analytics"
+- "Build client requirement posting (private, not public jobs)"
 
 ### Core Platform Features
-- "Build job posting with requirements parsing"
-- "Create candidate referral submission form"
-- "Add AI-powered candidate ranking"
-- "Build subscription and payment processing"
-
-### AI Integration
-- "Integrate GPT-4 for resume parsing"
-- "Add candidate-job matching algorithm"
-- "Create match explanation system"
-- "Build automated email notifications"
+- "Build relationship-based referral submission with personal recommendations"
+- "Create client requirement review and candidate pipeline"
+- "Add subscription tier management for network access"
+- "Build executive-friendly responsive dashboards"
 
 ### Business Logic
-- "Implement fee distribution (45%/40%/15%)"
-- "Add subscription tier management"
-- "Create analytics dashboard"
-- "Build GDPR compliance workflows"
+- "Implement referral fee distribution (45%/40%/15%)"
+- "Add network-based subscription tier management"
+- "Create professional network analytics dashboard"
+- "Build warm introduction workflow with consent management"

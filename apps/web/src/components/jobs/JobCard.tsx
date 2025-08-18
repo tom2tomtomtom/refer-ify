@@ -19,6 +19,7 @@ import {
   Briefcase
 } from "lucide-react";
 import Link from "next/link";
+import { ReferralModal } from "@/components/referrals/ReferralModal";
 
 interface Job {
   id: string;
@@ -190,9 +191,9 @@ export function JobCard({ job, onStatusChange, onDelete, showActions = true, var
             )}
             
             {variant === "referrer" && (
-              <Button size="sm">
-                Refer Candidate
-              </Button>
+              <ReferralModal job={job}>
+                <Button size="sm">Refer Professional</Button>
+              </ReferralModal>
             )}
           </div>
         </div>

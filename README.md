@@ -7,16 +7,20 @@ Your AI-powered development system for building the "Network = Networth" platfor
 ## ✨ What We're Building
 
 **Refer-ify** - An exclusive executive recruitment platform with:
-- **Founding Circle**: Elite tech executives (invitation-only)
+- **Founding Circle**: Elite tech executives (invitation-only) who monetize their networks
 - **Select Circle**: Quality referrers recruited by Founding Circle  
-- **Client Companies**: Organizations paying for access
-- **AI-Powered Matching**: GPT-4 candidate scoring and ranking
+- **Client Companies**: Organizations paying for access to this exclusive network
+- **REFERRAL-BASED SYSTEM**: Network members refer people they know personally (NOT a job board)
+- **AI-Powered Matching**: GPT-4 candidate scoring and relationship analysis
 
 ## 🎯 Business Model
 - **Subscription Tiers**: Connect ($500), Priority ($1,500), Exclusive ($3,000) monthly
+- **Clients pay for access** to quality referrers in the network
+- **Network members earn fees** for successful referrals (NOT job applications)
 - **Fee Distribution**: Platform (45%), Select Circle (40%), Founding Circle (15%)
 - **Target Markets**: APAC & EMEA tech executives
 - **Timeline**: 12-week MVP to prove "Network = Networth"
+- **Core Principle**: Warm professional introductions, not cold job applications
 
 ## 🛠️ Tech Stack
 
@@ -87,32 +91,32 @@ npm run dev
 # Open Cursor and start building!
 ```
 
-## 💡 AI Development Commands
+### **AI Development Commands**
 
 ### Vibe Coding (Ultra Simple)
-- "Build the Founding Circle member dashboard"
-- "Add AI candidate matching to job posts"  
-- "Create subscription payment processing"
-- "Make the platform responsive"
+- "Build the Founding Circle member dashboard for network earnings"
+- "Add referral submission for people I know personally"  
+- "Create client requirement posting (private, not public jobs)"
+- "Make the platform responsive for executive users"
 
 ### Direct Tool Commands
-- **Cursor**: "Create user dashboard with Supabase real-time updates"
-- **Claude Code**: "Build GPT-4 resume parsing with Supabase Storage"
+- **Cursor**: "Create referral submission form for known contacts"
+- **Claude Code**: "Build GPT-4 resume analysis for referred candidates"
 - **Augment**: "Optimize entire codebase for production"
 
 ## 📈 Development Timeline
 
 ### Week 1-4: Foundation
 - ✅ Project setup with Supabase integration
-- ✅ Multi-role authentication with RLS
-- ✅ Job posting and referral workflows
-- ✅ File upload with Supabase Storage
+- ✅ Multi-role authentication with RLS (Founding Circle, Select Circle, Clients)
+- ✅ Client requirement posting (private job requirements, not public listings)
+- ✅ Referral submission with Supabase Storage (for people you know personally)
 
 ### Week 5-8: AI Integration  
-- ✅ GPT-4 resume parsing with Supabase Storage
-- ✅ Real-time candidate matching
-- ✅ Live analytics dashboards
-- ✅ Real-time notifications
+- ✅ GPT-4 resume analysis for referred candidates
+- ✅ Real-time referral matching and notifications
+- ✅ Live network performance dashboards
+- ✅ Relationship-based referral scoring
 
 ### Week 9-12: Production
 - ✅ Performance optimization
@@ -139,6 +143,6 @@ npm run dev
 
 Just tell the AI what you want to build and watch it happen:
 
-> **"Let's start building the Refer-ify authentication system with Supabase"**
+> **"Let's start building the Refer-ify referral system for professional network monetization"**
 
 Happy coding! 🚀✨

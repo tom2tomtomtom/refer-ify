@@ -96,12 +96,16 @@ supabase/
 - [ ] Testing and deployment
 
 ## Business Requirements
-- Multi-role system: Founding Circle, Select Circle, Clients, Candidates
+- **REFERRAL-BASED RECRUITMENT PLATFORM** (NOT a job board)
+- Multi-role system: Founding Circle, Select Circle, Clients (NO candidate browsing)
 - Subscription tiers: Connect ($500), Priority ($1500), Exclusive ($3000)
-- AI-powered candidate matching with GPT-4
+- **Clients post job requirements** (private, network-only, not public listings)
+- **Network members refer people they know personally** (relationship-based referrals)
+- AI-powered candidate matching with GPT-4 for resume analysis
 - Automated fee distribution (Platform 45%, Select 40%, Founding 15%)
 - GDPR compliance for international markets
 - Multi-currency payment processing
+- **Focus: "Network = Networth" through warm professional introductions**
 
 ## Notes
 Building with Ultimate Dev System for 3-5x development speed acceleration.

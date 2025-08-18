@@ -21,7 +21,7 @@ interface Job {
   requirements?: Record<string, unknown> | null;
 }
 
-export function ReferralForm({ job }: { job: Job | null }) {
+export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitted?: (id: string) => void }) {
   const [uploading, setUploading] = useState(false);
   const [resumeName, setResumeName] = useState<string>("");
   const [resumePath, setResumePath] = useState<string | null>(null);
@@ -101,6 +101,7 @@ export function ReferralForm({ job }: { job: Job | null }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to submit referral");
       toast.success("Referral submitted! Tracking ID issued.");
+      if (onSubmitted && data.referral?.id) onSubmitted(data.referral.id);
     } catch (err) {
       toast.error((err as Error).message);
     }
@@ -110,7 +111,7 @@ export function ReferralForm({ job }: { job: Job | null }) {
     <div className="max-w-3xl mx-auto p-6 space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Refer a Candidate</CardTitle>
+          <CardTitle>Refer a Professional</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           {job && (
@@ -122,11 +123,11 @@ export function ReferralForm({ job }: { job: Job | null }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Name *</Label>
+              <Label>Professional Name *</Label>
               <Input value={form.candidate_name} onChange={(e) => setForm({ ...form, candidate_name: e.target.value })} />
             </div>
             <div>
-              <Label>Email *</Label>
+              <Label>Professional Email *</Label>
               <Input type="email" value={form.candidate_email} onChange={(e) => setForm({ ...form, candidate_email: e.target.value })} />
             </div>
             <div>
@@ -134,13 +135,13 @@ export function ReferralForm({ job }: { job: Job | null }) {
               <Input value={form.candidate_phone} onChange={(e) => setForm({ ...form, candidate_phone: e.target.value })} />
             </div>
             <div>
-              <Label>LinkedIn</Label>
+              <Label>LinkedIn Profile</Label>
               <Input value={form.candidate_linkedin} onChange={(e) => setForm({ ...form, candidate_linkedin: e.target.value })} />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label>Resume (PDF, DOC, DOCX, max 10MB)</Label>
+            <Label>Resume / Profile (PDF, DOC, DOCX, max 10MB)</Label>
             <div className="border rounded p-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Upload className="h-4 w-4" />
@@ -171,7 +172,7 @@ export function ReferralForm({ job }: { job: Job | null }) {
           </div>
 
           <div>
-            <Label>Why is this candidate a good fit?</Label>
+            <Label>Why is this professional a strong fit?</Label>
             <Textarea rows={5} value={form.referrer_notes} onChange={(e) => setForm({ ...form, referrer_notes: e.target.value })} />
           </div>
 
