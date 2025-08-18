@@ -3,12 +3,12 @@
 ## Current Project
 - Name: Refer-ify Executive Recruitment Platform
 - Type: Full-Stack SaaS Platform  
-- Size: ~12,000+ lines (Next.js 14 + TypeScript + Supabase + Comprehensive Tests)
+- Size: ~12,000+ lines (Next.js 15 + TypeScript + Supabase + Comprehensive Tests)
 - Status: **Job Management System + Full Testing Infrastructure Complete** ✅
-- Timeline: 12-week MVP target (Week 2 Complete - Major Features + Testing Done)
+- Timeline: 12-week MVP target (Week 4 In Progress - Core features + testing underway)
 
 ## Tech Stack
-- Frontend: Next.js 14 + TypeScript + Tailwind CSS + Shadcn/ui
+- Frontend: Next.js 15 + React 19 + TypeScript + Tailwind CSS 4 + Shadcn/ui
 - Backend: Next.js API Routes + TypeScript  
 - Database: Supabase (PostgreSQL + Auth + Storage + Real-time)
 - Authentication: Supabase Auth + LinkedIn OAuth
@@ -110,7 +110,7 @@ supabase/
 
 ## 🧪 Current Testing Status
 
-### Coverage Metrics (January 2025)
+### Coverage Metrics (August 2025)
 - **Current**: 43.26% statements, 45.1% lines
 - **Target**: 80% statement coverage 
 - **Progress**: +18% improvement from 25% baseline
@@ -159,7 +159,7 @@ npm test -- --watch        # Development mode
 - [x] **Candidate Referral System** ✅ (multi-table integration, resume storage)
 - [x] **Candidate Management Dashboard** ✅ (`/candidates`, role-aware for referrers/clients)
 - [x] **Global navigation polish** ✅ (role-aware items + Candidates link for all roles)
-- [ ] Candidate referral system with file storage
+
 - [ ] Job detail view with inline editing, status, analytics
 - [ ] My Referrals dashboards (Select/Founding Circle)
 - [ ] AI matching engine (GPT-4)

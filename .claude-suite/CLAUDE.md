@@ -79,7 +79,7 @@
 - CI/CD pipeline
 
 ### 🚧 CURRENT FOCUS
-**Week 3 - Founding + Candidate Systems**
+**Week 4 - Coverage + Referral Dashboards**
 - [x] Founding Circle dashboards (network, revenue with charts, invite, advisory)
 - [x] Candidate referral form (resume upload + storage, duplicate checks)
 - [x] Candidate tables (candidates, candidate_referrals) and role-aware `/candidates` dashboard

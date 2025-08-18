@@ -25,7 +25,7 @@ Your AI-powered development system for building the "Network = Networth" platfor
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Next.js 14** + TypeScript + Tailwind CSS
+- **Next.js 15** + React 19 + TypeScript + Tailwind CSS 4
 - **Shadcn/ui** components
 - **Vercel** deployment
 
