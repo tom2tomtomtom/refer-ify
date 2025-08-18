@@ -3,10 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { DevRoleSwitcher } from "@/components/dev/DevRoleSwitcher";
+import { SignOutButton } from "@/components/navigation/SignOutButton";
+import { Briefcase, Star, Users, User } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -95,6 +97,33 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
   };
 }
 
+function getRoleStyles(role: SupportedRole) {
+  switch (role) {
+    case 'client':
+      return 'bg-green-100 text-green-700';
+    case 'founding':
+      return 'bg-amber-100 text-amber-700';
+    case 'select':
+      return 'bg-blue-100 text-blue-700';
+    default:
+      return 'bg-gray-100 text-gray-700';
+  }
+}
+
+function RoleIcon({ role }: { role: SupportedRole }) {
+  if (role === 'client') return <Briefcase className="w-3 h-3" />;
+  if (role === 'founding') return <Star className="w-3 h-3" />;
+  if (role === 'select') return <Users className="w-3 h-3" />;
+  return <User className="w-3 h-3" />;
+}
+
+function getRoleLabel(role: SupportedRole) {
+  if (role === 'client') return 'Client Company';
+  if (role === 'founding') return 'Founding Circle';
+  if (role === 'select') return 'Select Circle';
+  return 'User';
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -104,7 +133,7 @@ export default async function RootLayout({
   let headerRole: string | null = null;
   let userId: string | null = null;
   try {
-    const supabase = await getSupabaseServerClient();
+    const supabase = await getSupabaseServerComponentClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       userId = user.id;
@@ -122,7 +151,7 @@ export default async function RootLayout({
   let hasClientJobs = false;
   if (normalizedRole === 'client' && userId) {
     try {
-      const supabase = await getSupabaseServerClient();
+      const supabase = await getSupabaseServerComponentClient();
       const { count } = await supabase
         .from('jobs')
         .select('id', { count: 'exact', head: true })
@@ -140,9 +169,14 @@ export default async function RootLayout({
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <div className="flex items-center gap-2">
               <Link href="/" className="font-semibold tracking-tight">Refer-ify</Link>
-              {navigation.roleLabel && (
-                <span className="hidden sm:inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] text-muted-foreground">
-                  {navigation.roleLabel}
+              {normalizedRole && (
+                <span className="hidden sm:inline-flex items-center gap-2">
+                  {process.env.NODE_ENV !== 'production' && (
+                    <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full font-medium">DEMO</span>
+                  )}
+                  <span className={`flex items-center gap-1 text-[10px] px-2 py-1 rounded-full font-medium ${getRoleStyles(normalizedRole)}`}>
+                    <RoleIcon role={normalizedRole} /> {getRoleLabel(normalizedRole)}
+                  </span>
                 </span>
               )}
             </div>
@@ -152,6 +186,9 @@ export default async function RootLayout({
                   {item.label}
                 </Link>
               ))}
+              {(normalizedRole !== null || process.env.NODE_ENV === 'development') && (
+                <SignOutButton />
+              )}
             </nav>
             <div className="flex items-center gap-3">
               <Link href={navigation.cta.href}>

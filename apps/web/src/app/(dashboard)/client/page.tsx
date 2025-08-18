@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 import { requireRole } from "@/lib/auth";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 export default async function ClientDashboardPage() {
   const { user } = await requireRole("client");
-  const supabase = await getSupabaseServerClient();
+  const supabase = await getSupabaseServerComponentClient();
   
   // Get user's jobs
   const { data: jobs } = await supabase

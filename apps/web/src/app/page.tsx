@@ -1,9 +1,9 @@
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { SolutionsSidebar } from "@/components/home/SolutionsSidebar";
 
 export default async function Home() {
-  const supabase = await getSupabaseServerClient();
+  const supabase = await getSupabaseServerComponentClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   return (

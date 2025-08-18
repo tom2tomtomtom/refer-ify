@@ -123,43 +123,43 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Professional Name *</Label>
-              <Input value={form.candidate_name} onChange={(e) => setForm({ ...form, candidate_name: e.target.value })} />
+              <Label htmlFor="candidate_name">Professional Name *</Label>
+              <Input id="candidate_name" value={form.candidate_name} onChange={(e) => setForm({ ...form, candidate_name: e.target.value })} />
             </div>
             <div>
-              <Label>Professional Email *</Label>
-              <Input type="email" value={form.candidate_email} onChange={(e) => setForm({ ...form, candidate_email: e.target.value })} />
+              <Label htmlFor="candidate_email">Professional Email *</Label>
+              <Input id="candidate_email" type="email" value={form.candidate_email} onChange={(e) => setForm({ ...form, candidate_email: e.target.value })} />
             </div>
             <div>
-              <Label>Phone</Label>
-              <Input value={form.candidate_phone} onChange={(e) => setForm({ ...form, candidate_phone: e.target.value })} />
+              <Label htmlFor="candidate_phone">Phone</Label>
+              <Input id="candidate_phone" value={form.candidate_phone} onChange={(e) => setForm({ ...form, candidate_phone: e.target.value })} />
             </div>
             <div>
-              <Label>LinkedIn Profile</Label>
-              <Input value={form.candidate_linkedin} onChange={(e) => setForm({ ...form, candidate_linkedin: e.target.value })} />
+              <Label htmlFor="candidate_linkedin">LinkedIn Profile</Label>
+              <Input id="candidate_linkedin" value={form.candidate_linkedin} onChange={(e) => setForm({ ...form, candidate_linkedin: e.target.value })} />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label>Resume / Profile (PDF, DOC, DOCX, max 10MB)</Label>
+            <Label htmlFor="resume">Resume / Profile (PDF, DOC, DOCX, max 10MB)</Label>
             <div className="border rounded p-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Upload className="h-4 w-4" />
                 <span className="text-sm">{resumeName || "No file selected"}</span>
               </div>
-              <Input type="file" accept=".pdf,.doc,.docx" onChange={onFileChange} disabled={uploading} />
+              <Input id="resume" type="file" accept=".pdf,.doc,.docx" onChange={onFileChange} disabled={uploading} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Expected Salary</Label>
-              <Input type="number" value={form.expected_salary} onChange={(e) => setForm({ ...form, expected_salary: e.target.value })} />
+              <Label htmlFor="expected_salary">Expected Salary</Label>
+              <Input id="expected_salary" type="number" value={form.expected_salary} onChange={(e) => setForm({ ...form, expected_salary: e.target.value })} />
             </div>
             <div>
-              <Label>Availability</Label>
+              <Label htmlFor="availability">Availability</Label>
               <Select value={form.availability} onValueChange={(v) => setForm({ ...form, availability: v })}>
-                <SelectTrigger>
+                <SelectTrigger id="availability">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -172,8 +172,8 @@ export function ReferralForm({ job, onSubmitted }: { job: Job | null; onSubmitte
           </div>
 
           <div>
-            <Label>Why is this professional a strong fit?</Label>
-            <Textarea rows={5} value={form.referrer_notes} onChange={(e) => setForm({ ...form, referrer_notes: e.target.value })} />
+            <Label htmlFor="referrer_notes">Why is this professional a strong fit?</Label>
+            <Textarea id="referrer_notes" rows={5} value={form.referrer_notes} onChange={(e) => setForm({ ...form, referrer_notes: e.target.value })} />
           </div>
 
           <div className="flex items-center space-x-2">

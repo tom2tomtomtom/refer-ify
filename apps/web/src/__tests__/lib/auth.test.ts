@@ -1,5 +1,4 @@
 import { getCurrentUser, requireAuth, requireRole } from '@/lib/auth'
-import { redirect } from 'next/navigation'
 
 const mockSupabaseClient = {
   auth: {
@@ -12,12 +11,16 @@ const mockSupabaseClient = {
 }
 
 jest.mock('@/lib/supabase/server', () => ({
-  getSupabaseServerClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
+  getSupabaseServerComponentClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
 }))
 
 jest.mock('next/navigation', () => ({
-  redirect: jest.fn(),
+  redirect: jest.fn().mockImplementation((url) => {
+    throw new Error(`NEXT_REDIRECT:${url}`)
+  }),
 }))
+
+const { redirect: mockRedirect } = jest.mocked(jest.requireMock('next/navigation'))
 
 describe('Auth Utils', () => {
   beforeEach(() => {
@@ -71,7 +74,7 @@ describe('Auth Utils', () => {
       const result = await requireAuth()
 
       expect(result).toEqual(mockUser)
-      expect(redirect).not.toHaveBeenCalled()
+      expect(mockRedirect).not.toHaveBeenCalled()
     })
 
     it('redirects to default login page when not authenticated', async () => {
@@ -80,9 +83,8 @@ describe('Auth Utils', () => {
         error: null,
       })
 
-      await requireAuth()
-
-      expect(redirect).toHaveBeenCalledWith('/login')
+      await expect(requireAuth()).rejects.toThrow('NEXT_REDIRECT:/login')
+      expect(mockRedirect).toHaveBeenCalledWith('/login')
     })
 
     it('redirects to custom path when not authenticated', async () => {
@@ -91,9 +93,8 @@ describe('Auth Utils', () => {
         error: null,
       })
 
-      await requireAuth('/custom-login')
-
-      expect(redirect).toHaveBeenCalledWith('/custom-login')
+      await expect(requireAuth('/custom-login')).rejects.toThrow('NEXT_REDIRECT:/custom-login')
+      expect(mockRedirect).toHaveBeenCalledWith('/custom-login')
     })
 
     it('redirects when authentication error occurs', async () => {
@@ -102,9 +103,8 @@ describe('Auth Utils', () => {
         error: { message: 'Token expired' },
       })
 
-      await requireAuth()
-
-      expect(redirect).toHaveBeenCalledWith('/login')
+      await expect(requireAuth()).rejects.toThrow('NEXT_REDIRECT:/login')
+      expect(mockRedirect).toHaveBeenCalledWith('/login')
     })
   })
 
@@ -125,7 +125,7 @@ describe('Auth Utils', () => {
 
       expect(result.user).toEqual(mockUser)
       expect(result.role).toBe('client')
-      expect(redirect).not.toHaveBeenCalled()
+      expect(mockRedirect).not.toHaveBeenCalled()
     })
 
     it('works with array of roles', async () => {
@@ -144,7 +144,7 @@ describe('Auth Utils', () => {
 
       expect(result.user).toEqual(mockUser)
       expect(result.role).toBe('candidate')
-      expect(redirect).not.toHaveBeenCalled()
+      expect(mockRedirect).not.toHaveBeenCalled()
     })
 
     it('redirects when user does not have required role', async () => {
@@ -159,9 +159,8 @@ describe('Auth Utils', () => {
         error: null,
       })
 
-      await requireRole('client')
-
-      expect(redirect).toHaveBeenCalledWith('/')
+      await expect(requireRole('client')).rejects.toThrow('NEXT_REDIRECT:/')
+      expect(mockRedirect).toHaveBeenCalledWith('/')
     })
 
     it('redirects to custom path when role check fails', async () => {
@@ -176,9 +175,8 @@ describe('Auth Utils', () => {
         error: null,
       })
 
-      await requireRole('client', '/unauthorized')
-
-      expect(redirect).toHaveBeenCalledWith('/unauthorized')
+      await expect(requireRole('client', '/unauthorized')).rejects.toThrow('NEXT_REDIRECT:/unauthorized')
+      expect(mockRedirect).toHaveBeenCalledWith('/unauthorized')
     })
 
     it('redirects when user profile is not found', async () => {
@@ -193,9 +191,8 @@ describe('Auth Utils', () => {
         error: { message: 'Profile not found' },
       })
 
-      await requireRole('client')
-
-      expect(redirect).toHaveBeenCalledWith('/')
+      await expect(requireRole('client')).rejects.toThrow('NEXT_REDIRECT:/')
+      expect(mockRedirect).toHaveBeenCalledWith('/')
     })
 
     it('redirects when user profile has no role', async () => {
@@ -210,9 +207,8 @@ describe('Auth Utils', () => {
         error: null,
       })
 
-      await requireRole('client')
-
-      expect(redirect).toHaveBeenCalledWith('/')
+      await expect(requireRole('client')).rejects.toThrow('NEXT_REDIRECT:/')
+      expect(mockRedirect).toHaveBeenCalledWith('/')
     })
 
     it('calls requireAuth first (redirects when not authenticated)', async () => {
@@ -221,9 +217,8 @@ describe('Auth Utils', () => {
         error: null,
       })
 
-      await requireRole('client')
-
-      expect(redirect).toHaveBeenCalledWith('/login')
+      await expect(requireRole('client')).rejects.toThrow('NEXT_REDIRECT:/login')
+      expect(mockRedirect).toHaveBeenCalledWith('/login')
       // Profile query should not be called if user is not authenticated
       expect(mockSupabaseClient.from).not.toHaveBeenCalled()
     })
@@ -263,7 +258,7 @@ describe('Auth Utils', () => {
 
       expect(result.user).toEqual(mockUser)
       expect(result.role).toBe('founding_circle')
-      expect(redirect).not.toHaveBeenCalled()
+      expect(mockRedirect).not.toHaveBeenCalled()
     })
 
     it('handles multiple roles correctly', async () => {
@@ -282,7 +277,7 @@ describe('Auth Utils', () => {
 
       expect(result.user).toEqual(mockUser)
       expect(result.role).toBe('founding_circle')
-      expect(redirect).not.toHaveBeenCalled()
+      expect(mockRedirect).not.toHaveBeenCalled()
     })
   })
 })

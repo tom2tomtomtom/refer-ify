@@ -91,3 +91,14 @@ export async function createTestJob(
   if (error) throw error
   return data
 }
+
+// Simple test to prevent empty test suite error
+describe('Test Database Utilities', () => {
+  it('should export test utilities', () => {
+    expect(createTestSupabaseClient).toBeDefined()
+    expect(createTestSupabaseServiceClient).toBeDefined()
+    expect(cleanupTestData).toBeDefined()
+    expect(createTestUser).toBeDefined()
+    expect(createTestJob).toBeDefined()
+  })
+})

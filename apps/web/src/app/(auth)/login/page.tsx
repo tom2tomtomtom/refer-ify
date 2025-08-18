@@ -8,67 +8,84 @@ import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function signInWithLinkedIn() {
     const supabase = getSupabaseBrowserClient();
     await supabase.auth.signInWithOAuth({
       provider: "linkedin_oidc",
-      options: {
-        redirectTo: `${window.location.origin}/callback`,
-      },
+      options: { redirectTo: `${window.location.origin}/callback` },
     });
   }
 
-  async function sendMagicLink() {
+  async function signInWithPassword() {
+    setLoading(true);
+    setMessage(null);
     try {
       const supabase = getSupabaseBrowserClient();
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/callback`,
-        },
-      });
-      if (error) {
-        setMessage(`Error: ${error.message}`);
-      } else {
-        setMessage("Check your email for the magic link!");
-      }
-    } catch (err) {
-      setMessage(`Error: ${err}`);
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      window.location.href = "/";
+    } catch (e: any) {
+      setMessage(e?.message || "Sign in failed");
+    } finally {
+      setLoading(false);
     }
+  }
+
+  function setDemoRole(role: "founding" | "select" | "client") {
+    try {
+      window.localStorage.setItem("demo_user_role", role);
+      window.localStorage.setItem("dev_role_override", role);
+      document.cookie = `dev_role_override=${role}; Max-Age=${60 * 60 * 24 * 7}; Path=/; SameSite=Lax`;
+    } catch {}
+    const redirect = role === "founding" ? "/founding-circle" : role === "select" ? "/select-circle" : "/client";
+    window.location.href = redirect;
   }
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center p-4">
-      <div className="space-y-6 w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center">Sign in to Refer-ify</h1>
+      <div className="space-y-8 w-full max-w-sm">
+        <div className="text-center space-y-2">
+          <h1 className="text-2xl font-semibold">Sign in to Refer-ify</h1>
+          <p className="text-sm text-muted-foreground">Use email + password or LinkedIn. New here? Sign up first.</p>
+        </div>
 
-        <div className="space-y-2 border rounded-md p-4">
-          <Label htmlFor="email">Email (Magic Link)</Label>
-          <div className="flex gap-2">
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Button onClick={sendMagicLink} disabled={!email}>
-              Send Link
-            </Button>
+        {/* Email + Password */}
+        <div className="space-y-3 border rounded-md p-4 bg-white">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
           </div>
-          <p className="text-xs text-muted-foreground">
-            Enable Email (Magic Link) provider in Supabase Auth to use this fallback.
-          </p>
-          {message && (
-            <p className="text-sm text-blue-600">{message}</p>
-          )}
+          <div className="grid gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
+          </div>
+          <Button onClick={signInWithPassword} disabled={!email || !password || loading} className="w-full">
+            {loading ? "Signing in..." : "Sign in"}
+          </Button>
+          {message && <p className="text-xs text-red-600 text-center">{message}</p>}
         </div>
 
         <div className="text-center">
-          <Button onClick={signInWithLinkedIn}>Continue with LinkedIn</Button>
-          <p className="text-xs text-muted-foreground mt-2">If LinkedIn is temporarily unavailable, use the email magic link above.</p>
+          <Button onClick={signInWithLinkedIn} className="w-full">Continue with LinkedIn</Button>
+        </div>
+
+        {process.env.NODE_ENV === "development" && (
+          <div className="space-y-3">
+            <p className="text-xs text-gray-600 text-center">Demo Flow: Choose a role below → Explore → Sign Out → Try another role</p>
+            <div className="grid grid-cols-1 gap-2">
+              <Button variant="outline" onClick={() => setDemoRole("founding")} className="w-full">Demo as Founding Circle</Button>
+              <Button variant="outline" onClick={() => setDemoRole("select")} className="w-full">Demo as Select Circle</Button>
+              <Button variant="outline" onClick={() => setDemoRole("client")} className="w-full">Demo as Client Company</Button>
+            </div>
+          </div>
+        )}
+
+        <div className="text-center text-xs text-muted-foreground">
+          Don’t have an account? <a href="/signup" className="underline">Sign up</a>
         </div>
       </div>
     </div>

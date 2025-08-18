@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/auth";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export default async function ClientJobDetailPage({ params }: { params: Promise<{ id: string }> }) {
   await requireRole("client");
   const { id } = await params;
-  const supabase = await getSupabaseServerClient();
+  const supabase = await getSupabaseServerComponentClient();
   const { data: job } = await supabase
     .from("jobs")
     .select("*")
