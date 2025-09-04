@@ -15,6 +15,10 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:debug": "playwright test --debug",
+    "test:comprehensive": "playwright test --config=playwright.comprehensive.config.ts",
+    "test:comprehensive:ui": "playwright test --config=playwright.comprehensive.config.ts --ui",
+    "test:comprehensive:headed": "playwright test --config=playwright.comprehensive.config.ts --headed",
+    "test:alpha-ready": "playwright test --config=playwright.comprehensive.config.ts e2e/comprehensive/00-alpha-readiness-check.spec.ts",
     "test:all": "npm run test:ci && npm run test:e2e"
   },
   "dependencies": {
@@ -52,6 +56,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^9.9.0",
     "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.7.0",
