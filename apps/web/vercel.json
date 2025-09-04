@@ -17,28 +17,5 @@
       "source": "/(.*)",
       "destination": "/$1"
     }
-  ],
-  "ignores": [
-    "src/app/api/dev/**",
-    "src/app/api/referrals/earnings-history/**",
-    "src/app/api/referrals/export-earnings/**",
-    "src/app/api/referrals/my-dashboard/**",
-    "src/app/api/referrals/analytics/**",
-    "src/app/api/referrals/analytics-all/**",
-    "src/app/api/user/profile/**",
-    "src/app/api/user/settings/**",
-    "src/app/api/billing/cancel/**",
-    "src/app/api/billing/transactions/**",
-    "src/app/api/analytics/jobs/**",
-    "src/app/api/support/tickets/**",
-    "src/app/api/ai/suggestions/**",
-    "src/app/api/candidates/**",
-    "src/app/api/revenue/**",
-    "src/app/api/referrals/[id]/resume/**",
-    "src/app/api/jobs/[id]/referrals/**",
-    "src/app/api/analytics/client/**",
-    "src/app/api/analytics/all/**",
-    "src/app/api/core/**",
-    "src/app/api/user/account/**"
   ]
 }
