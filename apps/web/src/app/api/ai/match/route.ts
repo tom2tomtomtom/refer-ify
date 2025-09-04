@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { OpenAI } from "openai";
 
@@ -16,7 +16,145 @@ interface MatchScore {
   potential_concerns: string[];
 }
 
-export async function POST(request: Request) {
+// Consolidated AI endpoint handling both matching and suggestions
+export async function POST(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const action = searchParams.get('action') || 'match';
+  
+  if (action === 'suggestions') {
+    return handleSuggestions(request);
+  } else {
+    return handleMatching(request);
+  }
+}
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const action = searchParams.get('action') || 'match';
+  
+  if (action === 'suggestions') {
+    return handleSuggestionsGet(request);
+  } else {
+    return handleMatchingGet(request);
+  }
+}
+
+// AI suggestions functionality from the suggestions route
+async function handleSuggestionsGet(request: NextRequest) {
+  const supabase = await getSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { searchParams } = new URL(request.url);
+  const jobId = searchParams.get('job_id');
+  const limit = parseInt(searchParams.get('limit') || '5');
+
+  if (!jobId) {
+    return NextResponse.json({ error: "job_id is required" }, { status: 400 });
+  }
+
+  try {
+    // Get job details
+    const { data: job, error: jobError } = await supabase
+      .from('jobs')
+      .select('*')
+      .eq('id', jobId)
+      .single();
+
+    if (jobError || !job) {
+      return NextResponse.json({ error: "Job not found" }, { status: 404 });
+    }
+
+    // Get profiles excluding current user and those who already referred to this job
+    const { data: existingReferrals } = await supabase
+      .from('referrals')
+      .select('referrer_id')
+      .eq('job_id', jobId);
+
+    const excludedIds = [user.id, ...(existingReferrals?.map(r => r.referrer_id) || [])];
+
+    const { data: profiles, error: profilesError } = await supabase
+      .from('profiles')
+      .select('id, first_name, last_name, company, linkedin_url, role')
+      .not('id', 'in', `(${excludedIds.join(',')})`)  
+      .in('role', ['founding_circle', 'select_circle'])
+      .limit(limit * 3); // Get more to allow for AI filtering
+
+    if (profilesError) {
+      console.error('Error fetching profiles:', profilesError);
+      return NextResponse.json({ error: "Failed to fetch candidates" }, { status: 500 });
+    }
+
+    if (!profiles || profiles.length === 0) {
+      return NextResponse.json({ suggestions: [] });
+    }
+
+    // Use AI to score and select best matches
+    const prompt = `\nJob: ${job.title}\nCompany: ${job.company}\nLocation: ${job.location}\nDescription: ${job.description?.substring(0, 500) || ''}\nRequirements: ${job.requirements?.substring(0, 300) || ''}\n\nCandidate Profiles:\n${profiles.map((p, i) => `${i + 1}. ${p.first_name} ${p.last_name} - ${p.company} (${p.role})`).join('\n')}\n\nRank the top ${limit} candidates who would be best suited to refer quality candidates for this job. Consider their role, company, and likely network. Return only the numbers (1-${profiles.length}) separated by commas.`;
+
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "gpt-3.5-turbo",
+        temperature: 0.3,
+        max_tokens: 100,
+      });
+
+      const ranking = completion.choices[0]?.message?.content?.trim() || '';
+      const selectedIndices = ranking.split(',').map(n => parseInt(n.trim()) - 1).filter(i => !isNaN(i) && i >= 0 && i < profiles.length);
+      
+      const suggestions = selectedIndices.slice(0, limit).map(i => profiles[i]);
+      return NextResponse.json({ suggestions });
+      
+    } catch (aiError) {
+      console.error('AI ranking failed, using fallback:', aiError);
+      // Fallback to first N profiles
+      return NextResponse.json({ suggestions: profiles.slice(0, limit) });
+    }
+
+  } catch (error) {
+    console.error('Error in suggestions endpoint:', error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+async function handleSuggestions(request: NextRequest) {
+  const supabase = await getSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const body = await request.json();
+  const { job_id, referrer_ids } = body;
+
+  if (!job_id || !referrer_ids || !Array.isArray(referrer_ids)) {
+    return NextResponse.json({ error: "job_id and referrer_ids array are required" }, { status: 400 });
+  }
+
+  try {
+    // Create invitation records or send notifications
+    const invitations = referrer_ids.map(referrer_id => ({
+      job_id,
+      referrer_id,
+      invited_by: user.id,
+      status: 'pending',
+      created_at: new Date().toISOString()
+    }));
+
+    // You would implement actual invitation logic here
+    // For now, just return success
+    return NextResponse.json({ 
+      message: `Invitations sent to ${referrer_ids.length} referrers`,
+      invitations: invitations.length
+    });
+
+  } catch (error) {
+    console.error('Error sending invitations:', error);
+    return NextResponse.json({ error: "Failed to send invitations" }, { status: 500 });
+  }
+}
+
+// Original matching functionality
+async function handleMatching(request: NextRequest) {
   try {
     const supabase = await getSupabaseServerClient();
     
@@ -162,7 +300,7 @@ Be objective and provide honest assessments. Scores should reflect realistic mat
 }
 
 // Get AI match analyses for a job
-export async function GET(request: Request) {
+async function handleMatchingGet(request: NextRequest) {
   try {
     const supabase = await getSupabaseServerClient();
     
