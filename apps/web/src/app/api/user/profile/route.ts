@@ -9,7 +9,7 @@ type ProfileExtensionInsert = Database["public"]["Tables"]["profile_extensions"]
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = await getSupabaseServerClient();
     
     // Get current user
     const { data: { user }, error: userError } = await supabase.auth.getUser();
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = await getSupabaseServerClient();
     
     // Get current user
     const { data: { user }, error: userError } = await supabase.auth.getUser();

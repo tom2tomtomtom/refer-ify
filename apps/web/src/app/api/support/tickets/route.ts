@@ -7,7 +7,7 @@ type SupportTicketInsert = Database["public"]["Tables"]["support_tickets"]["Inse
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = await getSupabaseServerClient();
     
     // Get current user
     const { data: { user }, error: userError } = await supabase.auth.getUser();
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = await getSupabaseServerClient();
     
     // Get current user
     const { data: { user }, error: userError } = await supabase.auth.getUser();
