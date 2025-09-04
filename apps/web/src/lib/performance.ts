@@ -1,7 +1,8 @@
 // Performance optimization utilities
 
-export const NETWORK_TIMEOUT = 10000; // 10 seconds
-export const DB_TIMEOUT = 5000; // 5 seconds
+// Reduce timeouts in production for faster failure detection
+export const NETWORK_TIMEOUT = process.env.NODE_ENV === 'production' ? 8000 : 10000;
+export const DB_TIMEOUT = process.env.NODE_ENV === 'production' ? 3000 : 5000;
 
 // Wrap database calls with timeout to prevent hanging
 export async function withTimeout<T>(
