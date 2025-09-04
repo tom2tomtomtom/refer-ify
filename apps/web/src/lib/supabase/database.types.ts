@@ -270,6 +270,47 @@ export interface Database {
         Insert: Partial<Database["public"]["Tables"]["payment_transactions"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["payment_transactions"]["Row"]>;
       };
+      user_settings: {
+        Row: {
+          id: string;
+          user_id: string;
+          email_notifications: boolean | null;
+          push_notifications: boolean | null;
+          marketing_emails: boolean | null;
+          two_factor_enabled: boolean | null;
+          profile_visibility: "public" | "private" | "network" | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["user_settings"]["Row"]> & { user_id: string };
+        Update: Partial<Database["public"]["Tables"]["user_settings"]["Row"]>;
+      };
+      profile_extensions: {
+        Row: {
+          id: string;
+          user_id: string;
+          role: UserRole;
+          data: Record<string, unknown> | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["profile_extensions"]["Row"]> & { user_id: string; role: UserRole };
+        Update: Partial<Database["public"]["Tables"]["profile_extensions"]["Row"]>;
+      };
+      support_tickets: {
+        Row: {
+          id: string;
+          user_id: string;
+          subject: string;
+          description: string;
+          status: "open" | "in_progress" | "closed" | "resolved" | null;
+          priority: "low" | "medium" | "high" | "urgent" | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["support_tickets"]["Row"]> & { user_id: string; subject: string; description: string };
+        Update: Partial<Database["public"]["Tables"]["support_tickets"]["Row"]>;
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

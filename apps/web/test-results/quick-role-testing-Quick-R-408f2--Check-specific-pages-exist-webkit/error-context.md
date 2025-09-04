@@ -1,0 +1,41 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Refer-ify" [ref=e5]:
+        - /url: /
+      - navigation [ref=e6]:
+        - link "How It Works" [ref=e7]:
+          - /url: /how-it-works
+        - link "For Companies" [ref=e8]:
+          - /url: /for-companies
+        - link "Join Network" [ref=e9]:
+          - /url: /join-network
+        - link "About" [ref=e10]:
+          - /url: /about
+        - button "Sign Out" [ref=e11]:
+          - img [ref=e12]
+          - text: Sign Out
+      - link "Request Invitation" [ref=e16]:
+        - /url: /apply
+        - button "Request Invitation" [ref=e17]
+  - generic [ref=e19]:
+    - heading "404" [level=1] [ref=e20]
+    - heading "This page could not be found." [level=2] [ref=e22]
+  - button "DEV" [ref=e24]
+  - region "Notifications alt+T"
+  - generic [ref=e29] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e30] [cursor=pointer]:
+      - img [ref=e31] [cursor=pointer]
+    - generic [ref=e36] [cursor=pointer]:
+      - button "Open issues overlay" [ref=e37] [cursor=pointer]:
+        - generic [ref=e38] [cursor=pointer]:
+          - generic [ref=e39] [cursor=pointer]: "0"
+          - generic [ref=e40] [cursor=pointer]: "1"
+        - generic [ref=e41] [cursor=pointer]: Issue
+      - button "Collapse issues badge" [ref=e42] [cursor=pointer]:
+        - img [ref=e43] [cursor=pointer]
+  - alert [ref=e45]
+```

@@ -1,0 +1,266 @@
+{
+  "timestamp": "2025-09-04T08:21:01.628Z",
+  "testUsers": [
+    {
+      "email": "client@test.com",
+      "password": "testpass123",
+      "role": "client"
+    },
+    {
+      "email": "founding@test.com",
+      "password": "testpass123",
+      "role": "founding_circle"
+    },
+    {
+      "email": "select@test.com",
+      "password": "testpass123",
+      "role": "select_circle"
+    },
+    {
+      "email": "candidate@test.com",
+      "password": "testpass123",
+      "role": "candidate"
+    }
+  ],
+  "summary": {
+    "totalPages": 31,
+    "workingPages": 31,
+    "failedPages": 0,
+    "successRate": 100,
+    "isProductionReady": true
+  },
+  "pageResults": {
+    "successfulPages": [
+      {
+        "url": "http://localhost:3001/client",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/jobs",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/jobs/new",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/candidates",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/analytics",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/ai-insights",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/billing",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/settings",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/profile",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/client/help",
+        "status": 200,
+        "ok": true,
+        "role": "Client"
+      },
+      {
+        "url": "http://localhost:3001/founding",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/referrals",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/network",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/invite",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/revenue",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/advisory",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/settings",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/profile",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/founding/help",
+        "status": 200,
+        "ok": true,
+        "role": "Founding"
+      },
+      {
+        "url": "http://localhost:3001/select-circle",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/referrals",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/network",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/earnings",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/job-opportunities",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/settings",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/profile",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/select-circle/help",
+        "status": 200,
+        "ok": true,
+        "role": "Select Circle"
+      },
+      {
+        "url": "http://localhost:3001/candidate",
+        "status": 200,
+        "ok": true,
+        "role": "Candidate"
+      },
+      {
+        "url": "http://localhost:3001/candidate/settings",
+        "status": 200,
+        "ok": true,
+        "role": "Candidate"
+      },
+      {
+        "url": "http://localhost:3001/candidate/profile",
+        "status": 200,
+        "ok": true,
+        "role": "Candidate"
+      },
+      {
+        "url": "http://localhost:3001/candidate/help",
+        "status": 200,
+        "ok": true,
+        "role": "Candidate"
+      }
+    ],
+    "failedPages": [],
+    "totalPages": 31
+  },
+  "apiResults": [
+    {
+      "endpoint": "/api/jobs",
+      "status": 401,
+      "ok": true
+    },
+    {
+      "endpoint": "/api/candidates",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "endpoint": "/api/referrals",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "endpoint": "/api/user/profile",
+      "status": 500,
+      "ok": false
+    },
+    {
+      "endpoint": "/api/user/settings",
+      "status": 500,
+      "ok": false
+    },
+    {
+      "endpoint": "/api/support/tickets",
+      "status": 500,
+      "ok": false
+    },
+    {
+      "endpoint": "/api/ai/match",
+      "status": 401,
+      "ok": true
+    },
+    {
+      "endpoint": "/api/payments",
+      "status": 401,
+      "ok": true
+    }
+  ]
+}
