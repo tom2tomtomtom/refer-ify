@@ -45,11 +45,13 @@ export function LoginForm() {
         toast.success("Successfully signed in!");
         
         // Get user profile to determine redirect
-        const { data: profile } = await supabase
-          .from("users")
+        const profileResult = await supabase
+          ?.from("profiles")
           .select("role")
           .eq("id", data.user.id)
           .single();
+        
+        const { data: profile } = profileResult || { data: null };
 
         // Redirect based on role
         if (profile?.role === "client") {
@@ -77,12 +79,14 @@ export function LoginForm() {
 
     try {
       const supabase = getSupabaseBrowserClient();
-      const { error } = await supabase.auth.signInWithOAuth({
+      const result = await supabase?.auth.signInWithOAuth({
         provider: "linkedin_oidc",
         options: {
           redirectTo: `${window.location.origin}/callback`,
         },
       });
+      
+      const { error } = result || { error: null };
 
       if (error) {
         toast.error(error.message);
@@ -105,12 +109,14 @@ export function LoginForm() {
 
     try {
       const supabase = getSupabaseBrowserClient();
-      const { error } = await supabase.auth.signInWithOtp({
+      const result = await supabase?.auth.signInWithOtp({
         email,
         options: {
           emailRedirectTo: `${window.location.origin}/callback`,
         },
       });
+      
+      const { error } = result || { error: null };
 
       if (error) {
         toast.error(error.message);

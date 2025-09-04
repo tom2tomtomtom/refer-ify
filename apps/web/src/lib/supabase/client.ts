@@ -6,7 +6,7 @@ import { optimizeSupabaseClient } from "@/lib/performance";
 
 let browserClient: ReturnType<typeof createBrowserClient<Database>> | null = null;
 
-export function getSupabaseBrowserClient() {
+export function getSupabaseBrowserClient(): ReturnType<typeof createBrowserClient<Database>> {
   if (browserClient) return browserClient;
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;

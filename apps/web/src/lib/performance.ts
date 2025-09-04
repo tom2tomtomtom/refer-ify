@@ -21,17 +21,17 @@ export async function withTimeout<T>(
 }
 
 // Optimize Supabase client connections
-export function optimizeSupabaseClient(client: any) {
+export function optimizeSupabaseClient<T>(client: T): T {
   // Set shorter timeout for database operations
-  if (client?.rest) {
-    client.rest.timeout = DB_TIMEOUT;
+  if (client && typeof client === 'object' && 'rest' in client && client.rest) {
+    (client as any).rest.timeout = DB_TIMEOUT;
   }
   
   // Configure realtime connection limits
-  if (client?.realtime) {
-    client.realtime.timeout = NETWORK_TIMEOUT;
-    client.realtime.heartbeatIntervalMs = 30000;
-    client.realtime.reconnectAfterMs = () => 5000;
+  if (client && typeof client === 'object' && 'realtime' in client && client.realtime) {
+    (client as any).realtime.timeout = NETWORK_TIMEOUT;
+    (client as any).realtime.heartbeatIntervalMs = 30000;
+    (client as any).realtime.reconnectAfterMs = () => 5000;
   }
   
   return client;

@@ -30,7 +30,7 @@ export function AuthCallback() {
         if (data?.session) {
           // Get user profile to determine redirect
           const profileResult = await supabase
-            ?.from("users")
+            ?.from("profiles")
             .select("role")
             .eq("id", data.session.user.id)
             .single();
