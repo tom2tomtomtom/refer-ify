@@ -4,7 +4,6 @@ import { useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -56,11 +55,11 @@ export default function LoginPage() {
         {/* Email + Password */}
         <div className="space-y-3 border rounded-md p-4 bg-white">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <label htmlFor="email" className="text-sm font-medium">Email</label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <label htmlFor="password" className="text-sm font-medium">Password</label>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
           </div>
           <Button onClick={signInWithPassword} disabled={!email || !password || loading} className="w-full">

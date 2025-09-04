@@ -216,7 +216,7 @@ export default function AIInsightsPage() {
           <div className="flex items-center justify-between">
             <CardTitle>Select Job for AI Analysis</CardTitle>
             <Select value={selectedJob} onValueChange={setSelectedJob}>
-              <SelectTrigger className="w-[300px]">
+              <SelectTrigger className="w-[300px]" size="default">
                 <SelectValue placeholder="Select a job..." />
               </SelectTrigger>
               <SelectContent>
