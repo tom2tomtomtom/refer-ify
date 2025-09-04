@@ -2,9 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { OpenAI } from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization of OpenAI client to avoid build-time errors
+let openai: OpenAI | null = null;
+
+function getOpenAIClient(): OpenAI | null {
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn("OpenAI API key not configured - AI features will be disabled");
+    return null;
+  }
+  
+  if (!openai) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+  
+  return openai;
+}
 
 interface MatchScore {
   overall_score: number;
@@ -93,7 +107,15 @@ async function handleSuggestionsGet(request: NextRequest) {
     const prompt = `\nJob: ${job.title}\nCompany: ${job.company}\nLocation: ${job.location}\nDescription: ${job.description?.substring(0, 500) || ''}\nRequirements: ${job.requirements?.substring(0, 300) || ''}\n\nCandidate Profiles:\n${profiles.map((p, i) => `${i + 1}. ${p.first_name} ${p.last_name} - ${p.company} (${p.role})`).join('\n')}\n\nRank the top ${limit} candidates who would be best suited to refer quality candidates for this job. Consider their role, company, and likely network. Return only the numbers (1-${profiles.length}) separated by commas.`;
 
     try {
-      const completion = await openai.chat.completions.create({
+      const client = getOpenAIClient();
+      if (!client) {
+        return NextResponse.json({ 
+          error: "AI features are not configured",
+          suggestions: [] 
+        }, { status: 503 });
+      }
+      
+      const completion = await client.chat.completions.create({
         messages: [{ role: "user", content: prompt }],
         model: "gpt-3.5-turbo",
         temperature: 0.3,
@@ -224,7 +246,23 @@ Be objective and provide honest assessments. Scores should reflect realistic mat
 `;
 
     // Call OpenAI API
-    const completion = await openai.chat.completions.create({
+    const client = getOpenAIClient();
+    if (!client) {
+      return NextResponse.json({ 
+        error: "AI features are not configured",
+        match_score: {
+          overall_score: 0,
+          skills_match: 0,
+          experience_match: 0,
+          education_match: 0,
+          reasoning: "AI features are not available",
+          key_strengths: [],
+          potential_concerns: ["AI matching is not configured"]
+        }
+      }, { status: 503 });
+    }
+    
+    const completion = await client.chat.completions.create({
       model: "gpt-4",
       messages: [
         {
