@@ -56,7 +56,7 @@ export default function BillingPage() {
       }
 
       // Fetch payment transactions
-      const transResponse = await fetch("/api/billing/transactions");
+      const transResponse = await fetch("/api/services?service=billing");
       if (transResponse.ok) {
         const transData = await transResponse.json();
         setTransactions(transData.transactions || []);
