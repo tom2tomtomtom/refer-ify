@@ -4,10 +4,5 @@
     "app/api/**/*.ts": {
       "maxDuration": 30
     }
-  },
-  "build": {
-    "env": {
-      "NODE_VERSION": "22"
-    }
   }
 }

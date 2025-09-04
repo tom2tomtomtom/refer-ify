@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
   eslint: {
@@ -13,7 +12,6 @@ const nextConfig: NextConfig = {
   },
   // Move serverComponentsExternalPackages to top-level as serverExternalPackages
   serverExternalPackages: ['@supabase/supabase-js'],
-  outputFileTracingRoot: path.join(__dirname, '../..'),
   
   // Production optimizations
   poweredByHeader: false,
