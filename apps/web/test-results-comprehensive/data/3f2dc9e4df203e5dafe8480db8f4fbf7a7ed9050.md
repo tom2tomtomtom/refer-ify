@@ -1,0 +1,52 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Refer-ify" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - link "How It Works" [ref=e7] [cursor=pointer]:
+          - /url: /how-it-works
+        - link "For Companies" [ref=e8] [cursor=pointer]:
+          - /url: /for-companies
+        - link "Join Network" [ref=e9] [cursor=pointer]:
+          - /url: /join-network
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - button "Sign Out" [ref=e11]:
+          - img [ref=e12]
+          - text: Sign Out
+      - link "Request Invitation" [ref=e17] [cursor=pointer]:
+        - /url: /apply
+        - button "Request Invitation" [ref=e18]
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - heading "Sign in to Refer-ify" [level=1] [ref=e22]
+      - paragraph [ref=e23]: Use email + password or LinkedIn. New here? Sign up first.
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Email
+        - textbox "Email" [ref=e27]
+      - generic [ref=e28]:
+        - generic [ref=e29]: Password
+        - textbox "Password" [ref=e30]
+      - button "Sign in" [disabled]
+    - button "Continue with LinkedIn" [ref=e32]
+    - generic [ref=e33]:
+      - paragraph [ref=e34]: "Demo Flow: Choose a role below → Explore → Sign Out → Try another role"
+      - generic [ref=e35]:
+        - button "Demo as Founding Circle" [ref=e36]
+        - button "Demo as Select Circle" [ref=e37]
+        - button "Demo as Client Company" [ref=e38]
+    - generic [ref=e39]:
+      - text: Don’t have an account?
+      - link "Sign up" [ref=e40] [cursor=pointer]:
+        - /url: /signup
+  - button "DEV" [ref=e42]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e48] [cursor=pointer]:
+    - img [ref=e49] [cursor=pointer]
+  - alert [ref=e53]
+```

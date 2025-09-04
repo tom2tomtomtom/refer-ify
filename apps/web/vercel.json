@@ -1,7 +1,5 @@
 {
-  "buildCommand": "npm run build",
   "framework": "nextjs",
-  "installCommand": "npm install",
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30
@@ -11,11 +9,5 @@
     "env": {
       "NODE_VERSION": "22"
     }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/$1"
-    }
-  ]
+  }
 }
