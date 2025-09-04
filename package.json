@@ -1,0 +1,17 @@
+{
+  "name": "refer-ify",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "build": "cd apps/web && npm run build",
+    "start": "cd apps/web && npm run start",
+    "dev": "cd apps/web && npm run dev"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

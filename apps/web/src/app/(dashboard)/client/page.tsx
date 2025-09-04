@@ -26,9 +26,9 @@ export default async function ClientDashboardPage() {
         <div className="bg-white p-6 rounded-lg border">
           <h2 className="text-xl font-semibold mb-4">Quick Stats</h2>
           <div className="space-y-2">
-            <p>Active Jobs: {jobs?.filter(j => j.status === 'active').length || 0}</p>
+            <p>Active Jobs: {jobs?.filter((j: any) => j.status === 'active').length || 0}</p>
             <p>Total Jobs: {jobs?.length || 0}</p>
-            <p>Draft Jobs: {jobs?.filter(j => j.status === 'draft').length || 0}</p>
+            <p>Draft Jobs: {jobs?.filter((j: any) => j.status === 'draft').length || 0}</p>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ export default async function ClientDashboardPage() {
         <div className="p-6">
           {jobs && jobs.length > 0 ? (
             <div className="space-y-4">
-              {jobs.slice(0, 5).map((job) => (
+              {jobs.slice(0, 5).map((job: any) => (
                 <div key={job.id} className="flex justify-between items-center p-4 bg-gray-50 rounded">
                   <div>
                     <h3 className="font-medium">{job.title || 'Untitled Job'}</h3>

@@ -2,8 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   eslint: {
-    // Do not block builds on lint errors (we still show them during dev/CI)
     ignoreDuringBuilds: true,
+  },
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@supabase/supabase-js', 'recharts'],
   },
 };
 

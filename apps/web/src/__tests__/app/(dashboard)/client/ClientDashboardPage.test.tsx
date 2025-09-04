@@ -7,7 +7,7 @@ import ClientDashboardPage from '@/app/(dashboard)/client/page'
 
 // Mock Next.js Link component
 jest.mock('next/link', () => {
-  return ({ href, children, ...props }: any) => (
+  return ({ href, children, ...props }: { href: string; children: React.ReactNode; [key: string]: unknown }) => (
     <a href={href} {...props}>
       {children}
     </a>
@@ -25,7 +25,7 @@ jest.mock('@/lib/auth', () => ({
   requireRole: jest.fn(),
 }))
 
-const { requireRole } = require('@/lib/auth')
+import { requireRole } from '@/lib/auth'
 
 // Mock Supabase server client
 const mockSupabaseClient = {
@@ -334,7 +334,8 @@ describe('Client Dashboard Page', () => {
     const PageComponent = await ClientDashboardPage()
     render(PageComponent)
 
-    // Should format date as MM/DD/YYYY
-    expect(screen.getByText(/Created: 1\/15\/2024/)).toBeInTheDocument()
+    // Should display the formatted creation date (flexible for different locales)
+    const expectedDate = new Date('2024-01-15T10:30:45Z').toLocaleDateString()
+    expect(screen.getByText(new RegExp(`Created: ${expectedDate.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`))).toBeInTheDocument()
   })
 })

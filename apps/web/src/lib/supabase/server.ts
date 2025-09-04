@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import type { Database } from "@/lib/supabase/database.types";
+import { optimizeSupabaseClient, withTimeout } from "@/lib/performance";
 
 export async function getSupabaseServerClient() {
   const cookieStore = await cookies();
@@ -11,7 +12,7 @@ export async function getSupabaseServerClient() {
     throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
   }
 
-  return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
+  const client = createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;
@@ -23,7 +24,17 @@ export async function getSupabaseServerClient() {
         cookieStore.set({ name, value: "", ...options });
       },
     } as any,
+    global: {
+      headers: {
+        'X-Client-Info': 'refer-ify-server@1.0.0',
+      },
+    },
+    db: {
+      schema: 'public',
+    }
   } as any);
+  
+  return optimizeSupabaseClient(client);
 }
 
 // Use this in Server Components (e.g., layout.tsx, page.tsx) to AVOID modifying cookies
@@ -37,7 +48,7 @@ export async function getSupabaseServerComponentClient() {
     throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
   }
 
-  return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
+  const client = createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value;
@@ -49,7 +60,17 @@ export async function getSupabaseServerComponentClient() {
         // no-op in Server Components
       },
     },
+    global: {
+      headers: {
+        'X-Client-Info': 'refer-ify-server-component@1.0.0',
+      },
+    },
+    db: {
+      schema: 'public',
+    }
   });
+  
+  return optimizeSupabaseClient(client);
 }
 
 

@@ -176,7 +176,7 @@ describe('Client Job Detail Page', () => {
 
     // Should display formatted date
     expect(screen.getByText(/Created/)).toBeInTheDocument()
-    expect(screen.getByText(/1\/15\/2024/)).toBeInTheDocument()
+    expect(screen.getByText(/15\/01\/2024/)).toBeInTheDocument()
   })
 
   it('hides description section when no description is provided', async () => {

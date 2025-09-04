@@ -1,10 +1,7 @@
-import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { SolutionsSidebar } from "@/components/home/SolutionsSidebar";
 
 export default async function Home() {
-  const supabase = await getSupabaseServerComponentClient();
-  const { data: { user } } = await supabase.auth.getUser();
 
   return (
     <main className="min-h-screen bg-[#f8f9fa]">
@@ -47,4 +44,5 @@ export default async function Home() {
   );
 }
 
-export const dynamic = "force-dynamic";
+// Homepage can be statically rendered for better performance
+export const dynamic = "force-static";

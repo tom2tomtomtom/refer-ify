@@ -2,7 +2,13 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { JobListingPage } from '@/components/jobs/JobListingPage'
 
-// Mock Supabase client
+// Mock Supabase channel
+const mockChannel = {
+  on: jest.fn().mockReturnThis(),
+  subscribe: jest.fn(),
+}
+
+// Mock Supabase client with channel functionality
 const mockSupabaseClient = {
   from: jest.fn().mockReturnThis(),
   select: jest.fn().mockReturnThis(),
@@ -11,6 +17,8 @@ const mockSupabaseClient = {
   order: jest.fn().mockReturnThis(),
   limit: jest.fn().mockReturnThis(),
   ilike: jest.fn().mockReturnThis(),
+  channel: jest.fn(() => mockChannel),
+  removeChannel: jest.fn(),
 }
 
 jest.mock('@/lib/supabase/client', () => ({

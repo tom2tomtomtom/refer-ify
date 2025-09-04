@@ -15,7 +15,7 @@ export default function SignupPage() {
 
   async function signUpWithLinkedIn() {
     const supabase = getSupabaseBrowserClient();
-    await supabase.auth.signInWithOAuth({
+    await supabase?.auth.signInWithOAuth({
       provider: "linkedin_oidc",
       options: {
         redirectTo: `${window.location.origin}/callback`,
@@ -28,14 +28,14 @@ export default function SignupPage() {
     setMessage(null);
     try {
       const supabase = getSupabaseBrowserClient();
-      const { error } = await supabase.auth.signUp({
+      const result = await supabase?.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/callback`,
         },
       });
-      if (error) throw error;
+      if (result?.error) throw result.error;
       setMessage("Check your email to confirm your account, then sign in with your password.");
     } catch (e: any) {
       setMessage(e?.message || "Signup failed");
@@ -48,8 +48,8 @@ export default function SignupPage() {
     setResending(true);
     try {
       const supabase = getSupabaseBrowserClient();
-      const { error } = await supabase.auth.resend({ type: 'signup', email });
-      if (error) throw error;
+      const result = await supabase?.auth.resend({ type: 'signup', email });
+      if (result?.error) throw result.error;
       setMessage('Confirmation email re-sent. Please check your inbox.');
     } catch (e: any) {
       setMessage(e?.message || 'Failed to resend');

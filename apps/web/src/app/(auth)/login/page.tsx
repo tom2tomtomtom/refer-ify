@@ -14,7 +14,7 @@ export default function LoginPage() {
 
   async function signInWithLinkedIn() {
     const supabase = getSupabaseBrowserClient();
-    await supabase.auth.signInWithOAuth({
+    await supabase?.auth.signInWithOAuth({
       provider: "linkedin_oidc",
       options: { redirectTo: `${window.location.origin}/callback` },
     });
@@ -25,8 +25,8 @@ export default function LoginPage() {
     setMessage(null);
     try {
       const supabase = getSupabaseBrowserClient();
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+      const result = await supabase?.auth.signInWithPassword({ email, password });
+      if (result?.error) throw result.error;
       window.location.href = "/";
     } catch (e: any) {
       setMessage(e?.message || "Sign in failed");

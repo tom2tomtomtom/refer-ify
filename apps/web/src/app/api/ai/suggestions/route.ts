@@ -88,7 +88,7 @@ export async function POST(request: Request) {
     }
 
     // Create AI prompt for batch analysis
-    const candidateProfiles = candidates.map(c => ({
+    const candidateProfiles = candidates.map((c: any) => ({
       id: c.id,
       name: `${c.first_name} ${c.last_name}`.trim(),
       email: c.email,
@@ -110,7 +110,7 @@ Location: ${job.location || 'Not specified'}
 Salary Range: ${job.salary_min ? `$${job.salary_min} - $${job.salary_max}` : 'Not specified'}
 
 CANDIDATE NETWORK:
-${candidateProfiles.map((c, i) => `
+${candidateProfiles.map((c: any, i: number) => `
 CANDIDATE ${i + 1}:
 ID: ${c.id}
 Name: ${c.name}
@@ -183,7 +183,7 @@ Rank by match_score (highest first). Only include candidates with score >= 60.
 
     // Enhance suggestions with candidate details
     const enhancedSuggestions = suggestions.map(suggestion => {
-      const candidate = candidateProfiles.find(c => c.id === suggestion.candidate_id);
+      const candidate = candidateProfiles.find((c: any) => c.id === suggestion.candidate_id);
       return {
         ...suggestion,
         candidate: candidate ? {

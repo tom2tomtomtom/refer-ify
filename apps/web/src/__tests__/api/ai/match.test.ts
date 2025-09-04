@@ -1,6 +1,5 @@
 import { POST, GET } from '@/app/api/ai/match/route'
 import { NextRequest } from 'next/server'
-import { OpenAI } from 'openai'
 
 // Mock NextResponse for Next.js 15 compatibility
 jest.mock('next/server', () => ({
@@ -35,15 +34,18 @@ jest.mock('@/lib/supabase/server', () => ({
 }))
 
 // Mock OpenAI
-jest.mock('openai', () => ({
-  OpenAI: jest.fn().mockImplementation(() => ({
-    chat: {
-      completions: {
-        create: jest.fn(),
+jest.mock('openai', () => {
+  const mockCreate = jest.fn();
+  return {
+    OpenAI: jest.fn().mockImplementation(() => ({
+      chat: {
+        completions: {
+          create: mockCreate,
+        },
       },
-    },
-  })),
-}))
+    })),
+  };
+})
 
 describe('/api/ai/match', () => {
   const mockUser = {
@@ -72,9 +74,9 @@ describe('/api/ai/match', () => {
     potential_concerns: ['No direct fintech experience mentioned']
   }
 
-  let mockOpenAICreate: jest.Mock
+  let mockOpenAI: any;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks()
     
     // Setup default Supabase auth mock
@@ -83,12 +85,12 @@ describe('/api/ai/match', () => {
       error: null
     })
 
-    // Get the mocked OpenAI create function
-    const { OpenAI } = require('openai')
-    mockOpenAICreate = new (OpenAI as jest.Mock)().chat.completions.create
-
+    // Get the mocked OpenAI instance
+    const { OpenAI } = await import('openai');
+    mockOpenAI = new (OpenAI as jest.Mock)();
+    
     // Setup default OpenAI mock
-    mockOpenAICreate.mockResolvedValue({
+    mockOpenAI.chat.completions.create.mockResolvedValue({
       choices: [{
         message: {
           content: JSON.stringify(mockAIResponse)
@@ -148,7 +150,7 @@ describe('/api/ai/match', () => {
       })
 
       // Verify OpenAI was called with correct parameters
-      expect(mockOpenAICreate).toHaveBeenCalledWith({
+      expect(mockOpenAI.chat.completions.create).toHaveBeenCalledWith({
         model: "gpt-4",
         messages: [
           {
@@ -253,7 +255,7 @@ describe('/api/ai/match', () => {
         error: null
       })
 
-      mockOpenAICreate.mockRejectedValue(
+      mockOpenAI.chat.completions.create.mockRejectedValue(
         new Error('OpenAI API error')
       )
 
@@ -281,7 +283,7 @@ describe('/api/ai/match', () => {
         error: null
       })
 
-      mockOpenAICreate.mockResolvedValue({
+      mockOpenAI.chat.completions.create.mockResolvedValue({
         choices: [{
           message: {
             content: 'Invalid JSON response from AI'
