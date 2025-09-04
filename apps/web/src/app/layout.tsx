@@ -142,44 +142,51 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Optimize role resolution with fallback to avoid blocking rendering
+  // Render with anonymous navigation by default for production stability
   let headerRole: string | null = null;
   let userId: string | null = null;
   let hasClientJobs = false;
 
-  // Quick cookie check first (dev override)
-  try {
-    const cookieStore = await cookies();
-    const devOverride = process.env.NODE_ENV !== 'production' ? cookieStore.get('dev_role_override')?.value : undefined;
-    if (devOverride) {
-      headerRole = devOverride;
-    }
-  } catch {}
+  // Only do complex auth in development or when we have all required environment variables
+  const hasRequiredEnvVars = process.env.NEXT_PUBLIC_SUPABASE_URL && 
+                             process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && 
+                             process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  // Only query database if no dev override exists
-  if (!headerRole) {
+  if (hasRequiredEnvVars) {
+    // Quick cookie check first (dev override)
     try {
-      const supabase = await getSupabaseServerComponentClient();
-      const { data: { user }, error } = await supabase.auth.getUser();
-      if (user && !error) {
-        userId = user.id;
-        // Combine user profile and job count queries for efficiency
-        const [profileResult, jobCountResult] = await Promise.allSettled([
-          supabase.from("profiles").select("role").eq("id", user.id as unknown as string).single(),
-          supabase.from('jobs').select('id', { count: 'exact', head: true }).eq('client_id', userId)
-        ]);
-
-        if (profileResult.status === 'fulfilled' && profileResult.value.data) {
-          headerRole = profileResult.value.data.role;
-        }
-
-        if (jobCountResult.status === 'fulfilled' && jobCountResult.value.count) {
-          hasClientJobs = jobCountResult.value.count > 0;
-        }
+      const cookieStore = await cookies();
+      const devOverride = process.env.NODE_ENV !== 'production' ? cookieStore.get('dev_role_override')?.value : undefined;
+      if (devOverride) {
+        headerRole = devOverride;
       }
-    } catch (error) {
-      // Fail gracefully - render anonymous navigation
-      console.warn('Failed to resolve user role:', error);
+    } catch {}
+
+    // Only query database if no dev override exists
+    if (!headerRole) {
+      try {
+        const supabase = await getSupabaseServerComponentClient();
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (user && !error) {
+          userId = user.id;
+          // Combine user profile and job count queries for efficiency
+          const [profileResult, jobCountResult] = await Promise.allSettled([
+            supabase.from("profiles").select("role").eq("id", user.id as unknown as string).single(),
+            supabase.from('jobs').select('id', { count: 'exact', head: true }).eq('client_id', userId)
+          ]);
+
+          if (profileResult.status === 'fulfilled' && profileResult.value.data) {
+            headerRole = profileResult.value.data.role;
+          }
+
+          if (jobCountResult.status === 'fulfilled' && jobCountResult.value.count) {
+            hasClientJobs = jobCountResult.value.count > 0;
+          }
+        }
+      } catch (error) {
+        // Fail gracefully - render anonymous navigation
+        console.warn('Failed to resolve user role:', error);
+      }
     }
   }
 
