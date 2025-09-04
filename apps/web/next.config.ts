@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', '@supabase/supabase-js', 'recharts'],
   },
+  outputFileTracingRoot: '/Users/thomasdowuona-hyde/refer-ify',
 };
 
 export default nextConfig;

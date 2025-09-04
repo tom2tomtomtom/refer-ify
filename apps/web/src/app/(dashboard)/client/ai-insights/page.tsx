@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -217,12 +216,12 @@ export default function AIInsightsPage() {
           <div className="flex items-center justify-between">
             <CardTitle>Select Job for AI Analysis</CardTitle>
             <Select value={selectedJob} onValueChange={setSelectedJob}>
-              <SelectTrigger className="w-[300px]" size="default" {...({} as any)}>
+              <SelectTrigger className="w-[300px]">
                 <SelectValue placeholder="Select a job..." />
               </SelectTrigger>
-              <SelectContent {...({} as any)}>
+              <SelectContent>
                 {jobs.map((job) => (
-                  <SelectItem key={job.id} value={job.id} {...({} as any)}>
+                  <SelectItem key={job.id} value={job.id}>
                     {job.title} - {job.company}
                   </SelectItem>
                 ))}
