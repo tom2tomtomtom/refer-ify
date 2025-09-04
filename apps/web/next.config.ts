@@ -9,10 +9,10 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', '@supabase/supabase-js', 'recharts'],
-    // Enable server component logs for debugging
-    serverComponentsExternalPackages: ['@supabase/supabase-js'],
+    optimizePackageImports: ['lucide-react', 'recharts'],
   },
+  // Move serverComponentsExternalPackages to top-level as serverExternalPackages
+  serverExternalPackages: ['@supabase/supabase-js'],
   outputFileTracingRoot: path.join(__dirname, '../..'),
   
   // Production optimizations
