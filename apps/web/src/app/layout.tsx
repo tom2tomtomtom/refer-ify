@@ -7,6 +7,7 @@ import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { DevRoleSwitcher } from "@/components/dev/DevRoleSwitcher";
+import { DemoRoleSwitcherSimple } from "@/components/dev/DemoRoleSwitcherSimple";
 import { DemoNavigationBar } from "@/components/dev/DemoNavigationBar";
 import { SignOutButton } from "@/components/navigation/SignOutButton";
 import { Briefcase, Star, Users, User } from "lucide-react";
@@ -242,6 +243,10 @@ export default async function RootLayout({
         {process.env.NODE_ENV === 'development' && (
           <DevRoleSwitcher currentRole={headerRole}
           />
+        )}
+        {/* Simple demo switcher for production CEO demo */}
+        {normalizedRole !== null && (
+          <DemoRoleSwitcherSimple />
         )}
         <Toaster />
       </body>
