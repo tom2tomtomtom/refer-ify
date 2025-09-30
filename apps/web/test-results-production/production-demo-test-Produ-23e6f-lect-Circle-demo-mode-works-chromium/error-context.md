@@ -1,0 +1,66 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "Refer-ify" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e7]:
+          - img [ref=e8]
+          - text: Select Circle
+      - navigation [ref=e13]:
+        - link "Dashboard" [ref=e14] [cursor=pointer]:
+          - /url: /select-circle
+        - link "Browse Jobs" [ref=e15] [cursor=pointer]:
+          - /url: /select-circle/job-opportunities
+        - link "My Referrals" [ref=e16] [cursor=pointer]:
+          - /url: /select-circle/referrals
+        - link "Earnings" [active] [ref=e17] [cursor=pointer]:
+          - /url: /select-circle/earnings
+        - link "Network" [ref=e18] [cursor=pointer]:
+          - /url: /select-circle/network
+        - button "Sign Out" [ref=e19]:
+          - img [ref=e20]
+          - text: Sign Out
+      - link "Find Jobs" [ref=e24] [cursor=pointer]:
+        - /url: /select-circle/job-opportunities
+        - button "Find Jobs" [ref=e25]
+  - generic [ref=e26]:
+    - heading "Opportunity Board" [level=1] [ref=e27]
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - heading "Opportunity Board" [level=1] [ref=e31]:
+            - img [ref=e32]
+            - text: Opportunity Board
+          - paragraph [ref=e35]: Executive opportunities in real time
+        - button [ref=e37]:
+          - img
+      - generic [ref=e38]:
+        - generic [ref=e40]:
+          - generic [ref=e43]: Live Jobs
+          - paragraph [ref=e44]: "0"
+        - generic [ref=e46]:
+          - generic [ref=e49]: Connect
+          - paragraph [ref=e50]: "0"
+        - generic [ref=e52]:
+          - generic [ref=e55]: Priority
+          - paragraph [ref=e56]: "0"
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - img [ref=e61]
+          - textbox "Search opportunities..." [ref=e64]
+        - combobox [ref=e65]:
+          - generic: All Tiers
+          - img
+        - combobox [ref=e66]:
+          - generic: All Types
+          - img
+        - combobox [ref=e67]:
+          - generic: All Levels
+          - img
+  - region "Notifications alt+T"
+  - alert [ref=e105]
+```

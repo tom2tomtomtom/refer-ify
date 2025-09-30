@@ -35,16 +35,43 @@ export default function LoginPage() {
     }
   }
 
-  function setDemoRole(role: "founding" | "select" | "client" | "candidate") {
+  async function setDemoRole(role: "founding" | "select" | "client" | "candidate") {
+    setLoading(true);
+    setMessage("Setting up demo mode...");
+
     try {
-      window.localStorage.setItem("demo_user_role", role);
-      window.localStorage.setItem("dev_role_override", role);
-      document.cookie = `dev_role_override=${role}; Max-Age=${60 * 60 * 24 * 7}; Path=/; SameSite=Lax`;
-    } catch {}
-    const redirect = role === "founding" ? "/founding-circle" : 
-                     role === "select" ? "/select-circle" : 
-                     role === "candidate" ? "/candidate" : "/client";
-    window.location.href = redirect;
+      // Step 1: Seed demo data
+      const seedResponse = await fetch('/api/demo/seed', { method: 'POST' });
+      if (!seedResponse.ok) {
+        console.error('Demo seed failed:', await seedResponse.text());
+      }
+
+      // Step 2: Set demo auth
+      const authResponse = await fetch('/api/demo/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role }),
+      });
+
+      if (!authResponse.ok) {
+        throw new Error('Failed to set demo mode');
+      }
+
+      const { redirect } = await authResponse.json();
+
+      // Also set localStorage for client-side checks
+      try {
+        window.localStorage.setItem("demo_user_role", role);
+        window.localStorage.setItem("dev_role_override", role);
+      } catch {}
+
+      // Redirect to role dashboard
+      window.location.href = redirect;
+    } catch (error: any) {
+      console.error('Demo mode error:', error);
+      setMessage(error.message || 'Failed to enter demo mode');
+      setLoading(false);
+    }
   }
 
   return (

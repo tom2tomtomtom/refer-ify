@@ -1,0 +1,88 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "Refer-ify" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e7]:
+          - img [ref=e8]
+          - text: Client Company
+      - navigation [ref=e11]:
+        - link "Dashboard" [ref=e12] [cursor=pointer]:
+          - /url: /client
+        - link "Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /client/jobs
+        - link "Candidates" [ref=e14] [cursor=pointer]:
+          - /url: /client/candidates
+        - link "Analytics" [ref=e15] [cursor=pointer]:
+          - /url: /client/analytics
+        - link "Billing" [ref=e16] [cursor=pointer]:
+          - /url: /client/billing
+        - button "Sign Out" [ref=e17]:
+          - img [ref=e18]
+          - text: Sign Out
+      - link "Post Job" [ref=e22] [cursor=pointer]:
+        - /url: /client/jobs/new
+        - button "Post Job" [ref=e23]
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - heading "Client Dashboard" [level=1] [ref=e26]
+      - paragraph [ref=e27]: Welcome back! Manage your job postings and referrals.
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - heading "Quick Stats" [level=2] [ref=e30]
+        - generic [ref=e31]:
+          - paragraph [ref=e32]: "Active Jobs: 2"
+          - paragraph [ref=e33]: "Total Jobs: 4"
+          - paragraph [ref=e34]: "Draft Jobs: 1"
+      - generic [ref=e35]:
+        - heading "Quick Actions" [level=2] [ref=e36]
+        - generic [ref=e37]:
+          - link "Post New Job" [ref=e38] [cursor=pointer]:
+            - /url: /client/jobs/new
+            - button "Post New Job" [ref=e39]
+          - link "View All Jobs" [ref=e40] [cursor=pointer]:
+            - /url: /client/jobs
+            - button "View All Jobs" [ref=e41]
+          - link "Manage Subscription" [ref=e42] [cursor=pointer]:
+            - /url: /client/billing
+            - button "Manage Subscription" [ref=e43]
+    - generic [ref=e44]:
+      - heading "Recent Jobs" [level=2] [ref=e46]
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - heading "Senior Full-Stack Engineer" [level=3] [ref=e51]
+            - paragraph [ref=e52]: "Status: active | Created: 12/1/2024"
+          - link "View" [ref=e53] [cursor=pointer]:
+            - /url: /client/jobs/demo-1
+            - button "View" [ref=e54]
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - heading "VP of Engineering" [level=3] [ref=e57]
+            - paragraph [ref=e58]: "Status: active | Created: 11/28/2024"
+          - link "View" [ref=e59] [cursor=pointer]:
+            - /url: /client/jobs/demo-2
+            - button "View" [ref=e60]
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - heading "Product Designer" [level=3] [ref=e63]
+            - paragraph [ref=e64]: "Status: draft | Created: 12/2/2024"
+          - link "View" [ref=e65] [cursor=pointer]:
+            - /url: /client/jobs/demo-3
+            - button "View" [ref=e66]
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - heading "Senior Data Scientist" [level=3] [ref=e69]
+            - paragraph [ref=e70]: "Status: filled | Created: 11/15/2024"
+          - link "View" [ref=e71] [cursor=pointer]:
+            - /url: /client/jobs/demo-4
+            - button "View" [ref=e72]
+    - link "← Back to Home" [ref=e74] [cursor=pointer]:
+      - /url: /
+  - region "Notifications alt+T"
+  - alert [ref=e75]
+```

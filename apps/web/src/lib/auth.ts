@@ -30,15 +30,26 @@ async function getDemoRole(): Promise<UserRole | null> {
   }
 }
 
+// Demo user IDs (must match the seed data)
+const DEMO_USER_IDS: Record<string, string> = {
+  founding: '00000000-0000-0000-0000-000000000001',
+  founding_circle: '00000000-0000-0000-0000-000000000001',
+  select: '00000000-0000-0000-0000-000000000002',
+  select_circle: '00000000-0000-0000-0000-000000000002',
+  client: '00000000-0000-0000-0000-000000000003',
+  candidate: '00000000-0000-0000-0000-000000000004',
+};
+
 // Create demo user object
 function createDemoUser(role: UserRole) {
+  const userId = DEMO_USER_IDS[role] || `demo-${role}-user`;
   return {
-    id: `demo-${role}-user`,
+    id: userId,
     email: `demo-${role}@refer-ify.com`,
     app_metadata: { role },
-    user_metadata: { 
+    user_metadata: {
       name: `Demo ${role.charAt(0).toUpperCase() + role.slice(1)} User`,
-      demo: true 
+      demo: true
     },
     aud: 'authenticated',
     created_at: new Date().toISOString(),

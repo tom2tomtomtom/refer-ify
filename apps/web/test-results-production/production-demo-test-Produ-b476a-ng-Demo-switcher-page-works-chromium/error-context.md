@@ -1,0 +1,70 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Refer-ify" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - link "How It Works" [ref=e7] [cursor=pointer]:
+          - /url: /how-it-works
+        - link "For Companies" [ref=e8] [cursor=pointer]:
+          - /url: /for-companies
+        - link "Join Network" [ref=e9] [cursor=pointer]:
+          - /url: /join-network
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Sign In" [ref=e11] [cursor=pointer]:
+          - /url: /login
+      - link "Request Invitation" [ref=e13] [cursor=pointer]:
+        - /url: /apply
+        - button "Request Invitation" [ref=e14]
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]: 🎭 Demo Mode - Choose Your Role
+      - generic [ref=e19]: Explore Refer-ify from different user perspectives. Click any role below to start.
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - button "Client Company View the hiring manager experience. Post jobs, review candidates, track analytics. Explore Client View" [ref=e22]:
+          - generic [ref=e23]:
+            - img
+            - text: Client Company
+          - generic [ref=e24]: View the hiring manager experience. Post jobs, review candidates, track analytics.
+          - generic [ref=e25]:
+            - text: Explore Client View
+            - img
+        - button "Founding Circle Network leader experience. Track revenue, manage network, view growth metrics. Explore Founding View" [ref=e26]:
+          - generic [ref=e27]:
+            - img
+            - text: Founding Circle
+          - generic [ref=e28]: Network leader experience. Track revenue, manage network, view growth metrics.
+          - generic [ref=e29]:
+            - text: Explore Founding View
+            - img
+        - button "Select Circle Referrer experience. Browse jobs, track earnings, submit referrals. Explore Select View" [ref=e30]:
+          - generic [ref=e31]:
+            - img
+            - text: Select Circle
+          - generic [ref=e32]: Referrer experience. Browse jobs, track earnings, submit referrals.
+          - generic [ref=e33]:
+            - text: Explore Select View
+            - img
+        - button "Candidate Job seeker experience. Track applications and interview status. Explore Candidate View" [ref=e34]:
+          - generic [ref=e35]:
+            - img
+            - text: Candidate
+          - generic [ref=e36]: Job seeker experience. Track applications and interview status.
+          - generic [ref=e37]:
+            - text: Explore Candidate View
+            - img
+      - paragraph [ref=e39]:
+        - strong [ref=e40]: "💡 Tip:"
+        - text: "To switch between roles, bookmark this page:"
+        - code [ref=e41]: "[YOUR-URL]/demo"
+        - text: Or click "Sign Out" to return here.
+      - link "Return to Homepage" [ref=e43] [cursor=pointer]:
+        - /url: /
+  - region "Notifications alt+T"
+  - alert [ref=e44]
+```

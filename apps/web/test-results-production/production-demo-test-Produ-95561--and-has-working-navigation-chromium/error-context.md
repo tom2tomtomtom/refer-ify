@@ -1,0 +1,72 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Refer-ify" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - link "How It Works" [ref=e7] [cursor=pointer]:
+          - /url: /how-it-works
+        - link "For Companies" [ref=e8] [cursor=pointer]:
+          - /url: /for-companies
+        - link "Join Network" [ref=e9] [cursor=pointer]:
+          - /url: /join-network
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Sign In" [ref=e11] [cursor=pointer]:
+          - /url: /login
+      - link "Request Invitation" [ref=e13] [cursor=pointer]:
+        - /url: /apply
+        - button "Request Invitation" [ref=e14]
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - paragraph [ref=e19]: Executive Recruitment Network
+          - heading "Network. Refer. Earn." [level=1] [ref=e20]
+          - paragraph [ref=e21]: Refer-ify connects senior executives with premium opportunities across APAC & EMEA. Our private network rewards trusted introductions and accelerates executive hiring.
+          - generic [ref=e22]:
+            - link "Request Invitation" [ref=e23] [cursor=pointer]:
+              - /url: /join-network
+            - link "Explore Client Solutions" [ref=e24] [cursor=pointer]:
+              - /url: /for-companies
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: Trusted by leaders at
+          - generic [ref=e27]:
+            - generic [ref=e28]: Meta
+            - generic [ref=e29]: Stripe
+            - generic [ref=e30]: Atlassian
+            - generic [ref=e31]: Canva
+        - paragraph [ref=e33]: Our platform blends the discretion of executive search with the velocity of trusted networks. Members refer exceptional professionals, clients post critical leadership requirements, and everyone wins through speed, trust, and aligned incentives.
+      - generic [ref=e34]:
+        - generic [ref=e35]: Our Solutions
+        - complementary [ref=e36]:
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - generic [ref=e40]: "01"
+              - generic [ref=e41]: Founding Circle
+              - generic [ref=e42]: Elite Network
+            - link "Get Started" [ref=e43] [cursor=pointer]:
+              - /url: /join-network
+              - button "Get Started" [ref=e44]
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - generic [ref=e48]: "02"
+              - generic [ref=e49]: Select Circle
+              - generic [ref=e50]: Quality Referrers
+            - link "Join Select Circle" [ref=e51] [cursor=pointer]:
+              - /url: /join-network
+              - button "Join Select Circle" [ref=e52]
+          - generic [ref=e54]:
+            - generic [ref=e55]:
+              - generic [ref=e56]: "03"
+              - generic [ref=e57]: Client Solutions
+              - generic [ref=e58]: Executive Hiring
+            - link "Explore Solutions" [ref=e59] [cursor=pointer]:
+              - /url: /for-companies
+              - button "Explore Solutions" [ref=e60]
+  - region "Notifications alt+T"
+  - alert [ref=e61]
+```
