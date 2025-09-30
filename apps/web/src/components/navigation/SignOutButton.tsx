@@ -29,7 +29,8 @@ export function SignOutButton({ className }: SignOutButtonProps) {
     } catch (error) {
       console.error('Sign out error:', error);
     } finally {
-      window.location.href = '/login';
+      // Return to demo switcher page for easy role switching
+      window.location.href = '/demo';
     }
   };
 
