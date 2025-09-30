@@ -225,8 +225,10 @@ export default async function RootLayout({
                   {item.label}
                 </Link>
               ))}
-              {(normalizedRole !== null || process.env.NODE_ENV === 'development') && (
+              {normalizedRole !== null ? (
                 <SignOutButton />
+              ) : (
+                <Link href="/login" className="hover:text-foreground font-medium">Sign In</Link>
               )}
             </nav>
             <div className="flex items-center gap-3">

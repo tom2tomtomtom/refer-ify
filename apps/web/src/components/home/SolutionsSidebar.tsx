@@ -17,21 +17,21 @@ const ITEMS: Item[] = [
     title: "Founding Circle",
     subtitle: "Elite Network",
     cta: "Get Started",
-    href: "/founding-circle",
+    href: "/join-network",
   },
   {
     number: "02",
     title: "Select Circle",
     subtitle: "Quality Referrers",
     cta: "Join Select Circle",
-    href: "/select-circle",
+    href: "/join-network",
   },
   {
     number: "03",
     title: "Client Solutions",
     subtitle: "Executive Hiring",
     cta: "Explore Solutions",
-    href: "/client",
+    href: "/for-companies",
   },
 ];
 

@@ -12,8 +12,8 @@ export default async function Home() {
             <h1 className="text-5xl font-extrabold tracking-tight">Network. Refer. Earn.</h1>
             <p className="text-lg text-muted-foreground max-w-2xl">Refer-ify connects senior executives with premium opportunities across APAC & EMEA. Our private network rewards trusted introductions and accelerates executive hiring.</p>
             <div className="flex gap-3">
-              <Link href="/login" className="inline-flex items-center rounded-md bg-black px-5 py-3 text-white hover:opacity-90 transition">Request Invitation</Link>
-              <Link href="/client" className="inline-flex items-center rounded-md border px-5 py-3 hover:bg-white/60 transition">Explore Client Solutions</Link>
+              <Link href="/join-network" className="inline-flex items-center rounded-md bg-black px-5 py-3 text-white hover:opacity-90 transition">Request Invitation</Link>
+              <Link href="/for-companies" className="inline-flex items-center rounded-md border px-5 py-3 hover:bg-white/60 transition">Explore Client Solutions</Link>
             </div>
           </div>
 
