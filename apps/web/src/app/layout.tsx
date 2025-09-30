@@ -168,8 +168,6 @@ export default async function RootLayout({
       // Only query database if no demo override exists
       if (!headerRole) {
         try {
-
-        try {
           const supabase = await getSupabaseServerComponentClient();
           const { data: { user }, error } = await supabase.auth.getUser();
           if (user && !error) {
