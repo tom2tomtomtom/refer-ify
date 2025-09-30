@@ -1,4 +1,5 @@
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SelectNetworkCharts } from "@/components/charts/SelectNetworkCharts";
 
@@ -8,7 +9,7 @@ function fmt(n: number) {
 
 export default async function SelectCircleNetworkPage() {
   const supabase = await getSupabaseServerComponentClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return null;
 
   // Demo data for demo users

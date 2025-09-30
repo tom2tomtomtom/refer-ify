@@ -1,4 +1,5 @@
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -17,7 +18,7 @@ function estimatePlacementFee(salaryMin?: number | null, salaryMax?: number | nu
 
 export default async function SelectCircleEarningsPage() {
   const supabase = await getSupabaseServerComponentClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return null;
 
   // Demo data for demo users (check for both old and new demo ID formats)

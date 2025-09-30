@@ -1,4 +1,5 @@
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FoundingRevenueCharts } from "@/components/charts/FoundingRevenueCharts";
@@ -15,7 +16,8 @@ type SessionRow = { session_date?: string; duration_hours?: number; hourly_rate?
 export default async function RevenueDashboardPage() {
   const supabase = await getSupabaseServerComponentClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  // Use getCurrentUser which handles both real auth and demo mode
+  const user = await getCurrentUser();
   if (!user) {
     return (
       <div className="px-4 py-6 md:px-6">

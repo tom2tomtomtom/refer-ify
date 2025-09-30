@@ -1,4 +1,5 @@
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QuickReferralForm } from "@/components/referrals/QuickReferralForm";
@@ -9,7 +10,7 @@ function fmtCurrency(n: number) {
 
 export default async function SelectCircleReferralsPage() {
   const supabase = await getSupabaseServerComponentClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return null;
 
   // Demo data for demo users
