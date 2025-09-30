@@ -48,6 +48,58 @@ export default function BillingPage() {
 
   const fetchBillingData = async () => {
     try {
+      // Check if demo mode by looking at cookies
+      const isDemoMode = document.cookie.includes('dev_role_override=client') ||
+                         document.cookie.includes('demo_user_id=00000000-0000-0000-0000-000000000003');
+
+      if (isDemoMode) {
+        // Demo subscription data
+        setSubscription({
+          id: 'demo-sub-1',
+          tier: 'priority',
+          status: 'active',
+          current_period_start: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+          current_period_end: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),
+          stripe_subscription_id: 'sub_demo123'
+        });
+
+        // Demo transactions
+        setTransactions([
+          {
+            id: 'txn-1',
+            amount: 150000,
+            currency: 'usd',
+            type: 'subscription',
+            subscription_tier: 'priority',
+            status: 'completed',
+            created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+            metadata: { description: 'Monthly subscription' }
+          },
+          {
+            id: 'txn-2',
+            amount: 150000,
+            currency: 'usd',
+            type: 'subscription',
+            subscription_tier: 'priority',
+            status: 'completed',
+            created_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+            metadata: { description: 'Monthly subscription' }
+          },
+          {
+            id: 'txn-3',
+            amount: 15000,
+            currency: 'usd',
+            type: 'job_posting',
+            subscription_tier: 'priority',
+            status: 'completed',
+            created_at: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
+            metadata: { job_title: 'Senior Full-Stack Engineer' }
+          }
+        ]);
+        setLoading(false);
+        return;
+      }
+
       // Fetch subscription data
       const subResponse = await fetch("/api/payments");
       if (subResponse.ok) {

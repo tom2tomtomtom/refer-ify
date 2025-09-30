@@ -8,7 +8,7 @@ export default async function InviteMembersPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   // Demo data for demo users
-  const isDemo = user?.id.startsWith('demo-');
+  const isDemo = user?.id.startsWith('demo-') || user?.id.startsWith('00000000-0000-0000-0000-');
   if (isDemo) {
     const demoInvitations = [
       { id: '1', invited_name: 'Jennifer Martinez', invited_company: 'TechCorp', invited_email: 'jennifer@techcorp.com', status: 'joined', sent_at: '2024-11-15T10:00:00Z' },

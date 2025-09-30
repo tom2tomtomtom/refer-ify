@@ -1,4 +1,5 @@
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
@@ -20,6 +21,89 @@ type Referral = {
 };
 
 export default async function NetworkGrowthPage() {
+  const user = await getCurrentUser();
+  if (!user) return null;
+
+  // Demo data for demo users
+  const isDemo = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-');
+  if (isDemo) {
+    const demoMembers = [
+      { id: '1', name: 'Sarah Chen', company: 'Tech Unicorn Inc', joined: '2024-09-15', referrals30: 8, jobsEngaged30: 4, successRate: 75 },
+      { id: '2', name: 'Michael Rodriguez', company: 'StartupX', joined: '2024-10-01', referrals30: 6, jobsEngaged30: 3, successRate: 67 },
+      { id: '3', name: 'Emily Watson', company: 'FinTech Corp', joined: '2024-10-15', referrals30: 5, jobsEngaged30: 3, successRate: 60 },
+      { id: '4', name: 'David Kim', company: 'Brand Leaders LLC', joined: '2024-11-01', referrals30: 4, jobsEngaged30: 2, successRate: 50 },
+      { id: '5', name: 'Jennifer Lee', company: 'Operations Pro Inc', joined: '2024-11-10', referrals30: 3, jobsEngaged30: 2, successRate: 67 },
+    ];
+
+    return (
+      <div className="px-4 py-6 md:px-6">
+        <div className="mb-3 flex items-center justify-between">
+          <h1 className="text-2xl font-bold">Network Growth &amp; Management</h1>
+          <div className="text-xs text-muted-foreground"><Link href="/founding">Back to Overview</Link></div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Total Network Members</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">28</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Active This Month</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold text-green-600">18</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Successful Placements (90d)</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold text-amber-600">12</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm font-medium">Growth Rate</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">+15%</div></CardContent>
+          </Card>
+        </div>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Member Activity (last 30 days)</CardTitle>
+              <div className="text-xs"><Link href="/founding/invite" className="underline">Invite New Member</Link></div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left border-b">
+                    <th className="py-2 pr-4">Member</th>
+                    <th className="py-2 pr-4">Company</th>
+                    <th className="py-2 pr-4">Joined</th>
+                    <th className="py-2 pr-4">Referrals</th>
+                    <th className="py-2 pr-4">Jobs Engaged</th>
+                    <th className="py-2 pr-4">Success Rate (90d)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {demoMembers.map(r => (
+                    <tr key={r.id} className="border-b last:border-none">
+                      <td className="py-2 pr-4 font-medium">{r.name}</td>
+                      <td className="py-2 pr-4">{r.company}</td>
+                      <td className="py-2 pr-4">{r.joined}</td>
+                      <td className="py-2 pr-4">{r.referrals30}</td>
+                      <td className="py-2 pr-4">{r.jobsEngaged30}</td>
+                      <td className="py-2 pr-4">{r.successRate}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-gray-700">
+              💡 Demo data shown for walkthrough purposes
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const supabase = await getSupabaseServerComponentClient();
 
   const now = Date.now();
