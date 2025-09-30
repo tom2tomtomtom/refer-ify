@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import Link from "next/link";
 import { CheckCircle, Users, Briefcase, DollarSign, Shield, Zap, ArrowRight, Star, TrendingUp } from "lucide-react";
 
 export default function HowItWorksPage() {
