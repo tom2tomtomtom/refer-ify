@@ -7,7 +7,6 @@ import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { DevRoleSwitcher } from "@/components/dev/DevRoleSwitcher";
-import { DemoNavigationBar } from "@/components/dev/DemoNavigationBar";
 import { SignOutButton } from "@/components/navigation/SignOutButton";
 import { Briefcase, Star, Users, User } from "lucide-react";
 
@@ -201,9 +200,6 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {process.env.NODE_ENV === 'development' && (
-          <DemoNavigationBar currentRole={headerRole} />
-        )}
         <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <div className="flex items-center gap-2">
