@@ -3,9 +3,8 @@ import { cookies } from "next/headers";
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import type { UserRole } from "@/lib/supabase/database.types";
 
-// Demo mode check
+// Demo mode check - now works in production too for CEO demo
 async function isDemoMode() {
-  if (process.env.NODE_ENV !== 'development') return false;
   try {
     const cookieStore = await cookies();
     return !!cookieStore.get('dev_role_override')?.value;
