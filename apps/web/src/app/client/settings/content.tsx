@@ -24,14 +24,37 @@ export function ClientSettingsContent() {
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch("/api/user/settings");
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const response = await fetch("/api/user/settings", {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
       if (!response.ok) throw new Error("Failed to fetch settings");
       
       const { data } = await response.json();
       setSettings(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching settings:", error);
-      toast.error("Failed to load settings");
+      if (error.name === 'AbortError') {
+        toast.error("Settings load timed out. Please try again.");
+      } else {
+        toast.error("Failed to load settings");
+      }
+      // Set demo data for development
+      if (process.env.NODE_ENV === 'development') {
+        setSettings({
+          user_id: 'demo-user',
+          email_notifications: true,
+          push_notifications: false,
+          marketing_emails: false,
+          two_factor_enabled: false,
+          profile_visibility: 'network'
+        });
+      }
     } finally {
       setIsLoading(false);
     }

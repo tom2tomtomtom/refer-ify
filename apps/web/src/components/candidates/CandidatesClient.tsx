@@ -97,8 +97,8 @@ export function CandidatesClient({ initialCandidates, mode: _mode }: { initialCa
             {candidates.length === 0 ? (
               <tr><td className="py-4 px-4 text-muted-foreground" colSpan={7}>No candidates found.</td></tr>
             ) : (
-              candidates.map(c => (
-                <tr key={c.id} className="border-b last:border-none hover:bg-muted/30 cursor-pointer" onClick={()=>window.location.href=`/candidates/${c.id}`}>
+              candidates.map((c, index) => (
+                <tr key={`candidate-${c.id}-${index}`} className="border-b last:border-none hover:bg-muted/30 cursor-pointer" onClick={()=>window.location.href=`/candidates/${c.id}`}>
                   <td className="py-2 pr-4 font-medium">
                     <div className="flex items-center gap-2">
                       <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center text-[10px]">

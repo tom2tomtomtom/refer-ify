@@ -26,14 +26,37 @@ export function ClientProfileContent() {
 
   const fetchProfile = async () => {
     try {
-      const response = await fetch("/api/user/profile");
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const response = await fetch("/api/user/profile", { 
+        signal: controller.signal 
+      });
+      clearTimeout(timeoutId);
+      
       if (!response.ok) throw new Error("Failed to fetch profile");
       
       const { data } = await response.json();
       setProfile(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching profile:", error);
-      toast.error("Failed to load profile");
+      if (error.name === 'AbortError') {
+        toast.error("Profile load timed out. Please try again.");
+      } else {
+        toast.error("Failed to load profile");
+      }
+      // Set demo data for development
+      if (process.env.NODE_ENV === 'development') {
+        setProfile({
+          role: 'client' as UserRole,
+          email: 'demo@example.com',
+          first_name: 'Demo',
+          last_name: 'User',
+          company: 'Demo Company',
+          linkedin_url: ''
+        });
+      }
     } finally {
       setIsLoading(false);
     }

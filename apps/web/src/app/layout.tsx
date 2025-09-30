@@ -7,6 +7,7 @@ import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { DevRoleSwitcher } from "@/components/dev/DevRoleSwitcher";
+import { DemoNavigationBar } from "@/components/dev/DemoNavigationBar";
 import { SignOutButton } from "@/components/navigation/SignOutButton";
 import { Briefcase, Star, Users, User } from "lucide-react";
 
@@ -58,44 +59,42 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
     return {
       items: [
         { label: "Dashboard", href: "/client" },
-        { label: "Candidates", href: "/client/candidates" },
         { label: "Jobs", href: "/client/jobs" },
-        { label: "Job Opportunities", href: "/client/job-opportunities" },
-        { label: "Settings", href: "/client" },
+        { label: "Candidates", href: "/client/candidates" },
+        { label: "Analytics", href: "/client/analytics" },
+        { label: "Billing", href: "/client/billing" },
       ],
       cta: hasClientJobs
         ? { label: "View Jobs", href: "/client/jobs" }
-        : { label: "Post First Job", href: "/client/jobs/new" },
+        : { label: "Post Job", href: "/client/jobs/new" },
       roleLabel: "Client Company",
     };
   }
   if (role === "founding") {
     return {
       items: [
-        { label: "How It Works", href: "/how-it-works" },
-        { label: "Candidates", href: "/candidates" },
-        { label: "My Referrals", href: "/referrals" },
+        { label: "Dashboard", href: "/founding" },
         { label: "Network Growth", href: "/founding/network" },
-        { label: "Revenue Dashboard", href: "/founding/revenue" },
+        { label: "Revenue", href: "/founding/revenue" },
+        { label: "My Referrals", href: "/founding/referrals" },
         { label: "Invite Members", href: "/founding/invite" },
         { label: "Advisory", href: "/founding/advisory" },
       ],
-      cta: { label: "Dashboard", href: "/founding" },
-      roleLabel: "Founding Circle Member",
+      cta: { label: "View Network", href: "/founding/network" },
+      roleLabel: "Founding Circle",
     };
   }
   if (role === "select") {
     return {
       items: [
-        { label: "How It Works", href: "/how-it-works" },
-        { label: "Candidates", href: "/candidates" },
-        { label: "Job Opportunities", href: "/select-circle" },
+        { label: "Dashboard", href: "/select-circle" },
+        { label: "Browse Jobs", href: "/select-circle/job-opportunities" },
         { label: "My Referrals", href: "/select-circle/referrals" },
-        { label: "Earnings", href: "/select-circle" },
-        { label: "Network", href: "/select-circle" },
+        { label: "Earnings", href: "/select-circle/earnings" },
+        { label: "Network", href: "/select-circle/network" },
       ],
-      cta: { label: "Browse Jobs", href: "/select-circle" },
-      roleLabel: "Select Circle Member",
+      cta: { label: "Find Jobs", href: "/select-circle/job-opportunities" },
+      roleLabel: "Select Circle",
     };
   }
   // Anonymous
@@ -202,6 +201,9 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {process.env.NODE_ENV === 'development' && (
+          <DemoNavigationBar currentRole={headerRole} />
+        )}
         <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <div className="flex items-center gap-2">

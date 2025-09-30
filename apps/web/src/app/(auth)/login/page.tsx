@@ -19,7 +19,8 @@ export default function LoginPage() {
     });
   }
 
-  async function signInWithPassword() {
+  async function signInWithPassword(e?: React.FormEvent) {
+    e?.preventDefault();
     setLoading(true);
     setMessage(null);
     try {
@@ -34,13 +35,15 @@ export default function LoginPage() {
     }
   }
 
-  function setDemoRole(role: "founding" | "select" | "client") {
+  function setDemoRole(role: "founding" | "select" | "client" | "candidate") {
     try {
       window.localStorage.setItem("demo_user_role", role);
       window.localStorage.setItem("dev_role_override", role);
       document.cookie = `dev_role_override=${role}; Max-Age=${60 * 60 * 24 * 7}; Path=/; SameSite=Lax`;
     } catch {}
-    const redirect = role === "founding" ? "/founding-circle" : role === "select" ? "/select-circle" : "/client";
+    const redirect = role === "founding" ? "/founding-circle" : 
+                     role === "select" ? "/select-circle" : 
+                     role === "candidate" ? "/candidate" : "/client";
     window.location.href = redirect;
   }
 
@@ -53,20 +56,20 @@ export default function LoginPage() {
         </div>
 
         {/* Email + Password */}
-        <div className="space-y-3 border rounded-md p-4 bg-white">
+        <form onSubmit={signInWithPassword} data-testid="login-form" className="space-y-3 border rounded-md p-4 bg-white">
           <div className="grid gap-2">
             <label htmlFor="email" className="text-sm font-medium">Email</label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+            <Input id="email" name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
           </div>
           <div className="grid gap-2">
             <label htmlFor="password" className="text-sm font-medium">Password</label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
+            <Input id="password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
           </div>
-          <Button onClick={signInWithPassword} disabled={!email || !password || loading} className="w-full">
+          <Button type="submit" disabled={!email || !password || loading} className="w-full">
             {loading ? "Signing in..." : "Sign in"}
           </Button>
           {message && <p className="text-xs text-red-600 text-center">{message}</p>}
-        </div>
+        </form>
 
         <div className="text-center">
           <Button onClick={signInWithLinkedIn} className="w-full">Continue with LinkedIn</Button>
@@ -79,6 +82,7 @@ export default function LoginPage() {
               <Button variant="outline" onClick={() => setDemoRole("founding")} className="w-full">Demo as Founding Circle</Button>
               <Button variant="outline" onClick={() => setDemoRole("select")} className="w-full">Demo as Select Circle</Button>
               <Button variant="outline" onClick={() => setDemoRole("client")} className="w-full">Demo as Client Company</Button>
+              <Button variant="outline" onClick={() => setDemoRole("candidate")} className="w-full">Demo as Candidate</Button>
             </div>
           </div>
         )}
