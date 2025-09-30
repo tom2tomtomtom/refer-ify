@@ -52,11 +52,7 @@ const nextConfig: NextConfig = {
   // Redirects for better SEO and error handling
   async redirects() {
     return [
-      {
-        source: '/login',
-        destination: '/auth/login',
-        permanent: false,
-      },
+      // Removed /login redirect - page exists at (auth)/login/page.tsx
     ];
   },
 };
