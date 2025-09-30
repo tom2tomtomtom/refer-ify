@@ -443,13 +443,17 @@ export default function HowItWorksPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl transition-colors flex items-center gap-2">
-              Apply for Select Circle
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <button className="border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-4 px-8 rounded-xl transition-colors">
-              Learn About Client Access
-            </button>
+            <Link href="/join-network">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl transition-colors flex items-center gap-2">
+                Apply for Select Circle
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </Link>
+            <Link href="/for-companies">
+              <button className="border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold py-4 px-8 rounded-xl transition-colors">
+                Learn About Client Access
+              </button>
+            </Link>
           </div>
 
           <p className="text-sm text-gray-500 mt-6">

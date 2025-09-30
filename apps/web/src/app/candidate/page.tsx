@@ -109,9 +109,10 @@ export default async function CandidateDashboardPage() {
           ) : (
             <div className="text-center py-8">
               <p className="text-gray-500 mb-4">No applications yet</p>
-              <Link href="/jobs" className="text-blue-600 hover:text-blue-800">
-                Browse Available Opportunities
-              </Link>
+              <p className="text-sm text-gray-600">
+                Applications appear here when network members refer you to opportunities.
+                Stay connected with your professional network!
+              </p>
             </div>
           )}
         </CardContent>
