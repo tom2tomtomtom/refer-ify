@@ -9,18 +9,17 @@ interface SignOutButtonProps {
 
 export function SignOutButton({ className }: SignOutButtonProps) {
   const handleSignOut = async () => {
+    // Always clear demo cookies (works in production now for demo mode)
     try {
-      if (process.env.NODE_ENV === 'development') {
-        const demoRole = typeof window !== 'undefined' ? window.localStorage.getItem('demo_user_role') : null;
-        const devOverride = typeof window !== 'undefined' ? window.localStorage.getItem('dev_role_override') : null;
-        if (demoRole) {
-          window.localStorage.removeItem('demo_user_role');
-          document.cookie = `demo_user_role=; Max-Age=0; Path=/; SameSite=Lax`;
-        }
-        if (devOverride) {
-          window.localStorage.removeItem('dev_role_override');
-          document.cookie = `dev_role_override=; Max-Age=0; Path=/; SameSite=Lax`;
-        }
+      const demoRole = typeof window !== 'undefined' ? window.localStorage.getItem('demo_user_role') : null;
+      const devOverride = typeof window !== 'undefined' ? window.localStorage.getItem('dev_role_override') : null;
+      if (demoRole) {
+        window.localStorage.removeItem('demo_user_role');
+        document.cookie = `demo_user_role=; Max-Age=0; Path=/; SameSite=Lax`;
+      }
+      if (devOverride) {
+        window.localStorage.removeItem('dev_role_override');
+        document.cookie = `dev_role_override=; Max-Age=0; Path=/; SameSite=Lax`;
       }
     } catch {}
 

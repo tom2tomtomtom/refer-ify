@@ -11,7 +11,65 @@ export default async function ClientCandidatesPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // Metrics
+  // Check if demo mode
+  const isDemo = user.id.startsWith('demo-');
+  
+  if (isDemo) {
+    // Demo data for candidates page
+    const demoData = {
+      total: 15,
+      pending: 8,
+      interviewing: 4,
+      hired: 3,
+      pipeline: [
+        { id: '1', status: 'submitted', candidate: { first_name: 'Sarah', last_name: 'Chen', current_title: 'VP Engineering' }, job: { title: 'CTO' } },
+        { id: '2', status: 'reviewed', candidate: { first_name: 'Michael', last_name: 'Johnson', current_title: 'Senior Director' }, job: { title: 'VP Engineering' } },
+        { id: '3', status: 'shortlisted', candidate: { first_name: 'Emily', last_name: 'Rodriguez', current_title: 'Lead Designer' }, job: { title: 'Head of Design' } },
+        { id: '4', status: 'interviewing', candidate: { first_name: 'David', last_name: 'Kim', current_title: 'Product Manager' }, job: { title: 'Director of Product' } },
+        { id: '5', status: 'hired', candidate: { first_name: 'Jessica', last_name: 'Taylor', current_title: 'Engineering Manager' }, job: { title: 'VP of Engineering' } },
+      ]
+    };
+    
+    const columns = ['submitted','reviewed','shortlisted','interviewing','hired','rejected'];
+    
+    return (
+      <div className="px-4 py-6 md:px-6">
+        <div className="mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Candidates</h1>
+          <div className="text-sm text-muted-foreground">Review candidates referred to your jobs.</div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Total</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{demoData.total}</div></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Pending Review</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{demoData.pending}</div></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Interviewing</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{demoData.interviewing}</div></CardContent></Card>
+          <Card><CardHeader className="pb-2"><CardTitle className="text-sm">Hired</CardTitle></CardHeader><CardContent><div className="text-2xl font-bold">{demoData.hired}</div></CardContent></Card>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+          {columns.map(col => (
+            <Card key={col}>
+              <CardHeader className="pb-2"><CardTitle className="text-sm capitalize">{col}</CardTitle></CardHeader>
+              <CardContent>
+                {demoData.pipeline.filter((p: any) => p.status === col).map((p: any) => (
+                  <div key={p.id} className="mb-3 rounded border p-2 text-xs">
+                    <div className="font-semibold">{p.candidate.first_name} {p.candidate.last_name} <span className="text-muted-foreground">· {p.candidate.current_title}</span></div>
+                    <div className="text-muted-foreground">{p.job.title}</div>
+                    <div className="mt-2 text-xs text-gray-500">Demo candidate data</div>
+                  </div>
+                ))}
+                {demoData.pipeline.filter((p: any) => p.status === col).length === 0 && (
+                  <div className="text-xs text-muted-foreground">No {col} candidates</div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Real data for non-demo users
   const [totalRes, pendingRes, interviewingRes, hiredRes] = await Promise.all([
     supabase.from('referrals').select('id, jobs!inner(client_id)', { count: 'exact', head: true }).eq('jobs.client_id', user.id),
     supabase.from('referrals').select('id, jobs!inner(client_id)', { count: 'exact', head: true }).eq('jobs.client_id', user.id).in('status', ['submitted','reviewed','shortlisted']),
