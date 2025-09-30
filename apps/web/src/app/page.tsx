@@ -46,3 +46,4 @@ export default async function Home() {
 
 // Homepage can be statically rendered for better performance
 export const dynamic = "force-static";
+// Trigger deployment - updated 2025-09-30
