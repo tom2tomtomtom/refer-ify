@@ -8,7 +8,7 @@ export default async function CandidateDashboardPage() {
   const { user } = await requireRole("candidate");
   
   // Demo data for candidate
-  const applications = user.id.startsWith('demo-') ? [
+  const applications = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-') ? [
     {
       id: '1',
       job_title: 'Senior Full-Stack Engineer',

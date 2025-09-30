@@ -20,8 +20,8 @@ export default async function SelectCircleEarningsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // Demo data for demo users
-  const isDemo = user.id.startsWith('demo-');
+  // Demo data for demo users (check for both old and new demo ID formats)
+  const isDemo = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-');
   if (isDemo) {
     const ytdEarned = 65400;
     const ytdPaid = 48500;

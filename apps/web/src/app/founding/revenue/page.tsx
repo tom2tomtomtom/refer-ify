@@ -25,8 +25,8 @@ export default async function RevenueDashboardPage() {
     );
   }
 
-  // Demo data for demo users
-  const isDemo = user.id.startsWith('demo-');
+  // Demo data for demo users (check for both old and new demo ID formats)
+  const isDemo = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-');
   if (isDemo) {
     const demoRevenueData: RevRow[] = [
       { month: '2024-07', network_revenue: 45000, direct_referrals: 8000, advisory_revenue: 12000, successful_placements: 3 },

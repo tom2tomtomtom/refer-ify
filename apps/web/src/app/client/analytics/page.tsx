@@ -7,7 +7,7 @@ export default async function ClientAnalyticsPage() {
   // Use demo data or fetch real data
   let data: any;
   
-  if (user.id.startsWith('demo-')) {
+  if (user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-')) {
     // Demo analytics data for client
     data = {
       pipelineCounts: {

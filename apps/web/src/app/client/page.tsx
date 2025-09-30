@@ -10,7 +10,7 @@ export default async function ClientDashboardPage() {
   // Get user's jobs - or use demo data
   let jobs: any[] = [];
   
-  if (user.id.startsWith('demo-')) {
+  if (user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-')) {
     // Demo data for client dashboard
     jobs = [
       {

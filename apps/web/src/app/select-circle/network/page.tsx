@@ -12,7 +12,7 @@ export default async function SelectCircleNetworkPage() {
   if (!user) return null;
 
   // Demo data for demo users
-  const isDemo = user.id.startsWith('demo-');
+  const isDemo = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-');
   if (isDemo) {
     const referrals90 = 18;
     const referrals30 = 7;

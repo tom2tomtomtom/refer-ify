@@ -12,7 +12,7 @@ export default async function ClientCandidatesPage() {
   if (!user) return null;
 
   // Check if demo mode
-  const isDemo = user.id.startsWith('demo-');
+  const isDemo = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-');
   
   if (isDemo) {
     // Demo data for candidates page

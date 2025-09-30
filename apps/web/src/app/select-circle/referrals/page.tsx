@@ -13,7 +13,7 @@ export default async function SelectCircleReferralsPage() {
   if (!user) return null;
 
   // Demo data for demo users
-  const isDemo = user.id.startsWith('demo-');
+  const isDemo = user.id.startsWith('demo-') || user.id.startsWith('00000000-0000-0000-0000-');
   if (isDemo) {
     const totalEarnings = 48500;
     const successRate = 65;
