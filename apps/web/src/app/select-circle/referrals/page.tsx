@@ -12,6 +12,82 @@ export default async function SelectCircleReferralsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
+  // Demo data for demo users
+  const isDemo = user.id.startsWith('demo-');
+  if (isDemo) {
+    const totalEarnings = 48500;
+    const successRate = 65;
+    const pipeline = [
+      { id: '1', candidateName: 'Sarah Chen', jobTitle: 'VP Engineering', status: 'hired', potentialEarnings: 12000, daysInStatus: 45 },
+      { id: '2', candidateName: 'Michael Johnson', jobTitle: 'CTO', status: 'interviewing', potentialEarnings: 15000, daysInStatus: 12 },
+      { id: '3', candidateName: 'Emily Rodriguez', jobTitle: 'Head of Design', status: 'shortlisted', potentialEarnings: 8500, daysInStatus: 8 },
+      { id: '4', candidateName: 'David Kim', jobTitle: 'Director of Product', status: 'reviewed', potentialEarnings: 9000, daysInStatus: 5 },
+      { id: '5', candidateName: 'Lisa Wang', jobTitle: 'Senior Engineer', status: 'submitted', potentialEarnings: 6000, daysInStatus: 2 },
+    ];
+
+    return (
+      <div className="px-4 py-6 md:px-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">My Referrals</h1>
+            <div className="text-sm text-muted-foreground">Track your referrals, statuses, and earnings.</div>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" asChild><a href="/select-circle/earnings">View Earnings</a></Button>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Total Earnings</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold text-green-700">{fmtCurrency(totalEarnings)}</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Success Rate</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">{successRate}%</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Referrals</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">{pipeline.length}</div></CardContent>
+          </Card>
+        </div>
+
+        <Card>
+          <CardHeader><CardTitle>My Referral Submissions</CardTitle></CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left border-b">
+                    <th className="py-2 pr-4">Candidate</th>
+                    <th className="py-2 pr-4">Job</th>
+                    <th className="py-2 pr-4">Status</th>
+                    <th className="py-2 pr-4">Potential</th>
+                    <th className="py-2 pr-4">Days</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pipeline.map((p) => (
+                    <tr key={p.id} className="border-b last:border-none">
+                      <td className="py-2 pr-4">{p.candidateName}</td>
+                      <td className="py-2 pr-4">{p.jobTitle}</td>
+                      <td className="py-2 pr-4 capitalize">{p.status}</td>
+                      <td className="py-2 pr-4 text-green-700">{fmtCurrency(p.potentialEarnings)}</td>
+                      <td className="py-2 pr-4">{p.daysInStatus}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-gray-700">
+              💡 Demo data shown for walkthrough purposes
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const origin = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const [dashboardRes, profileRes] = await Promise.all([
     fetch(`${origin}/api/referrals/my-dashboard`, { cache: 'no-store' }),

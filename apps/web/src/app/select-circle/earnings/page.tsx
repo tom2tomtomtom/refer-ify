@@ -20,6 +20,133 @@ export default async function SelectCircleEarningsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
+  // Demo data for demo users
+  const isDemo = user.id.startsWith('demo-');
+  if (isDemo) {
+    const ytdEarned = 65400;
+    const ytdPaid = 48500;
+    const ytdPending = 16900;
+
+    const earningsSeries = [
+      { month: '2024-07', earnings: 8200 },
+      { month: '2024-08', earnings: 9800 },
+      { month: '2024-09', earnings: 12100 },
+      { month: '2024-10', earnings: 10500 },
+      { month: '2024-11', earnings: 13800 },
+      { month: '2024-12', earnings: 11000 },
+    ];
+
+    const breakdown = [
+      { label: 'Pending', value: 7 },
+      { label: 'Successful', value: 5 },
+      { label: 'Paid', value: 4 },
+    ];
+
+    const topReferrals = [
+      { id: '1', title: 'VP Engineering', estimatedEarnings: 15000, matchScore: 92, date: '2024-11-15' },
+      { id: '2', title: 'CTO', estimatedEarnings: 12000, matchScore: 88, date: '2024-10-22' },
+      { id: '3', title: 'Head of Product', estimatedEarnings: 10500, matchScore: 85, date: '2024-09-30' },
+      { id: '4', title: 'Senior Engineer', estimatedEarnings: 8200, matchScore: 90, date: '2024-08-18' },
+    ];
+
+    const payments = [
+      { id: '1', date: '12/15/2024', jobTitle: 'VP Engineering', amount: 15000, status: 'paid' },
+      { id: '2', date: '11/20/2024', jobTitle: 'CTO', amount: 12000, status: 'paid' },
+      { id: '3', date: '10/30/2024', jobTitle: 'Head of Product', amount: 10500, status: 'paid' },
+      { id: '4', date: '09/25/2024', jobTitle: 'Senior Engineer', amount: 11000, status: 'paid' },
+    ];
+
+    return (
+      <div className="px-4 py-6 md:px-6 space-y-6">
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Earnings Dashboard</h1>
+            <div className="text-sm text-muted-foreground">Select Circle earnings overview and payment history.</div>
+          </div>
+          <div className="flex gap-2">
+            <Link href="/select-circle/referrals"><Button variant="outline">View My Referrals</Button></Link>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">YTD Earned</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold text-green-700">{fmtCurrency(ytdEarned)}</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">YTD Paid</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">{fmtCurrency(ytdPaid)}</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Pending Payout</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">{fmtCurrency(ytdPending)}</div></CardContent>
+          </Card>
+        </div>
+
+        <SelectEarningsCharts earningsSeries={earningsSeries} breakdown={breakdown} />
+
+        <Card>
+          <CardHeader><CardTitle>Top Performing Referrals</CardTitle></CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left border-b">
+                    <th className="py-2 pr-4">Referral</th>
+                    <th className="py-2 pr-4">Estimated Earnings</th>
+                    <th className="py-2 pr-4">Match Score</th>
+                    <th className="py-2 pr-4">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topReferrals.map((r) => (
+                    <tr key={r.id} className="border-b last:border-none">
+                      <td className="py-2 pr-4">{r.title}</td>
+                      <td className="py-2 pr-4 text-green-700">{fmtCurrency(r.estimatedEarnings)}</td>
+                      <td className="py-2 pr-4">{r.matchScore}%</td>
+                      <td className="py-2 pr-4">{new Date(r.date).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader><CardTitle>Payment History</CardTitle></CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left border-b">
+                    <th className="py-2 pr-4">Date</th>
+                    <th className="py-2 pr-4">Job</th>
+                    <th className="py-2 pr-4">Amount</th>
+                    <th className="py-2 pr-4">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payments.map((p) => (
+                    <tr key={p.id} className="border-b last:border-none">
+                      <td className="py-2 pr-4">{p.date}</td>
+                      <td className="py-2 pr-4">{p.jobTitle}</td>
+                      <td className="py-2 pr-4">{fmtCurrency(p.amount)}</td>
+                      <td className="py-2 pr-4 capitalize">{p.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-gray-700">
+              💡 Demo data shown for walkthrough purposes
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   // Determine role and early return if not select/founding (circle members)
   let role: string | null = null;
   try {

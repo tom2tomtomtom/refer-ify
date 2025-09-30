@@ -11,6 +11,83 @@ export default async function SelectCircleNetworkPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
+  // Demo data for demo users
+  const isDemo = user.id.startsWith('demo-');
+  if (isDemo) {
+    const referrals90 = 18;
+    const referrals30 = 7;
+    const monthlyReferrals = [
+      { month: '2024-07', referrals: 2 },
+      { month: '2024-08', referrals: 3 },
+      { month: '2024-09', referrals: 4 },
+      { month: '2024-10', referrals: 3 },
+      { month: '2024-11', referrals: 4 },
+      { month: '2024-12', referrals: 2 },
+    ];
+
+    return (
+      <div className="px-4 py-6 md:px-6 space-y-6">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Network Dashboard</h1>
+          <div className="text-sm text-muted-foreground">Track growth, activity, and invitations in your referral network.</div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Referrals (90 days)</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">{fmt(referrals90)}</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Referrals (30 days)</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">{fmt(referrals30)}</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Active Jobs</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">12</div></CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm">Network Connections</CardTitle></CardHeader>
+            <CardContent><div className="text-2xl font-bold">45</div></CardContent>
+          </Card>
+        </div>
+
+        <SelectNetworkCharts monthlyReferrals={monthlyReferrals} />
+
+        <Card>
+          <CardHeader><CardTitle>Recent Activity</CardTitle></CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center py-2 border-b">
+                <div>
+                  <div className="font-medium">Referred Sarah Chen for VP Engineering</div>
+                  <div className="text-xs text-muted-foreground">2 days ago</div>
+                </div>
+                <div className="text-sm text-green-600">+50 points</div>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b">
+                <div>
+                  <div className="font-medium">Completed profile update</div>
+                  <div className="text-xs text-muted-foreground">5 days ago</div>
+                </div>
+                <div className="text-sm text-blue-600">+10 points</div>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <div>
+                  <div className="font-medium">Referred Michael Johnson for CTO</div>
+                  <div className="text-xs text-muted-foreground">7 days ago</div>
+                </div>
+                <div className="text-sm text-green-600">+50 points</div>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-gray-700">
+              💡 Demo data shown for walkthrough purposes
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   // Basic metrics from recent referrals and invites (best effort)
   const since90 = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
   const [{ count: referrals90 }, { count: referrals30 }] = await Promise.all([
