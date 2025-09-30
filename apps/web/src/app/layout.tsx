@@ -147,26 +147,28 @@ export default async function RootLayout({
   let userId: string | null = null;
   let hasClientJobs = false;
 
+  // Check for demo mode first (works in both dev and production)
+  try {
+    const cookieStore = await cookies();
+    const devOverride = cookieStore.get('dev_role_override')?.value;
+    if (devOverride) {
+      headerRole = devOverride;
+    }
+  } catch {}
+
   // In production, skip complex database queries to prevent timeouts and 500 errors
   const isProduction = process.env.NODE_ENV === 'production';
   
   if (!isProduction) {
-    // Only do auth resolution in development
+    // Only do database auth resolution in development
     const hasRequiredEnvVars = process.env.NEXT_PUBLIC_SUPABASE_URL && 
                                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (hasRequiredEnvVars) {
-      // Quick cookie check first (dev override)
-      try {
-        const cookieStore = await cookies();
-        const devOverride = cookieStore.get('dev_role_override')?.value;
-        if (devOverride) {
-          headerRole = devOverride;
-        }
-      } catch {}
-
-      // Only query database if no dev override exists
+      // Only query database if no demo override exists
       if (!headerRole) {
+        try {
+
         try {
           const supabase = await getSupabaseServerComponentClient();
           const { data: { user }, error } = await supabase.auth.getUser();
@@ -201,7 +203,9 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <DemoNavigationBar currentRole={headerRole} />
+        {process.env.NODE_ENV === 'development' && (
+          <DemoNavigationBar currentRole={headerRole} />
+        )}
         <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <div className="flex items-center gap-2">
