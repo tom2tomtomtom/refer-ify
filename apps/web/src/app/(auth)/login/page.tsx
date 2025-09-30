@@ -75,17 +75,15 @@ export default function LoginPage() {
           <Button onClick={signInWithLinkedIn} className="w-full">Continue with LinkedIn</Button>
         </div>
 
-        {process.env.NODE_ENV === "development" && (
-          <div className="space-y-3">
-            <p className="text-xs text-gray-600 text-center">Demo Flow: Choose a role below → Explore → Sign Out → Try another role</p>
-            <div className="grid grid-cols-1 gap-2">
-              <Button variant="outline" onClick={() => setDemoRole("founding")} className="w-full">Demo as Founding Circle</Button>
-              <Button variant="outline" onClick={() => setDemoRole("select")} className="w-full">Demo as Select Circle</Button>
-              <Button variant="outline" onClick={() => setDemoRole("client")} className="w-full">Demo as Client Company</Button>
-              <Button variant="outline" onClick={() => setDemoRole("candidate")} className="w-full">Demo as Candidate</Button>
-            </div>
+        <div className="space-y-3">
+          <p className="text-xs text-gray-600 text-center">Demo Mode: Choose a role below to explore the platform</p>
+          <div className="grid grid-cols-1 gap-2">
+            <Button variant="outline" onClick={() => setDemoRole("founding")} className="w-full">Demo as Founding Circle</Button>
+            <Button variant="outline" onClick={() => setDemoRole("select")} className="w-full">Demo as Select Circle</Button>
+            <Button variant="outline" onClick={() => setDemoRole("client")} className="w-full">Demo as Client Company</Button>
+            <Button variant="outline" onClick={() => setDemoRole("candidate")} className="w-full">Demo as Candidate</Button>
           </div>
-        )}
+        </div>
 
         <div className="text-center text-xs text-muted-foreground">
           Don’t have an account? <a href="/signup" className="underline">Sign up</a>
