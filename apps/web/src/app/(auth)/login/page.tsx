@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -77,6 +78,18 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center p-4">
       <div className="space-y-8 w-full max-w-sm">
+        {/* Large Brand Logo */}
+        <div className="flex justify-center mb-8">
+          <Image
+            src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
+            alt="Refer-ify - Executive Recruitment Network"
+            width={240}
+            height={80}
+            className="h-16 w-auto sm:h-20"
+            priority
+          />
+        </div>
+
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-semibold">Sign in to Refer-ify</h1>
           <p className="text-sm text-muted-foreground">Use email + password or LinkedIn. New here? Sign up first.</p>

@@ -19,6 +19,18 @@ export default function AboutPage() {
 
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center space-y-6 mb-12">
+            {/* Large Brand Logo */}
+            <div className="mb-6 flex justify-center">
+              <Image
+                src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
+                alt="Refer-ify - Executive Recruitment Network"
+                width={280}
+                height={93}
+                className="h-20 w-auto sm:h-24"
+                priority
+              />
+            </div>
+
             <Badge variant="secondary" className="px-4 py-1.5 text-sm font-medium bg-white/80 backdrop-blur-sm">
               <Sparkles className="w-3 h-3 mr-1.5 inline" />
               About Refer-ify

@@ -208,9 +208,9 @@ export default async function RootLayout({
                 <Image
                   src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
                   alt="Refer-ify"
-                  width={120}
-                  height={40}
-                  className="h-8 w-auto"
+                  width={180}
+                  height={60}
+                  className="h-12 w-auto sm:h-14"
                   priority
                 />
               </Link>

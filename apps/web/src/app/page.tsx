@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +33,18 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Hero content */}
             <div className="space-y-8">
+              {/* Large Brand Logo */}
+              <div className="mb-6">
+                <Image
+                  src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
+                  alt="Refer-ify - Executive Recruitment Network"
+                  width={280}
+                  height={93}
+                  className="h-20 w-auto sm:h-24"
+                  priority
+                />
+              </div>
+
               <Badge variant="secondary" className="px-4 py-1.5 text-sm font-medium bg-white/80 backdrop-blur-sm">
                 <Zap className="w-3 h-3 mr-1.5 inline" />
                 Executive Recruitment Network
