@@ -20,13 +20,13 @@ export default function AboutPage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center space-y-6 mb-12">
             {/* Large Brand Logo */}
-            <div className="mb-6 flex justify-center">
+            <div className="mb-8 flex justify-center">
               <Image
                 src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
                 alt="Refer-ify - Executive Recruitment Network"
-                width={280}
-                height={93}
-                className="h-20 w-auto sm:h-24"
+                width={480}
+                height={160}
+                className="h-32 w-auto sm:h-40 lg:h-48"
                 priority
               />
             </div>

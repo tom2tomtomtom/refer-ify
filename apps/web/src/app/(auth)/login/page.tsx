@@ -83,9 +83,9 @@ export default function LoginPage() {
           <Image
             src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
             alt="Refer-ify - Executive Recruitment Network"
-            width={240}
-            height={80}
-            className="h-16 w-auto sm:h-20"
+            width={400}
+            height={133}
+            className="h-24 w-auto sm:h-32 md:h-36"
             priority
           />
         </div>
