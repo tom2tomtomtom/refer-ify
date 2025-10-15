@@ -19,7 +19,7 @@ import {
 
 export default async function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20">
+    <main className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-100 to-zinc-100">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Background decorative elements */}
