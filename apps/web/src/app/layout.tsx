@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import { getSupabaseServerComponentClient } from "@/lib/supabase/server";
@@ -203,7 +204,16 @@ export default async function RootLayout({
         <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
             <div className="flex items-center gap-2">
-              <Link href="/" className="font-semibold tracking-tight">Refer-ify</Link>
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
+                  alt="Refer-ify"
+                  width={120}
+                  height={40}
+                  className="h-8 w-auto"
+                  priority
+                />
+              </Link>
               {normalizedRole && (
                 <span className="hidden sm:inline-flex items-center gap-2">
                   {process.env.NODE_ENV !== 'production' && (
