@@ -207,8 +207,8 @@ describe('Login Page', () => {
     render(<LoginPage />)
 
     expect(screen.getByText('Demo Flow: Choose a role below → Explore → Sign Out → Try another role')).toBeInTheDocument()
-    expect(screen.getByText('Demo as Founding Circle')).toBeInTheDocument()
-    expect(screen.getByText('Demo as Select Circle')).toBeInTheDocument()
+    expect(screen.getByText('Demo as Founder')).toBeInTheDocument()
+    expect(screen.getByText('Demo as Referrer')).toBeInTheDocument()
     expect(screen.getByText('Demo as Client Company')).toBeInTheDocument()
   })
 
@@ -217,16 +217,16 @@ describe('Login Page', () => {
     render(<LoginPage />)
 
     expect(screen.queryByText('Demo Flow: Choose a role below → Explore → Sign Out → Try another role')).not.toBeInTheDocument()
-    expect(screen.queryByText('Demo as Founding Circle')).not.toBeInTheDocument()
-    expect(screen.queryByText('Demo as Select Circle')).not.toBeInTheDocument()
+    expect(screen.queryByText('Demo as Founder')).not.toBeInTheDocument()
+    expect(screen.queryByText('Demo as Referrer')).not.toBeInTheDocument()
     expect(screen.queryByText('Demo as Client Company')).not.toBeInTheDocument()
   })
 
-  it('handles demo role selection - founding circle', async () => {
+  it('handles demo role selection - founding_circle role', async () => {
     render(<LoginPage />)
 
-    const foundingButton = screen.getByText('Demo as Founding Circle')
-    
+    const foundingButton = screen.getByText('Demo as Founder')
+
     await act(async () => {
       fireEvent.click(foundingButton)
     })
@@ -236,11 +236,11 @@ describe('Login Page', () => {
     // Navigation tested separately - just check localStorage calls
   })
 
-  it('handles demo role selection - select circle', async () => {
+  it('handles demo role selection - select_circle role', async () => {
     render(<LoginPage />)
 
-    const selectButton = screen.getByText('Demo as Select Circle')
-    
+    const selectButton = screen.getByText('Demo as Referrer')
+
     await act(async () => {
       fireEvent.click(selectButton)
     })
@@ -271,13 +271,13 @@ describe('Login Page', () => {
 
     render(<LoginPage />)
 
-    const foundingButton = screen.getByText('Demo as Founding Circle')
-    
+    const foundingButton = screen.getByText('Demo as Founder')
+
     // Should not throw error when clicking
     await act(async () => {
       expect(() => fireEvent.click(foundingButton)).not.toThrow()
     })
-    
+
     // Navigation would still work but localStorage call failed gracefully
   })
 

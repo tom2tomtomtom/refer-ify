@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ROLE_LABELS } from "@/lib/role-display";
 
 export default function DashboardIndexPage() {
   return (
@@ -7,8 +8,8 @@ export default function DashboardIndexPage() {
       <ul className="list-disc pl-6">
         <li><Link href="/client">Client</Link></li>
         <li><Link href="/candidate">Candidate</Link></li>
-        <li><Link href="/founding-circle">Founding Circle</Link></li>
-        <li><Link href="/select-circle">Select Circle</Link></li>
+        <li><Link href="/founding-circle">Founder</Link></li>
+        <li><Link href="/select-circle">Referrer</Link></li>
       </ul>
     </div>
   );

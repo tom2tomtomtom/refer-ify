@@ -86,7 +86,7 @@ describe('Founding Dashboard Page', () => {
     render(FoundingDashboard)
 
     expect(screen.getByText('Welcome back, Member')).toBeInTheDocument()
-    expect(screen.getByText('Founding Circle')).toBeInTheDocument()
+    expect(screen.getByText('Founder')).toBeInTheDocument()
     expect(screen.getByText('Your network drives premium outcomes across the platform.')).toBeInTheDocument()
   })
 
@@ -94,7 +94,7 @@ describe('Founding Dashboard Page', () => {
     const FoundingDashboard = await FoundingDashboardPage()
     render(FoundingDashboard)
 
-    expect(screen.getByText('Dashboard > Founding Circle')).toBeInTheDocument()
+    expect(screen.getByText('Dashboard > Founder')).toBeInTheDocument()
   })
 
   it('shows all action buttons in header', async () => {
@@ -267,7 +267,7 @@ describe('Founding Dashboard Page', () => {
     const FoundingDashboard = await FoundingDashboardPage()
     render(FoundingDashboard)
 
-    const badge = screen.getByText('Founding Circle')
+    const badge = screen.getByText('Founder')
     expect(badge).toHaveClass('badge', 'secondary')
   })
 

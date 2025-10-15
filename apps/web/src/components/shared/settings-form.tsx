@@ -37,7 +37,7 @@ const roleSpecificSettings = {
     ],
   },
   founding_circle: {
-    title: "Founding Circle Settings", 
+    title: "Founder Settings",
     description: "Configure your network and revenue sharing preferences",
     additionalOptions: [
       { id: "network_updates", label: "Network activity notifications", icon: Bell },
@@ -45,8 +45,8 @@ const roleSpecificSettings = {
     ],
   },
   select_circle: {
-    title: "Select Circle Settings",
-    description: "Manage your referral and earnings notification preferences", 
+    title: "Referrer Settings",
+    description: "Manage your referral and earnings notification preferences",
     additionalOptions: [
       { id: "referral_notifications", label: "New referral opportunities", icon: Bell },
       { id: "earnings_updates", label: "Earnings and payment updates", icon: Mail },

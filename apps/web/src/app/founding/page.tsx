@@ -71,14 +71,14 @@ export default async function FoundingDashboardPage() {
   return (
     <div className="px-4 py-6 md:px-6">
       {/* Breadcrumb */}
-      <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founding Circle</div>
+      <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founder</div>
 
       {/* Header */}
       <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2">
             Welcome back, {displayName}
-            <Badge variant="secondary">Founding Circle</Badge>
+            <Badge variant="secondary">Founder</Badge>
           </h1>
           <p className="text-sm text-muted-foreground mt-1">Your network drives premium outcomes across the platform.</p>
         </div>

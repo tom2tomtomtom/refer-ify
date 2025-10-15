@@ -14,12 +14,11 @@ export default function ForCompaniesPage() {
             Trusted by 200+ Companies
           </Badge>
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-blue-600 bg-clip-text text-transparent">
-            Stop Hiring from Job Boards.<br />
-            Start Hiring from Networks.
+            Great people know, great people.
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Access executive talent through trusted referrals from our curated network of 
-            industry leaders. Get quality candidates, not quantity applications.
+            Get the best people for your team with pre-vetted, highly regarded recommendations
+            from our founders; senior executives and their connections.
           </p>
           <div className="flex justify-center gap-4">
             <Link href="/apply">

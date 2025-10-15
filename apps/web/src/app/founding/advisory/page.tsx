@@ -26,7 +26,7 @@ export default async function AdvisoryPage() {
 
     return (
       <div className="px-4 py-6 md:px-6">
-        <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founding Circle &gt; Advisory Services</div>
+        <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founder &gt; Advisory Services</div>
         <div className="mb-3 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Advisory Services ($500/hour)</h1>
           <div className="text-xs text-muted-foreground flex items-center gap-3">

@@ -106,16 +106,16 @@ describe('RealTimeJobFeed', () => {
     expect(screen.getByText('Executive opportunities in real time')).toBeInTheDocument()
   })
 
-  it('shows founding circle badge for founding circle users', () => {
+  it('shows founder badge for founding_circle role users', () => {
     render(<RealTimeJobFeed userRole="founding_circle" />)
 
-    expect(screen.getByText('Founding Circle')).toBeInTheDocument()
+    expect(screen.getByText('Founder')).toBeInTheDocument()
   })
 
-  it('does not show founding circle badge for select circle users', () => {
+  it('does not show founder badge for select_circle role users', () => {
     render(<RealTimeJobFeed userRole="select_circle" />)
 
-    expect(screen.queryByText('Founding Circle')).not.toBeInTheDocument()
+    expect(screen.queryByText('Founder')).not.toBeInTheDocument()
   })
 
   it('renders loading skeletons initially', () => {

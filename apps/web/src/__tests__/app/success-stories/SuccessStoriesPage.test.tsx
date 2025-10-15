@@ -18,11 +18,11 @@ describe('Success Stories Page', () => {
 
     // Check for VP Engineering story
     expect(screen.getByText('VP Engineering • Series B')).toBeInTheDocument()
-    expect(screen.getByText('Hired via Select Circle referral in 23 days. Reduced interview load by 60%.')).toBeInTheDocument()
+    expect(screen.getByText('Hired via Referrer referral in 23 days. Reduced interview load by 60%.')).toBeInTheDocument()
 
     // Check for Head of Product story
     expect(screen.getByText('Head of Product • Fintech')).toBeInTheDocument()
-    expect(screen.getByText('Found through a Founding Circle introduction. Offer accepted in 3 weeks.')).toBeInTheDocument()
+    expect(screen.getByText('Found through a Founder introduction. Offer accepted in 3 weeks.')).toBeInTheDocument()
 
     // Check for Country GM story
     expect(screen.getByText('Country GM • APAC')).toBeInTheDocument()
@@ -128,8 +128,8 @@ describe('Success Stories Page', () => {
   it('emphasizes relationship-based referrals', () => {
     render(<SuccessStoriesPage />)
 
-    expect(screen.getByText(/Select Circle referral/)).toBeInTheDocument()
-    expect(screen.getByText(/Founding Circle introduction/)).toBeInTheDocument()
+    expect(screen.getByText(/Referrer referral/)).toBeInTheDocument()
+    expect(screen.getByText(/Founder introduction/)).toBeInTheDocument()
     expect(screen.getByText(/Warm referral/)).toBeInTheDocument()
     expect(screen.getByText(/prior working history/)).toBeInTheDocument()
   })

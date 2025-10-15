@@ -80,7 +80,7 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
         { label: "Advisory", href: "/founding/advisory" },
       ],
       cta: { label: "View Network", href: "/founding/network" },
-      roleLabel: "Founding Circle",
+      roleLabel: "Founder",
     };
   }
   if (role === "select") {
@@ -93,7 +93,7 @@ function getNavigationForRole(role: SupportedRole, hasClientJobs?: boolean): Nav
         { label: "Network", href: "/select-circle/network" },
       ],
       cta: { label: "Find Jobs", href: "/select-circle/job-opportunities" },
-      roleLabel: "Select Circle",
+      roleLabel: "Referrer",
     };
   }
   // Anonymous
@@ -130,8 +130,8 @@ function RoleIcon({ role }: { role: SupportedRole }) {
 
 function getRoleLabel(role: SupportedRole) {
   if (role === 'client') return 'Client Company';
-  if (role === 'founding') return 'Founding Circle';
-  if (role === 'select') return 'Select Circle';
+  if (role === 'founding') return 'Founder';
+  if (role === 'select') return 'Referrer';
   return 'User';
 }
 

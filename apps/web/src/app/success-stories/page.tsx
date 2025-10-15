@@ -9,11 +9,11 @@ export default function SuccessStoriesPage() {
         <div className="grid gap-6 md:grid-cols-3">
           <article className="rounded border bg-white p-6 shadow-sm">
             <div className="text-sm font-semibold">VP Engineering • Series B</div>
-            <p className="mt-2 text-sm text-muted-foreground">Hired via Select Circle referral in 23 days. Reduced interview load by 60%.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Hired via Referrer network in 23 days. Reduced interview load by 60%.</p>
           </article>
           <article className="rounded border bg-white p-6 shadow-sm">
             <div className="text-sm font-semibold">Head of Product • Fintech</div>
-            <p className="mt-2 text-sm text-muted-foreground">Found through a Founding Circle introduction. Offer accepted in 3 weeks.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Found through a Founder introduction. Offer accepted in 3 weeks.</p>
           </article>
           <article className="rounded border bg-white p-6 shadow-sm">
             <div className="text-sm font-semibold">Country GM • APAC</div>

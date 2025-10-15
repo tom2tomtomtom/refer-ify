@@ -47,7 +47,7 @@ const roleSpecificFields = {
     ],
   },
   founding_circle: {
-    title: "Founding Circle Profile", 
+    title: "Founder Profile",
     description: "Showcase your expertise and network",
     fields: [
       { id: "network_size", label: "Network Size", type: "number" },
@@ -57,8 +57,8 @@ const roleSpecificFields = {
     ],
   },
   select_circle: {
-    title: "Select Circle Profile",
-    description: "Highlight your referral capabilities and expertise", 
+    title: "Referrer Profile",
+    description: "Highlight your referral capabilities and expertise",
     fields: [
       { id: "specializations", label: "Specializations", type: "textarea" },
       { id: "years_recruiting", label: "Years in Recruiting", type: "number" },

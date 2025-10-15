@@ -7,8 +7,8 @@ describe('SolutionsSidebar', () => {
     render(<SolutionsSidebar />)
 
     // Check that all three solutions are displayed
-    expect(screen.getByText('Founding Circle')).toBeInTheDocument()
-    expect(screen.getByText('Select Circle')).toBeInTheDocument()
+    expect(screen.getByText('Founders')).toBeInTheDocument()
+    expect(screen.getByText('Referrers')).toBeInTheDocument()
     expect(screen.getByText('Client Solutions')).toBeInTheDocument()
 
     // Check subtitles
@@ -18,7 +18,7 @@ describe('SolutionsSidebar', () => {
 
     // Check CTAs
     expect(screen.getByText('Get Started')).toBeInTheDocument()
-    expect(screen.getByText('Join Select Circle')).toBeInTheDocument()
+    expect(screen.getByText('Join Referrer Network')).toBeInTheDocument()
     expect(screen.getByText('Explore Solutions')).toBeInTheDocument()
 
     // Check numbering
@@ -32,20 +32,20 @@ describe('SolutionsSidebar', () => {
 
     // Check that links have correct hrefs
     const foundingCircleLink = screen.getByText('Get Started').closest('a')
-    const selectCircleLink = screen.getByText('Join Select Circle').closest('a')
+    const selectCircleLink = screen.getByText('Join Referrer Network').closest('a')
     const clientSolutionsLink = screen.getByText('Explore Solutions').closest('a')
 
-    expect(foundingCircleLink).toHaveAttribute('href', '/founding-circle')
-    expect(selectCircleLink).toHaveAttribute('href', '/select-circle')
-    expect(clientSolutionsLink).toHaveAttribute('href', '/client')
+    expect(foundingCircleLink).toHaveAttribute('href', '/join-network')
+    expect(selectCircleLink).toHaveAttribute('href', '/join-network')
+    expect(clientSolutionsLink).toHaveAttribute('href', '/for-companies')
   })
 
   it('applies different styling to first item', () => {
     render(<SolutionsSidebar />)
 
-    // The first item (Founding Circle) should have special styling
+    // The first item (Founders) should have special styling
     const foundingCircleButton = screen.getByText('Get Started')
-    const selectCircleButton = screen.getByText('Join Select Circle')
+    const selectCircleButton = screen.getByText('Join Referrer Network')
 
     // Check that buttons have different classes (first should be default variant, others outline)
     expect(foundingCircleButton).toBeInTheDocument()
@@ -64,7 +64,7 @@ describe('SolutionsSidebar', () => {
     // Should have exactly 3 buttons in the correct order
     expect(items).toHaveLength(3)
     expect(items[0]).toHaveTextContent('Get Started')
-    expect(items[1]).toHaveTextContent('Join Select Circle')
+    expect(items[1]).toHaveTextContent('Join Referrer Network')
     expect(items[2]).toHaveTextContent('Explore Solutions')
   })
 
@@ -72,8 +72,8 @@ describe('SolutionsSidebar', () => {
     render(<SolutionsSidebar />)
 
     // Each item should be in a card structure
-    const foundingCircleCard = screen.getByText('Founding Circle').closest('[data-slot="card"]')
-    const selectCircleCard = screen.getByText('Select Circle').closest('[data-slot="card"]')
+    const foundingCircleCard = screen.getByText('Founders').closest('[data-slot="card"]')
+    const selectCircleCard = screen.getByText('Referrers').closest('[data-slot="card"]')
     const clientCard = screen.getByText('Client Solutions').closest('[data-slot="card"]')
 
     expect(foundingCircleCard).toBeInTheDocument()

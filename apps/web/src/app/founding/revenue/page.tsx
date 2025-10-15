@@ -63,7 +63,7 @@ export default async function RevenueDashboardPage() {
 
     return (
       <div className="px-4 py-6 md:px-6">
-        <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founding Circle &gt; Revenue</div>
+        <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founder &gt; Revenue</div>
         <div className="mb-4 flex items-center justify-between gap-3">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Revenue Dashboard</h1>
           <div className="flex items-center gap-3 text-xs text-muted-foreground"><Link href="/founding">Back to Overview</Link></div>

@@ -25,8 +25,8 @@ export function DemoNavigationBar({ currentRole }: DemoNavigationBarProps) {
   const getRoleLabel = (role: string | null) => {
     if (!role) return 'Visitor';
     if (role === 'client') return 'Client Company';
-    if (role === 'founding') return 'Founding Circle';
-    if (role === 'select') return 'Select Circle';
+    if (role === 'founding') return 'Founder';
+    if (role === 'select') return 'Referrer';
     return 'User';
   };
 

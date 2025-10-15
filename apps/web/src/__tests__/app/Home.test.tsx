@@ -18,8 +18,8 @@ jest.mock('next/link', () => {
 jest.mock('@/components/home/SolutionsSidebar', () => ({
   SolutionsSidebar: () => (
     <div data-testid="solutions-sidebar">
-      <div>Founding Circle</div>
-      <div>Select Circle</div>
+      <div>Founders</div>
+      <div>Referrers</div>
       <div>Client Solutions</div>
     </div>
   ),

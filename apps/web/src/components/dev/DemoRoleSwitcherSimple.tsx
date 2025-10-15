@@ -56,24 +56,24 @@ export function DemoRoleSwitcherSimple() {
           Client Company
         </Button>
         
-        <Button 
-          variant="outline" 
-          size="sm" 
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => handleRoleSwitch('founding')}
           className="w-full justify-start text-xs"
         >
           <Star className="w-3 h-3 mr-2" />
-          Founding Circle
+          Founder
         </Button>
-        
-        <Button 
-          variant="outline" 
-          size="sm" 
+
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => handleRoleSwitch('select')}
           className="w-full justify-start text-xs"
         >
           <Users className="w-3 h-3 mr-2" />
-          Select Circle
+          Referrer
         </Button>
         
         <Button 

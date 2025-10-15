@@ -105,8 +105,8 @@ export default function LoginPage() {
         <div className="space-y-3">
           <p className="text-xs text-gray-600 text-center">Demo Mode: Choose a role below to explore the platform</p>
           <div className="grid grid-cols-1 gap-2">
-            <Button variant="outline" onClick={() => setDemoRole("founding")} className="w-full">Demo as Founding Circle</Button>
-            <Button variant="outline" onClick={() => setDemoRole("select")} className="w-full">Demo as Select Circle</Button>
+            <Button variant="outline" onClick={() => setDemoRole("founding")} className="w-full">Demo as Founder</Button>
+            <Button variant="outline" onClick={() => setDemoRole("select")} className="w-full">Demo as Referrer</Button>
             <Button variant="outline" onClick={() => setDemoRole("client")} className="w-full">Demo as Client Company</Button>
             <Button variant="outline" onClick={() => setDemoRole("candidate")} className="w-full">Demo as Candidate</Button>
           </div>

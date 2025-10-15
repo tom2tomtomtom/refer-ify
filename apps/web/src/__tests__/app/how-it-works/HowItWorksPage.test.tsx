@@ -48,13 +48,13 @@ describe('How It Works Page', () => {
     expect(screen.getByText('How Different Roles Use Refer-ify')).toBeInTheDocument()
     expect(screen.getByText('Choose your path based on your position in the network')).toBeInTheDocument()
 
-    // Founding Circle
-    expect(screen.getByText('Founding Circle')).toBeInTheDocument()
+    // Founder
+    expect(screen.getByText('Founder')).toBeInTheDocument()
     expect(screen.getByText('Elite Executives')).toBeInTheDocument()
     expect(screen.getByText('Senior tech leaders who founded this network')).toBeInTheDocument()
 
-    // Select Circle
-    expect(screen.getByText('Select Circle')).toBeInTheDocument()
+    // Referrer
+    expect(screen.getByText('Referrer')).toBeInTheDocument()
     expect(screen.getByText('Network Builders')).toBeInTheDocument()
     expect(screen.getByText('Trusted professionals making referrals')).toBeInTheDocument()
 
@@ -165,11 +165,11 @@ describe('How It Works Page', () => {
     expect(screen.getByText('Example: $200K salary hire = $20K total placement fee (10%)')).toBeInTheDocument()
 
     expect(screen.getByText('$8,000')).toBeInTheDocument()
-    expect(screen.getByText('Select Circle (40%)')).toBeInTheDocument()
+    expect(screen.getByText('Referrer (40%)')).toBeInTheDocument()
     expect(screen.getByText('Referrer reward')).toBeInTheDocument()
 
     expect(screen.getAllByText('$3,000')).toHaveLength(2)
-    expect(screen.getByText('Founding Circle (15%)')).toBeInTheDocument()
+    expect(screen.getByText('Founder (15%)')).toBeInTheDocument()
     expect(screen.getByText('Network bonus')).toBeInTheDocument()
 
     expect(screen.getByText('$9,000')).toBeInTheDocument()
@@ -180,10 +180,10 @@ describe('How It Works Page', () => {
   it('shows annual earning potential breakdowns', () => {
     render(<HowItWorksPage />)
 
-    expect(screen.getByText('Founding Circle Earnings')).toBeInTheDocument()
+    expect(screen.getByText('Founder Earnings')).toBeInTheDocument()
     expect(screen.getByText('$31K-86K')).toBeInTheDocument()
 
-    expect(screen.getByText('Select Circle Earnings')).toBeInTheDocument()
+    expect(screen.getByText('Referrer Earnings')).toBeInTheDocument()
     expect(screen.getByText('$19K-49K')).toBeInTheDocument()
 
     // Check for specific earning streams
@@ -199,7 +199,7 @@ describe('How It Works Page', () => {
     expect(screen.getByText('Ready to Transform Your Network?')).toBeInTheDocument()
     expect(screen.getByText('Join an exclusive community where professional relationships create substantial value')).toBeInTheDocument()
 
-    expect(screen.getByText('Apply for Select Circle')).toBeInTheDocument()
+    expect(screen.getByText('Apply for Referrer Network')).toBeInTheDocument()
     expect(screen.getByText('Learn About Client Access')).toBeInTheDocument()
     expect(screen.getByText('Invitation-only platform • Currently accepting applications from senior tech executives')).toBeInTheDocument()
   })

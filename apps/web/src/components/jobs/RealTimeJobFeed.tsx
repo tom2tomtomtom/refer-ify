@@ -91,10 +91,10 @@ export function RealTimeJobFeed({ userRole }: RealTimeJobFeedProps) {
 
       // Apply tier-based filtering
       if (userRole === "founding_circle") {
-        // Founding Circle sees all tiers with priority access
+        // Founders see all tiers with priority access
         query = query.order("subscription_tier", { ascending: false });
       } else {
-        // Select Circle sees connect and priority tiers
+        // Referrers see connect and priority tiers
         query = query.in("subscription_tier", ["connect", "priority"]);
       }
 

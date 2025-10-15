@@ -24,9 +24,9 @@ export default async function InviteMembersPage() {
 
     return (
       <div className="px-4 py-6 md:px-6">
-        <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founding Circle &gt; Invite Members</div>
+        <div className="text-xs text-muted-foreground mb-2">Dashboard &gt; Founder &gt; Invite Members</div>
         <div className="mb-3 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Invite Select Circle Members</h1>
+          <h1 className="text-2xl font-bold">Invite Referrers</h1>
           <div className="text-xs text-muted-foreground flex items-center gap-3">
             <Link href="/founding">Back to Overview</Link>
             <span className="opacity-40">|</span>

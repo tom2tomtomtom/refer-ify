@@ -99,7 +99,7 @@ const roleSpecificHelp = {
     ]
   },
   founding_circle: {
-    title: "Founding Circle Help",
+    title: "Founder Help",
     description: "Guide to maximizing your network and advisory opportunities",
     quickActions: [
       { title: "View Network", icon: Star, href: "/founding/network" },
@@ -118,7 +118,7 @@ const roleSpecificHelp = {
             category: "network"
           },
           {
-            question: "What makes a good Select Circle member?",
+            question: "What makes a good Referrer?",
             answer: "Look for professionals with strong networks, relevant industry experience, and a track record of successful placements or referrals.",
             category: "selection"
           }
@@ -131,7 +131,7 @@ const roleSpecificHelp = {
         content: [
           {
             question: "How is revenue distributed?",
-            answer: "Revenue is split: 45% to platform, 40% to Select Circle member, 15% to Founding Circle. You earn on all network activity.",
+            answer: "Revenue is split: 45% to platform, 40% to Referrer, 15% to Founder. You earn on all network activity.",
             category: "revenue"
           },
           {
@@ -144,7 +144,7 @@ const roleSpecificHelp = {
     ]
   },
   select_circle: {
-    title: "Select Circle Help",
+    title: "Referrer Help",
     description: "Maximize your referral success and earnings potential",
     quickActions: [
       { title: "Browse Jobs", icon: Search, href: "/select-circle/job-opportunities" },

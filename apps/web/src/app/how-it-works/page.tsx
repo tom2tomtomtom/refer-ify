@@ -44,7 +44,7 @@ export default function HowItWorksPage() {
           {/* Founding Circle */}
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-8 relative">
             <div className="absolute -top-3 left-6 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              Founding Circle
+              Founders
             </div>
             <div className="mt-4 space-y-4">
               <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center">
@@ -88,7 +88,7 @@ export default function HowItWorksPage() {
           {/* Select Circle */}
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 relative">
             <div className="absolute -top-3 left-6 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              Select Circle
+              Referrers
             </div>
             <div className="mt-4 space-y-4">
               <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
@@ -240,7 +240,7 @@ export default function HowItWorksPage() {
                 <div>
                   <h3 className="text-xl font-bold mb-2">Network Makes Referrals</h3>
                   <p className="text-gray-600 text-sm">
-                    Select Circle members refer people they know personally. Warm introductions, not cold applications.
+                    Referrers refer people they know personally. Warm introductions, not cold applications.
                   </p>
                 </div>
               </div>
@@ -351,12 +351,12 @@ export default function HowItWorksPage() {
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div className="space-y-2">
                 <div className="text-4xl font-bold text-blue-600">$8,000</div>
-                <div className="text-sm font-medium">Select Circle (40%)</div>
+                <div className="text-sm font-medium">Referrer (40%)</div>
                 <div className="text-xs text-gray-600">Referrer reward</div>
               </div>
               <div className="space-y-2">
                 <div className="text-4xl font-bold text-amber-600">$3,000</div>
-                <div className="text-sm font-medium">Founding Circle (15%)</div>
+                <div className="text-sm font-medium">Founder (15%)</div>
                 <div className="text-xs text-gray-600">Network bonus</div>
               </div>
               <div className="space-y-2">
@@ -370,7 +370,7 @@ export default function HowItWorksPage() {
           {/* Annual Earning Potential */}
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-200">
-              <h3 className="text-xl font-bold mb-4 text-amber-800">Founding Circle Earnings</h3>
+              <h3 className="text-xl font-bold mb-4 text-amber-800">Founder Earnings</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-sm">Placement referrals</span>
@@ -398,7 +398,7 @@ export default function HowItWorksPage() {
             </div>
 
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-              <h3 className="text-xl font-bold mb-4 text-blue-800">Select Circle Earnings</h3>
+              <h3 className="text-xl font-bold mb-4 text-blue-800">Referrer Earnings</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-sm">Placement referrals</span>
@@ -446,7 +446,7 @@ export default function HowItWorksPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/join-network">
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl transition-colors flex items-center gap-2">
-                Apply for Select Circle
+                Apply as Referrer
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>

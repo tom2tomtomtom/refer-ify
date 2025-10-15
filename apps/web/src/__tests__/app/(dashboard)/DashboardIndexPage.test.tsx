@@ -27,8 +27,8 @@ describe('Dashboard Index Page', () => {
 
     expect(screen.getByText('Client')).toBeInTheDocument()
     expect(screen.getByText('Candidate')).toBeInTheDocument()
-    expect(screen.getByText('Founding Circle')).toBeInTheDocument()
-    expect(screen.getByText('Select Circle')).toBeInTheDocument()
+    expect(screen.getByText('Founder')).toBeInTheDocument()
+    expect(screen.getByText('Referrer')).toBeInTheDocument()
   })
 
   it('renders dashboard links with correct hrefs', () => {
@@ -40,10 +40,10 @@ describe('Dashboard Index Page', () => {
     const candidateLink = screen.getByText('Candidate').closest('a')
     expect(candidateLink).toHaveAttribute('href', '/candidate')
 
-    const foundingLink = screen.getByText('Founding Circle').closest('a')
+    const foundingLink = screen.getByText('Founder').closest('a')
     expect(foundingLink).toHaveAttribute('href', '/founding-circle')
 
-    const selectLink = screen.getByText('Select Circle').closest('a')
+    const selectLink = screen.getByText('Referrer').closest('a')
     expect(selectLink).toHaveAttribute('href', '/select-circle')
   })
 

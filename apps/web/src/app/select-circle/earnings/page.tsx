@@ -255,7 +255,7 @@ export default async function SelectCircleEarningsPage() {
       <div className="mb-2 flex items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Earnings Dashboard</h1>
-          <div className="text-sm text-muted-foreground">Select Circle earnings overview and payment history.</div>
+          <div className="text-sm text-muted-foreground">Referrer earnings overview and payment history.</div>
         </div>
         <div className="flex gap-2">
           <Link href="/select-circle/referrals"><Button variant="outline">View My Referrals</Button></Link>

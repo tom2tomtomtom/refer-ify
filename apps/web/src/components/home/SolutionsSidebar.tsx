@@ -14,16 +14,16 @@ type Item = {
 const ITEMS: Item[] = [
   {
     number: "01",
-    title: "Founding Circle",
+    title: "Founders",
     subtitle: "Elite Network",
     cta: "Get Started",
     href: "/join-network",
   },
   {
     number: "02",
-    title: "Select Circle",
+    title: "Referrers",
     subtitle: "Quality Referrers",
-    cta: "Join Select Circle",
+    cta: "Join Referrer Network",
     href: "/join-network",
   },
   {

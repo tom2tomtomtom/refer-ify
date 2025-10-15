@@ -40,7 +40,7 @@ export function InviteForm({ founderId }: Props) {
   const [success, setSuccess] = useState<string | null>(null);
 
   function defaultTemplate(r: string) {
-    return `Hi ${name || 'there'},\n\nI’d like to invite you to join Refer-ify’s Select Circle — a private network of senior operators making trusted referrals. Given your experience in ${expertise.join(', ') || 'your domain'} at ${company || 'your company'}, I believe you’d be an excellent fit.\n\nHappy to answer any questions. — ${r}`;
+    return `Hi ${name || 'there'},\n\nI'd like to invite you to join Refer-ify's Referrer network — a private network of senior operators making trusted referrals. Given your experience in ${expertise.join(', ') || 'your domain'} at ${company || 'your company'}, I believe you'd be an excellent fit.\n\nHappy to answer any questions. — ${r}`;
   }
 
   // populate template on relationship change
