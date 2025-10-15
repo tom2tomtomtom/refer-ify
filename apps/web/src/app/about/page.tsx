@@ -1,8 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Linkedin, Sparkles, Heart, Target, Users, Award } from "lucide-react";
+import { Linkedin, Sparkles, Heart, Target, Award } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -70,10 +71,17 @@ export default function AboutPage() {
             <div className="lg:col-span-1">
               <Card className="border-2 border-purple-100 bg-gradient-to-br from-white to-purple-50/30 shadow-xl hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-6 text-center">
-                  {/* Profile Image Placeholder */}
+                  {/* Profile Image */}
                   <div className="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1">
-                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                      <Users className="w-20 h-20 text-purple-600" />
+                    <div className="w-full h-full rounded-full overflow-hidden bg-white">
+                      <Image
+                        src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760521418/sammiedobbs_uienrg.png"
+                        alt="Sammie Dobbs - Founder & CEO of Refer-ify"
+                        width={160}
+                        height={160}
+                        className="w-full h-full object-cover"
+                        priority
+                      />
                     </div>
                   </div>
 

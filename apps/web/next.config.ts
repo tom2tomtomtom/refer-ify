@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
   },
   // Move serverComponentsExternalPackages to top-level as serverExternalPackages
   serverExternalPackages: ['@supabase/supabase-js'],
+
+  // Image optimization
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/dkl8kiemy/**',
+      },
+    ],
+  },
   
   // Production optimizations
   poweredByHeader: false,
