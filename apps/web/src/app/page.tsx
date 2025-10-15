@@ -33,22 +33,17 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Hero content */}
             <div className="space-y-8">
-              {/* Large Brand Logo */}
-              <div className="mb-6">
+              {/* MASSIVE Brand Logo */}
+              <div className="mb-8">
                 <Image
                   src="https://res.cloudinary.com/dkl8kiemy/image/upload/v1760523034/ref_log_y8ozda.png"
-                  alt="Refer-ify - Executive Recruitment Network"
-                  width={480}
-                  height={160}
-                  className="h-32 w-auto sm:h-40 lg:h-48"
+                  alt="Refer-ify"
+                  width={800}
+                  height={267}
+                  className="h-48 w-auto sm:h-64 lg:h-80"
                   priority
                 />
               </div>
-
-              <Badge variant="secondary" className="px-4 py-1.5 text-sm font-medium bg-white/80 backdrop-blur-sm">
-                <Zap className="w-3 h-3 mr-1.5 inline" />
-                Executive Recruitment Network
-              </Badge>
 
               <div className="space-y-6">
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
